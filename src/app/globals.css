@@ -1,0 +1,245 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat",sans-serif;
+  /* font-family:"Poppins" ,sans-serif ; */
+}
+/* product page */
+
+.product_page {
+  background-image: url(./../../public/product/bg.png);
+}
+
+/* /////////////////////////////////// */
+
+.bgImage {
+  background-image: url(@/../../../public/banner/sh.png);
+}
+
+.heroImage {
+  background-image: url(@/../../../public/banner/hero.png);
+}
+
+.ABCSD {
+
+  color: #e9bc95;  /* primary */
+  background: #a8744a; /* secondary */
+
+  color: #f8f3f3;
+
+}
+
+.heading--primary {
+  color: #a16c3d;
+  font-family: "Lora", serif;
+  font-style: normal;
+
+  @apply text-4xl font-semibold
+}
+
+.heading--secondary {
+  color: #ffffff;
+  font-family: "Lora", serif;
+  font-style: normal;
+  @apply text-4xl font-semibold
+}
+
+.sub-heading--primary {
+  color: #c29166;
+  font-family: "Satisfy", serif;
+  font-weight: 400;
+  font-style: normal;
+
+  @apply text-2xl
+}
+
+.text--primary {
+  color: #8f8174;
+  font-family: "Poppins", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.text--primary {
+  font-family: "Poppins", serif;
+  font-weight: 400;
+  font-style: normal;
+  @apply text-gray-900
+}
+
+.data-\[focus-visible\=true\]\:outline-focus[data-focus-visible="true"] {
+  outline-color: unset;
+}
+
+.BUTTON--primary {
+  background: #a16c3d;
+  color: white;
+  font-family: "Lora", serif;
+  font-weight: bold;
+  font-style: normal;
+  border: 1px solid #a16c3d;
+  border-radius: 0;
+  @apply hover:text-[#a16c3d] hover:bg-white focus-visible:outline-none focus:outline-none
+}
+
+.BUTTON--secondary {
+  background: transparent;
+  color: white;
+  font-family: "Lora", serif;
+  font-weight: bold;
+  font-style: normal;
+  border: 1px solid white;
+  border-radius: 0;
+  @apply hover:text-[#a16c3d] hover:bg-white focus-visible:outline-none focus:outline-none
+}
+
+.SECTION--primary {
+
+  padding: 50px 10%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 50px;
+}
+
+.SECTION--secondary {
+  background: #fcf7f1;
+  padding: 50px 10%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 50px;
+}
+
+.LINKS {
+  @apply text-[#444746] hover:text-[#2962ff]
+}
+
+@media only screen and (max-width : 770px) {
+  .SECTION--primary {
+    background: #f6e6d9;
+    padding: 30px 10%;
+    display: grid;
+    grid-template-columns: 100%;
+    gap: 50px;
+  }
+
+  .SECTION--secondary {
+    background: #fcf7f1;
+    padding: 30px 10%;
+    display: grid;
+    grid-template-columns: 100%;
+    gap: 50px;
+  }
+}
+
+
+/* /////////////////////////////////// */
+
+
+:root {
+  --red-color: #ffffff;
+  --bg-color: #111827;
+}
+
+.sub_heading{
+  @apply leading-tight font-bold text-5xl
+}
+
+.kalam_font {
+  font-family: "Great Vibes", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.custom_bg {
+  background-image: url(../../public/images/BG.png);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* slider portfolio */
+
+.abcde .slick-track {
+  padding: 50px 0;
+}
+
+/* MUJEEB CSS */
+td{
+  @apply py-[3%]
+}
+/* SINCE Text */
+
+.sin {
+  -webkit-text-stroke: 1px var(--red-color);
+}
+
+
+/* Footer Animation */
+
+
+.footer_animation {
+  height: 100%;
+  width: 100%;
+  background-color: var(--red-color);
+  position: absolute;
+  top: 40px;
+  left: 0;
+  transition: all .5s;
+}
+
+.s_link {
+  overflow: hidden;
+}
+
+.s_link:hover .footer_animation {
+  top: 0;
+  z-index: 1;
+}
+
+.s_link:hover .icon {
+  @apply text-[#a8744a]
+}
+
+.footer_card {
+  @apply flex flex-col gap-6
+}
+
+.child {
+  @apply flex flex-col gap-3
+}
+
+.product_card{
+ background-color: white;
+  /* box-shadow: 2px 2px 5px silver; */
+}
+
+
+/* ====== Details ====== */
+.size_btn{
+  border-radius: 5px;
+  @apply w-[60px] border h-7 flex items-center justify-center
+}
+.size_btn { 
+  @apply bg-white focus:bg-gray-200 focus:border focus:border-gray-700
+}
+.color_btn{
+  border-radius: 5px;
+  @apply w-[60px] h-7
+}
+.color_btn:focus{
+  padding: 3px;
+   
+}
+.s{
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+}

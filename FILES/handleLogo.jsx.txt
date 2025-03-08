@@ -1,0 +1,57 @@
+import dbConnection from "@/config/dbConnection";
+import logoModel from "@/models/logoModel";
+import { NextResponse } from "next/server";
+
+export const revalidate = 0;
+
+
+export async function GET() {
+  
+  await dbConnection();
+
+  try {
+    // Fetch all logos from the database
+    const logos = await logoModel.find();
+
+    console.log(logos,"logos")
+
+    return new NextResponse(JSON.stringify({ message: "Success", logos }), {
+      status: 200,
+    });
+  } catch (error) {
+    console.error("Error fetching logos:", error);
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function POST(req) {
+  await dbConnection();
+
+  try {
+    const { url } = await req.json();
+
+    if (!url) {
+      return NextResponse.json(
+        { message: "Missing required fields." },
+        { status: 400 }
+      );
+    }
+
+    const result = new logoModel({ url });
+
+    await result.save();
+
+    return new NextResponse(JSON.stringify({ message: "Success" }), {
+      status: 201,
+    });
+  } catch (error) {
+    console.error("Error saving logo:", error);
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
