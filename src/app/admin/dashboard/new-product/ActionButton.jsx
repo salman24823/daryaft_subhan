@@ -22,8 +22,7 @@ const ActionButton = ({ productData, setProductData }) => {
 
       if (!response.ok) {
         setLoading(false);
-
-        return toast.error("Error in Uploading Product.");
+        toast.error("Error in Uploading Product.");
       }
 
       const result = await response.json()
@@ -37,7 +36,7 @@ const ActionButton = ({ productData, setProductData }) => {
         regularPrice: "",
         salePrice: "",
         stockStatus: "instock",
-        category: "category1",
+        categories: [],
         tags: [],
         variations: [],
         sizes: [], 
