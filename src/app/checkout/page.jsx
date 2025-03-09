@@ -4,7 +4,9 @@ import { useState } from "react";
 import Footer from "../components/Footer/page";
 import { toast } from "react-toastify";
 
-const checkout = () => {
+
+const Checkout = () => {
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -248,4 +250,4 @@ const checkout = () => {
   );
 };
 
-export default checkout;
+export default Checkout;

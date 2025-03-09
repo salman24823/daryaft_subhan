@@ -35,7 +35,7 @@ const Features = () => {
       id="features-section"
       className="z-10 w-full max-[770px]:px-[5%] px-[10%]"
     >
-      <div className="bg-secondary -mt-16 w-full grid grid-cols-2 max-[770px]:flex rounded-lg shadow-xl">
+      <div className="bg-[#a8744a] -mt-16 w-full grid grid-cols-2 max-[770px]:flex rounded-lg shadow-xl">
 
         {/* first */}
         <div className="w-full py-3">

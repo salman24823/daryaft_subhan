@@ -12,7 +12,7 @@ const Footer = () => {
 
   useEffect(() => {
     AOS.init({
-      duration: 1000, // Animation duration in milliseconds
+      duration: 500, // Animation duration in milliseconds
       once: true, // Ensure animations run only once
     });
   }, []);
@@ -34,9 +34,10 @@ const Footer = () => {
   ];
 
   return (
-    <div className="w-full relative bg-[#a16c3d] text-white">
+    <div className="w-full relative bg-[#a16c3d] overflow-hidden text-white">
       <footer className="flex flex-col gap-6 p-[5%]">
         <div className="ft_cont grid grid-cols-[1.5fr,1fr,1fr,1fr] py-[3%] gap-6">
+
           <div
             className="flex flex-col gap-4"
             data-aos="fade-up"
@@ -57,7 +58,7 @@ const Footer = () => {
           <div
             className="footer_card"
             data-aos="fade-up"
-            data-aos-delay="200"
+            data-aos-delay="100"
           >
             <div className="child">
               <span className="text-[1.5rem] font-semibold">Faisalabad</span>
@@ -79,8 +80,7 @@ const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="s_link border border-white p-2 text-[1.5rem] relative overflow-hidden hover:bg-transparent transition-all"
-                    data-aos="fade-up"
-                    data-aos-delay={`${600 + index * 200}`}
+             
                   >
                     {value.icon}
                     <span className="footer_animation"></span>
@@ -93,22 +93,20 @@ const Footer = () => {
           <div
             className="footer_card"
             data-aos="fade-up"
-            data-aos-delay="800"
+            data-aos-delay="300"
           >
             <div className="child">
               <span className="text-[1.5rem] font-semibold">Contact</span>
               <ul className="list-none px-2 mt-2">
                 <li
                   className="font-light text-lg hover:text-white cursor-pointer transition-all"
-                  data-aos="fade-up"
-                  data-aos-delay="1000"
+            
                 >
                   +1934719 8948
                 </li>
                 <li
                   className="font-light text-lg hover:text-white cursor-pointer transition-all"
-                  data-aos="fade-up"
-                  data-aos-delay="1200"
+            
                 >
                   +1934719 8948
                 </li>
@@ -116,8 +114,7 @@ const Footer = () => {
             </div>
             <div
               className="child"
-              data-aos="fade-up"
-              data-aos-delay="1400"
+        
             >
               <span className="text-[1.5rem] font-semibold">Email</span>
               <Link href="/">
@@ -129,7 +126,7 @@ const Footer = () => {
           <div
             className="child"
             data-aos="fade-up"
-            data-aos-delay="1600"
+            data-aos-delay="500"
           >
             <span className="text-[1.5rem] font-semibold">Main Menu</span>
             <div className="nav_links flex flex-col font-light gap-1 mt-2">
@@ -138,26 +135,23 @@ const Footer = () => {
                   key={index}
                   href={`/${menu.Title.replace(/\\s+/g, "").toLowerCase()}`}
                   className="transition-all duration-200 pl-2 border-l-2 border-transparent hover:font-semibold hover:border-white"
-                  data-aos="fade-up"
-                  data-aos-delay={`${1800 + index * 200}`}
                 >
                   {menu.Title}
                 </Link>
               ))}
             </div>
           </div>
+
         </div>
 
         <hr
           className="w-full border-white"
-          data-aos="fade-up"
-          data-aos-delay="2200"
+          // data-aos="fade-up"
+          // data-aos-delay="700"
         />
 
         <span
           className="self-center text-white text-sm"
-          data-aos="fade-up"
-          data-aos-delay="2400"
         >
           Copyright @ 2025 <span className="text-white cursor-pointer">Alishaimpex.</span> All Rights reserved.
         </span>
