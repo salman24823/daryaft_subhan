@@ -9,8 +9,7 @@ import { FaArrowRight } from "react-icons/fa";
 const Trending_items = () => {
   return (
     <section className='w-full'>
-    <div className='w-full h-[80vh] bg-[url(./../../public/banner/news2.png)] bg-cover bg-no-repeat'> 
-    </div>
+    <div className='w-full h-[80vh] bg-[url(./../../public/banner/news2.png)] bg-cover bg-no-repeat'></div>
       <div className='p-[5%] flex flex-col items-center gap-12 bg-gray-50'>
       <h2 className='heading--primary'>Trending Products</h2>
       <div className='New_arrival w-full grid grid-cols-4 justify-between gap-6'>

@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import Footer from "../components/Footer/page";
 
-const CheckOut = () => {
+const Checkout = () => {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -232,4 +232,4 @@ const CheckOut = () => {
   );
 };
 
-export default CheckOut;
+export default Checkout;
