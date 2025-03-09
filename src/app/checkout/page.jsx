@@ -10,7 +10,7 @@ const checkout = () => {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("cod");
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +23,7 @@ const checkout = () => {
 
       if (!response.ok) {
         toast.error("Something went wrong!");
-        setLoading(false);
+        setIsLoading(false);
       }
 
       toast.success("Order Placed Successfully");
@@ -32,7 +32,7 @@ const checkout = () => {
       setPhone("");
       setAddress("");
       setPaymentMethod("cod");
-      setLoading(false);
+      setIsLoading(false);
     } catch (error) {
       console.error(error);
       toast.error("Somethign went wrong! in Catch");
