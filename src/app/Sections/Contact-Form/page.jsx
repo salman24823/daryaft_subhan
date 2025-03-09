@@ -1,14 +1,43 @@
-"use client"
+"use client";
 
 import { Button } from "@heroui/react";
 import { CircleCheck } from "lucide-react";
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CircleImage from "../../../../public/images/Circles.png";
 import AOS from "aos";
 import "aos/dist/aos.css"; // Import AOS styles
+import { toast } from "react-toastify";
 
 const ContactForm = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+
+  async function submitForm(e) {
+    e.preventDefault()
+
+    try {
+      const response = await fetch("/api/handleContactForm", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, phone }),
+      });
+      if (!response.ok) {
+        toast.error(response.message);
+      }
+
+      toast.success("Form submitted successfully")
+
+      setName("")
+      setEmail("")
+      setPhone("")
+
+    } catch (error) {
+      toast.error("Failed to submit form.");
+    }
+  }
+
   // Initialize AOS with `once: true`
   useEffect(() => {
     AOS.init({
@@ -63,7 +92,11 @@ const ContactForm = () => {
       </div>
 
       {/* Right Section */}
-      <div className="relative max-[770px]:px-0 px-[18%]" data-aos="fade-left" data-aos-delay="300">
+      <div
+        className="relative max-[770px]:px-0 px-[18%]"
+        data-aos="fade-left"
+        data-aos-delay="300"
+      >
         {/* <Image
           className="animate__animated animate__fadeInUp absolute -top-28 max-[770px]:right-0 right-20 z-0 w-3/4"
           src={CircleImage}
@@ -86,32 +119,39 @@ const ContactForm = () => {
             Get in Touch
           </h2>
 
-          <form className="space-y-4">
+          <form onSubmit={submitForm} className="space-y-4">
             <input
               type="text"
               placeholder="Name"
               className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={name}
               data-aos="fade-up"
               data-aos-delay="900"
+              onChange={(e) => setName(e.target.value)}
             />
             <input
               type="text"
               placeholder="Phone"
               className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={phone}
               data-aos="fade-up"
               data-aos-delay="1000"
+              onChange={(e) => setPhone(e.target.value)}
             />
             <input
               type="text"
-              placeholder="Address"
+              placeholder="Email"
+              value={email}
               className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
               data-aos="fade-up"
               data-aos-delay="1100"
+              onChange={(e) => setEmail(e.target.value)}
             />
             <Button
               className="w-full BUTTON--primary"
               data-aos="fade-up"
               data-aos-delay="1200"
+              type="submit"
             >
               Submit
             </Button>

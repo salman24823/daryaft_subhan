@@ -4,7 +4,7 @@ import React from "react";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LogOut, X, Box, CopyPlus } from "lucide-react"; // Assuming you're using Lucide icons
+import { LogOut, X, Box, CopyPlus, Contact, ShoppingBag, Mail  } from "lucide-react"; // Assuming you're using Lucide icons
 import { Home } from "lucide-react";
 import { Button } from "@heroui/react";
 
@@ -30,6 +30,21 @@ const Layout = ({ children }) => {
       path: "/admin/dashboard/products",
       icon: <Box className="w-5 h-5 text-gray-600" />,
     },
+    {
+      name: "Contact",
+      path: "/admin/dashboard/contact",
+      icon: <Contact className="w-5 h-5 text-gray-600" />,
+    },
+    {
+      name: "Checkout",
+      path: "/admin/dashboard/checkout",
+      icon: <ShoppingBag className="w-5 h-5 text-gray-600" />,
+    },
+    {
+      name: "NewsLetter",
+      path: "/admin/dashboard/newsletter",
+      icon: <Mail className="w-5 h-5 text-gray-600" />,
+    },
   ];
 
   const logout = () => {
@@ -53,7 +68,7 @@ const Layout = ({ children }) => {
             )}
 
             <aside
-              className={`fixed pt-2 lg:sticky lg:top-0 lg:left-0 lg:h-screen lg:w-64 w-64 h-full bg-white border-r border-gray-200 z-30 transform transition-transform duration-300 ease-in-out ${
+              className={`fixed w-[15%] pt-2 lg:sticky lg:top-0 lg:left-0 lg:h-screen  h-full bg-white border-r border-gray-200 z-30 transform transition-transform duration-300 ease-in-out ${
                 sidebarOpen ? "translate-x-0" : "-translate-x-full"
               } lg:translate-x-0`}
             >
@@ -106,7 +121,7 @@ const Layout = ({ children }) => {
         )}
 
         {/* Main Content */}
-        <div className="flex-1 p-4 bg-gray-50 min-h-screen">
+        <div className="p-4 w-[85%] bg-gray-50 min-h-screen">
           {/* Mobile Menu Toggle Button */}
           <Button
             className="lg:hidden p-2 bg-white border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 mb-4"
