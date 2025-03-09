@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const newletterSchema = new Schema({
+const newsletterSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
@@ -9,6 +9,6 @@ const newletterSchema = new Schema({
 
 const newsletterModel =
   mongoose.models.newsletterModel ||
-  mongoose.model("newsletterModel", newletterSchema);
+  mongoose.model("newsletterModel", newsletterSchema);
 
 export default newsletterModel;

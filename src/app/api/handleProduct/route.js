@@ -67,13 +67,16 @@ export async function PUT(req) {
     // Connect to the database
     await dbConnection();
     // Parse the request body
-    const { productId, productData } = await req.json();
+    const { salePrice , id } = await req.json();
+
+    console.log(salePrice , id,"salePrice , id")
+    return
     // Validate required fields
     if (
       !productData.name ||
       !productData.description ||
       !productData.regularPrice ||
-      !productData.category
+      !productData.categories
     ) {
       return new NextResponse(
         JSON.stringify({ error: "Missing required fields" }),
@@ -99,14 +102,15 @@ export async function PUT(req) {
     );
   }
 }
-export async function Delete(req) {
+export async function DELETE(req) {
   try {
     // Connect to the database
     await dbConnection();
     // Parse the request body
-    const { productId } = await req.json();
+    const { id } = await req.json();
+    console.log(id,"id")
     // Delete the product document
-    await ProductModel.findByIdAndDelete(productId);
+    await ProductModel.findByIdAndDelete(id);
     // Return success response
     return new NextResponse(JSON.stringify({ success: true }), { status: 200 });
   } catch (error) {

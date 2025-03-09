@@ -1,11 +1,33 @@
-"use client"
+"use client";
 
 import { Button } from "@heroui/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css"; // Import AOS styles
+import { toast } from "react-toastify";
 
 const NewsLetter = () => {
+  const [email, setEmail] = useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      const response = await fetch("/api/handlenewsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (!response.ok) {
+        toast.error("Failed to submit form.");
+        return;
+      }
+      toast.success("Form submitted successfully");
+      setEmail("");
+    } catch (error) {
+      toast.error("Failed to submit form.");
+    }
+  }
+
   // Initialize AOS
   useEffect(() => {
     AOS.init({
@@ -52,11 +74,7 @@ const NewsLetter = () => {
         </div>
 
         {/* Content */}
-        <div
-          className="px-4 py-16"
-          data-aos="fade-up"
-          data-aos-delay="400"
-        >
+        <div className="px-4 py-16" data-aos="fade-up" data-aos-delay="400">
           <div className="relative max-w-2xl mx-auto text-center">
             {/* Title */}
             <h2
@@ -83,17 +101,21 @@ const NewsLetter = () => {
               className="flex rounded-2xl overflow-hidden justify-center items-center w-full mb-4"
               data-aos="zoom-in"
               data-aos-delay="700"
+              onSubmit={handleSubmit}
             >
               <input
                 placeholder="Email"
-                required=""
-                type="text"
+                required
+                type="email"
                 className="flex-grow w-full h-12 px-4 text-gray-900 transition rounded-l-2xl duration-200 border-2 border-[#a8744a] appearance-none bg-white focus:border-teal-accent-700 focus:outline-none focus:shadow-outline"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
               />
               <Button
                 className="bg-[#a8744a] p-6 text-white rounded-none"
                 data-aos="fade-left"
                 data-aos-delay="800"
+                type="submit"
               >
                 Subscribe
               </Button>
@@ -129,9 +151,7 @@ const NewsLetter = () => {
             </a>
           </div>
         </div>
-
       </div>
-
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+  import React from "react";
 import Product from "@/../../public/product.png";
 import { FaStar } from "react-icons/fa";
 import Image from "next/image";

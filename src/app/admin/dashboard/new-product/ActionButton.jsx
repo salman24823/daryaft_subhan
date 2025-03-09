@@ -22,6 +22,7 @@ const ActionButton = ({ productData, setProductData }) => {
 
       if (!response.ok) {
         setLoading(false);
+
         return toast.error("Error in Uploading Product.");
       }
 
