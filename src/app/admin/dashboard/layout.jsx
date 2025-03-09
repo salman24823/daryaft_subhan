@@ -36,8 +36,8 @@ const Layout = ({ children }) => {
       icon: <Contact className="w-5 h-5 text-gray-600" />,
     },
     {
-      name: "Checkout",
-      path: "/admin/dashboard/checkout",
+      name: "Orders",
+      path: "/admin/dashboard/orders",
       icon: <ShoppingBag className="w-5 h-5 text-gray-600" />,
     },
     {

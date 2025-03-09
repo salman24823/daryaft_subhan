@@ -1,5 +1,6 @@
 "use client";
 import {
+  Button,
   Spinner,
   Table,
   TableBody,
@@ -8,17 +9,17 @@ import {
   TableHeader,
   TableRow,
 } from "@heroui/react";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
-const Newsletter = () => {
-  const [email, setEmail] = useState([]);
+const Orders = () => {
+  const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  async function formData(setEmail) {
+  async function fetchData() {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/handlenewsletter", {
+      const response = await fetch("/api/handleOrder", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -26,45 +27,53 @@ const Newsletter = () => {
       });
 
       if (!response.ok) {
-        toast.error(response.message);
+        toast.error("Error fetching data");
         setIsLoading(false);
       }
+
       const data = await response.json();
-      console.log(data);
-      setEmail(data);
+      setOrders(data);
       setIsLoading(false);
     } catch (error) {
-      toast.error("Failed to show data.");
+      toast.error("Failed to fetch data");
     }
   }
 
   useEffect(() => {
-    formData(setEmail);
+    fetchData(setOrders);
   }, []);
+
   return (
     <div>
       {isLoading ? (
         <div className="w-full h-screen bg-white opacity-30 flex justify-center items-center">
           <Spinner className="!text-blue-600" size="lg" color="primary" />
           <p className="text-2xl text-black font-semibold opacity-100 mx-3">
-            Loading..
+            Loading...
           </p>
         </div>
       ) : (
         <Table>
           <TableHeader>
             <TableColumn>#</TableColumn>
+            <TableColumn>Name</TableColumn>
+            <TableColumn>Phone</TableColumn>
             <TableColumn>Email</TableColumn>
+            <TableColumn>Address</TableColumn>
+            <TableColumn>Payment Method</TableColumn>
           </TableHeader>
-
-          <TableBody emptyContent="No Email Found">
-            {email?.map((mail, index) => (
+          <TableBody>
+            {orders.Orders.map((data, index) => (
               <TableRow
                 className="hover:bg-gray-100 transition-colors"
-                key={mail.id}
-              >
+                key={data.index}
+                >
                 <TableCell>{index + 1}</TableCell>
-                <TableCell>{mail.email}</TableCell>
+                <TableCell>{data.name}</TableCell>
+                <TableCell>{data.phone}</TableCell>
+                <TableCell>{data.email}</TableCell>
+                <TableCell>{data.address}</TableCell>
+                <TableCell>{data.paymentMethod}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -74,4 +83,4 @@ const Newsletter = () => {
   );
 };
 
-export default Newsletter;
+export default Orders;
