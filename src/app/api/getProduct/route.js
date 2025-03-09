@@ -12,8 +12,6 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const productId = searchParams.get('product_id');
 
-    console.log(productId, "productId");
-
     if (!productId) {
       return NextResponse.json(
         { error: 'product_id is required' },
