@@ -146,7 +146,6 @@ const Layout = ({ children }) => {
           {/* Page Content */}
           {children}
         </div>
-
       </div>
     </>
   );

@@ -22,8 +22,11 @@ const productSchema = new mongoose.Schema(
       enum: ["instock", "outofstock"],
       default: "instock",
     },
-    category: {
-      type: String,
+    collectionName: {
+      type: String, // Featured Collection , Top Rating etc
+    },
+    categories: {
+      type: [String],
       required: true,
     },
     tags: {

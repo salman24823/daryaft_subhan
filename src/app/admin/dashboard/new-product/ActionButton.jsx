@@ -9,6 +9,8 @@ const ActionButton = ({ productData, setProductData }) => {
 
   async function UploadProduct() {
 
+    setLoading(true);
+
     try {
       const response = await fetch("/api/handleProduct", {
         method: "POST",
@@ -19,6 +21,8 @@ const ActionButton = ({ productData, setProductData }) => {
       });
 
       if (!response.ok) {
+        setLoading(false);
+
         return toast.error("Error in Uploading Product.");
       }
 
@@ -55,7 +59,7 @@ const ActionButton = ({ productData, setProductData }) => {
         onPress={UploadProduct}
         className="rounded-none font-semibold bg-blue-500 text-white"
       >
-        Upload
+        {loading ? "Uploading..." : "Upload"} 
       </Button>
     </div>
   );

@@ -4,8 +4,12 @@ import { useState } from "react";
 import { CldUploadWidget } from "next-cloudinary";
 import MDEditor from "@uiw/react-md-editor";
 import ActionButton from "./ActionButton";
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@heroui/react";
+import { ChevronDown } from "lucide-react";
 
 const NewProducts = () => {
+
+  const [ collectionName , setCollectionName ] = useState("Featured")
 
   const [productData, setProductData] = useState({
     name: "",
@@ -13,7 +17,8 @@ const NewProducts = () => {
     regularPrice: "",
     salePrice: "",
     stockStatus: "instock",
-    category: "category1",
+    categories: [],
+    collectionName: collectionName,
     tags: [],
     variations: [],
     sizes: [], // New field for sizes
@@ -76,11 +81,29 @@ const NewProducts = () => {
     }
   };
 
+  const addCategory = (e) => {
+    if (e.key === "Enter" && e.target.value.trim()) {
+      const newCategory = e.target.value.trim();
+      setProductData((prev) => ({
+        ...prev,
+        categories: [...prev.categories, newCategory],
+      }));
+      e.target.value = ""; // Clear the input after adding a category
+    }
+  };
+
   const removeSize = (index) => {
     setProductData((prev) => {
       const updatedSizes = [...prev.sizes];
       updatedSizes.splice(index, 1);
       return { ...prev, sizes: updatedSizes };
+    });
+  };
+  const removeCategory = (index) => {
+    setProductData((prev) => {
+      const upDatedcategory = [...prev.categories];
+      upDatedcategory.splice(index, 1);
+      return { ...prev, categories: upDatedcategory };
     });
   };
 
@@ -187,6 +210,35 @@ const NewProducts = () => {
                   className="text-xs text-red-500 mt-1"
                 >
                   Remove
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Add Category Section */}
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Add Category
+          </label>
+          <input
+            type="text"
+            onKeyDown={addCategory}
+            className="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="e.g., Men"
+          />
+          <div className="mt-2 flex flex-wrap gap-2">
+            {productData.categories.map((category, index) => (
+              <div
+                key={index}
+                className="flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full text-sm"
+              >
+                <span>{category}</span>
+                <button
+                  onClick={() => removeCategory(index)}
+                  className="text-xs text-red-500"
+                >
+                  ×
                 </button>
               </div>
             ))}
@@ -301,6 +353,35 @@ const NewProducts = () => {
             ))}
           </div>
         </div>
+
+        {/* Meta Title */}
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Collection Name
+          </label>
+          <Dropdown placement="bottom-start">
+              <DropdownTrigger>
+                <Button
+                  variant="bordered"
+                  className="w-full flex justify-between"
+                >
+                  {collectionName}
+                  <ChevronDown className="text-gray-500" />
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu>
+                {["Featured", "Trending"].map((option) => (
+                  <DropdownItem
+                    key={option}
+                    onPress={() => setCollectionName(option)}
+                  >
+                    {option}
+                  </DropdownItem>
+                ))}
+              </DropdownMenu>
+            </Dropdown>
+        </div>
+
 
         {/* Meta Title */}
         <div className="mb-6">

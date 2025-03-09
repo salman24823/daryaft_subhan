@@ -27,12 +27,14 @@ export async function POST(req) {
     // Parse the request body
     const { productData } = await req.json();
 
+    console.log(productData,"productData")
+
     // Validate required fields
     if (
       !productData.name ||
       !productData.description ||
       !productData.regularPrice ||
-      !productData.category
+      !productData.categories 
     ) {
       return new NextResponse(
         JSON.stringify({ error: "Missing required fields" }),
@@ -74,7 +76,7 @@ export async function PUT(req) {
       !productData.name ||
       !productData.description ||
       !productData.regularPrice ||
-      !productData.category
+      !productData.categories
     ) {
       return new NextResponse(
         JSON.stringify({ error: "Missing required fields" }),
