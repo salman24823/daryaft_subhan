@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Spinner } from "@heroui/react";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { ChevronLeft, ChevronRight, FolderUp, Heart } from "lucide-react";
 import BuyAction from "./BuyAction";
@@ -9,9 +9,8 @@ import { useSearchParams } from "next/navigation";
 
 const Detail = () => {
   const [product, setProduct] = useState();
-  
-  const [variantImmage, setVariantImage] = useState()
 
+  const [variantImmage, setVariantImage] = useState();
 
   const searchParams = useSearchParams();
 
@@ -45,7 +44,7 @@ const Detail = () => {
             <div className="prod_img flex">
               <div className="w-full">
                 <img
-                  src={variantImmage? variantImmage : product.thumbnail}
+                  src={variantImmage ? variantImmage : product.thumbnail}
                   alt="Product Image"
                   className="w-[90%] rounded-lg"
                 />
@@ -134,4 +133,20 @@ const Detail = () => {
   );
 };
 
-export default Detail;
+// Export the component wrapped in Suspense
+export default function DetailPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="w-full h-screen flex justify-center items-center text-black ">
+          <div className="flex gap-5">
+            <Spinner size="lg" />
+            <p>Loading...</p>
+          </div>
+        </div>
+      }
+    >
+      <Detail />
+    </Suspense>
+  );
+}
