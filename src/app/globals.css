@@ -218,6 +218,7 @@ td{
 
 .product_card{
  background-color: white;
+ border: 1px solid #efececd7;
   /* box-shadow: 2px 2px 5px silver; */
 }
 

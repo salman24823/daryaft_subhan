@@ -1,12 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Footer from "../components/Footer/page";
 import { toast } from "react-toastify";
-
+import { Button } from "@heroui/react";
 
 const Checkout = () => {
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -14,13 +13,37 @@ const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState("cod");
   const [isLoading, setIsLoading] = useState(false);
 
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedCart = localStorage.getItem("cart");
+      setCart(storedCart ? JSON.parse(storedCart) : []);
+    };
+
+    // Initial load
+    handleStorageChange();
+
+    // Listen for storage changes
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
+  const totalPrice = cart.reduce(
+    (acc, item) => acc + item.salePrice * item.quantity,
+    0
+  );
+
   const handleSubmit = async (e) => {
+
+    setIsLoading(true)
+
     e.preventDefault();
     try {
       const response = await fetch("/api/handleOrder", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone, address, paymentMethod }),
+        body: JSON.stringify({ name, email, phone, address, paymentMethod , cart }),
       });
 
       if (!response.ok) {
@@ -34,10 +57,15 @@ const Checkout = () => {
       setPhone("");
       setAddress("");
       setPaymentMethod("cod");
+      setCart([]);
+    localStorage.removeItem("cart");
+
       setIsLoading(false);
     } catch (error) {
       console.error(error);
       toast.error("Somethign went wrong! in Catch");
+      setIsLoading(false);
+
     }
   };
 
@@ -46,7 +74,10 @@ const Checkout = () => {
       <div className="grid min-h-screen grid-cols-10">
         <div className="col-span-full py-6 px-4 sm:py-12 lg:col-span-6 lg:py-24">
           <div className="mx-auto w-full max-w-lg">
-            <h1 className="relative text-2xl font-medium text-gray-700 sm:text-3xl">
+            <h1
+              onClick={() => console.log(cart, "cart")}
+              className="relative text-2xl font-medium text-gray-700 sm:text-3xl"
+            >
               Secure Checkout
               <span className="mt-2 block h-1 w-10 bg-[#c77d37] sm:w-20"></span>
             </h1>
@@ -139,12 +170,13 @@ const Checkout = () => {
               </div>
 
               {/* Place Order Button */}
-              <button
+              <Button
                 type="submit"
                 className="mt-4 inline-flex w-full justify-center rounded bg-[#c77d37] py-2.5 px-4 text-base font-semibold text-white hover:text-opacity-100 focus:ring-2 focus:ring-[#c77d37]"
+                isLoading={isLoading}
               >
                 Place Order
-              </button>
+              </Button>
             </form>
 
             <p className="mt-10 text-center text-sm font-semibold text-gray-500">
@@ -171,52 +203,38 @@ const Checkout = () => {
           </div>
           <div className="relative">
             <ul className="space-y-5">
-              <li className="flex justify-between">
-                <div className="inline-flex">
-                  <img
-                    src="https://www.uberprints.com/content/products/flat/800x800/gisf500_1_blk.jpg"
-                    alt=""
-                    className="max-h-16"
-                  />
-                  <div className="ml-3">
-                    <p className="text-base font-semibold text-white">
-                      Black Hoodie
-                    </p>
-                    <p className="text-sm font-medium text-white text-opacity-80">
-                      S-Medium
-                    </p>
-                  </div>
-                </div>
-                <p className="text-sm font-semibold text-white">$30.00</p>
-              </li>
-              <li className="flex justify-between">
-                <div className="inline-flex">
-                  <img
-                    src="https://www.uberprints.com/content/products/flat/800x800/itss4500z_1_mrn.jpg"
-                    alt=""
-                    className="max-h-16"
-                  />
-                  <div className="ml-3">
-                    <p className="text-base font-semibold text-white">
-                      Zipper Hoddie Maroon-4
-                    </p>
-                    <p className="text-sm font-medium text-white text-opacity-80">
-                      S-Medium
-                    </p>
-                  </div>
-                </div>
-                <p className="text-sm font-semibold text-white">$50.00</p>
-              </li>
+              {cart.map((value, index) => {
+                return (
+                  <li className="flex">
+                    <div className="flex w-full justify-between">
+                      <div className="flex items-center">
+                        <img
+                          src={value.thumbnail}
+                          alt={value.name}
+                          className="max-h-16"
+                        />
+                        <div className="ml-3 flex flex-col justify-center">
+                          <p className="text-base font-semibold text-white">
+                            {value.name}
+                          </p>
+                          <p className="text-sm font-medium text-white text-opacity-80">
+                            Quantity : {value.quantity}
+                          </p>
+                        </div>
+                      </div>
+                      <p className="mt-3 text-sm font-semibold text-white">
+                        {value.salePrice} PKR
+                      </p>
+                    </div>
+                  </li>
+                );
+              })}
             </ul>
             <div className="my-5 h-0.5 w-full bg-white bg-opacity-30"></div>
             <div className="space-y-2">
               <p className="flex justify-between text-lg font-bold text-white">
                 <span>Total price:</span>
-                <span>$80.00</span>
-              </p>
-              <p className="flex justify-between text-sm font-medium text-white">
-                <span>Vat: 10%</span>
-                <span>$2.00</span>
+                <span> {totalPrice} PKR </span>
               </p>
             </div>
           </div>

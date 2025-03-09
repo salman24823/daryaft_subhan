@@ -29,36 +29,39 @@ export async function GET() {
 
 export async function POST(req) {
   try {
-    // Connect to the database
     await dbConnection();
-    // Parse the request body
-    const { name, email, phone, address, paymentMethod } = await req.json();
-    if (!name || !email || !phone || !address || !paymentMethod) {
+    
+    const { name, email, phone, address, paymentMethod, cart } = await req.json();
+
+    if (!name || !email || !phone || !address || !paymentMethod || !cart || !Array.isArray(cart) || cart.length === 0) {
       return NextResponse.json(
-        { error: "Missing required fields" },
+        { error: "Missing or invalid required fields" },
         { status: 400 }
       );
     }
-    const newcheckout = new ordersModel({
+
+    const newCheckout = new ordersModel({
       name,
       email,
       phone,
       address,
       paymentMethod,
+      cart, 
     });
 
-    await newcheckout.save();
+    await newCheckout.save();
+
     return NextResponse.json(
       {
         success: true,
-        message: "Check data saved successfully",
+        message: "Checkout data saved successfully",
       },
       { status: 201 }
     );
   } catch (error) {
-    console.error("Error uploading product:", error);
+    console.error("Error saving checkout data:", error);
     return NextResponse.json(
-      { error: "Failed to upload user information" },
+      { error: "Failed to save checkout data" },
       { status: 500 }
     );
   }

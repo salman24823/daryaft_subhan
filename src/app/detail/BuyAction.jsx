@@ -1,5 +1,6 @@
 import { Button } from "@heroui/react";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const BuyAction = ({product , setVariantImage}) => {
 
@@ -7,6 +8,8 @@ const BuyAction = ({product , setVariantImage}) => {
   const [selectedColor, setSelectedColor] = useState(""); // Default color is black
   const [selectedSize, setSelectedSize] = useState("8"); // Default size is 8
   const [quantity, setQuantity] = useState(1); // Default quantity is 1
+  const [loading, setLoading] = useState(false);
+
 
   // Handle color selection
   const handleColorSelect = ({name , color , image} ) => {
@@ -55,9 +58,49 @@ const BuyAction = ({product , setVariantImage}) => {
     // Save updated cart back to localStorage
     localStorage.setItem("cart", JSON.stringify(cart));
 
-    location.replace(`/checkout?product_id=${product._id}`)
+    location.replace(`/checkout`)
   
     console.log("Updated Cart:", cart);
+  };
+
+  const handleCart = () => {
+    setLoading(true); // Set loading state to true
+  
+    const productDetails = {
+      color: selectedColor,
+      size: selectedSize,
+      quantity: quantity,
+      id: product._id,
+      thumbnail: product.thumbnail,
+      salePrice: product.salePrice,
+      name: product.name,
+    };
+  
+    console.log(productDetails, "productDetails");
+  
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  
+    const existingIndex = cart.findIndex((item) => item.id === productDetails.id);
+  
+    if (existingIndex !== -1) {
+      // If product exists, update the quantity
+      cart[existingIndex].quantity += quantity;
+      setTimeout(() => {
+        setLoading(false); // Reset loading state after 1 second
+        toast.success("Cart updated successfully!"); // Show success toast for update
+      }, 1000);
+    } else {
+      // If product does not exist, add it to the cart
+      cart.push(productDetails);
+      setTimeout(() => {
+        setLoading(false); // Reset loading state after 1 second
+        toast.success("Product added to cart!"); // Show success toast for new item
+      }, 1000);
+    }
+  
+    localStorage.setItem("cart", JSON.stringify(cart));
+  
+   
   };
 
   
@@ -114,14 +157,14 @@ const BuyAction = ({product , setVariantImage}) => {
         />
       </div>
       <div className="detail_btn w-full flex gap-4 mt-6">
-        <Button className="w-[50%] bg-[#B4531A] text-white text-lg font-bold border-none rounded-lg hover:bg-[#9C3E16] transition-all">
+        <Button isLoading={loading} onPress={handleCart} className="w-[50%] bg-[#B4531A] text-white text-lg font-bold border-none rounded-lg hover:bg-[#9C3E16] transition-all">
           Add to Cart
         </Button>
         <Button
           className="w-[50%] bg-transparent border-2 border-[#B4531A] text-[#B4531A] text-lg font-bold rounded-lg hover:bg-[#B4531A] hover:text-white transition-all"
           onPress={handleCheckout}
         >
-          Check Out
+          Buy Now
         </Button>
       </div>
     </div>

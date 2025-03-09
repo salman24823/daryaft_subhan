@@ -102,7 +102,7 @@ const Detail = () => {
                   </span>
 
                   {product.regularPrice ? (
-                    <span className="font-medium text-xl line-through text-red-600">
+                    <span className="font-medium text-3xl line-through text-red-600">
                       ${product.regularPrice}
                     </span>
                   ) : null}
