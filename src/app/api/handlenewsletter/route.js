@@ -7,7 +7,7 @@ export async function POST(req) {
     // Connect to the database
     await dbConnection();
     // Parse the request body
-    const { email } = await req.json();
+    const { email, time } = await req.json();
     if (!email) {
       return NextResponse.json(
         { error: "Missing required field" },
@@ -15,7 +15,7 @@ export async function POST(req) {
       );
     }
     // Create a new newsletter document
-    const newnewsletter = new newsletterModel({ email });
+    const newnewsletter = new newsletterModel({ email, time });
     // Save the newsletter to the database
     await newnewsletter.save();
     // Return success response

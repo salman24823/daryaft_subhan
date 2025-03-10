@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@heroui/react";
+import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
@@ -58,16 +59,21 @@ const Orders = () => {
             <TableColumn>#</TableColumn>
             <TableColumn>Name</TableColumn>
             <TableColumn>Phone</TableColumn>
-            <TableColumn>Email</TableColumn>
-            <TableColumn>Address</TableColumn>
-            <TableColumn>Payment Method</TableColumn>
+            <TableColumn>Status</TableColumn>
+            <TableColumn>Price</TableColumn>
+            <TableColumn>Date</TableColumn>
           </TableHeader>
           <TableBody>
             {orders.Orders.map((data, index) => (
               <TableRow
-                className="hover:bg-gray-100 transition-colors"
+                className="hover:bg-gray-100 transition-colors cursor-pointer"
                 key={data.index}
-                >
+                onClick={(ir) =>
+                  location.replace(
+                    `/admin/dashboard/orders/order-summary?order_id=${data?._id}`
+                  )
+                }
+              >
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{data.name}</TableCell>
                 <TableCell>{data.phone}</TableCell>

@@ -4,7 +4,15 @@ import React from "react";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LogOut, X, Box, CopyPlus, Contact, ShoppingBag, Mail  } from "lucide-react"; // Assuming you're using Lucide icons
+import {
+  LogOut,
+  X,
+  Box,
+  CopyPlus,
+  Contact,
+  ShoppingBag,
+  Mail,
+} from "lucide-react"; // Assuming you're using Lucide icons
 import { Home } from "lucide-react";
 import { Button } from "@heroui/react";
 
@@ -45,6 +53,11 @@ const Layout = ({ children }) => {
       path: "/admin/dashboard/newsletter",
       icon: <Mail className="w-5 h-5 text-gray-600" />,
     },
+    {
+      name: "Banners",
+      path: "/admin/dashboard/banners",
+      icon: <Mail className="w-5 h-5 text-gray-600" />,
+    },
   ];
 
   const logout = () => {
@@ -54,7 +67,6 @@ const Layout = ({ children }) => {
 
   return (
     <>
-
       <div className="w-full min-h-screen bg-white flex">
         {/* Sidebar */}
         {pathname !== "/panel/change-password" && (
