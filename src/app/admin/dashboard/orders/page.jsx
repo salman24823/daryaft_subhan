@@ -9,7 +9,6 @@ import {
   TableHeader,
   TableRow,
 } from "@heroui/react";
-import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
@@ -68,7 +67,7 @@ const Orders = () => {
               <TableRow
                 className="hover:bg-gray-100 transition-colors cursor-pointer"
                 key={data.index}
-                onClick={(ir) =>
+                onClick={(_id) =>
                   location.replace(
                     `/admin/dashboard/orders/order-summary?order_id=${data?._id}`
                   )
