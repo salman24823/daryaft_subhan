@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Spinner,
   Table,
@@ -10,12 +11,13 @@ import {
 } from "@heroui/react";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { format } from "date-fns";
 
 const Newsletter = () => {
-  const [email, setEmail] = useState([]);
+  const [emailData, setEmailData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  async function formData(setEmail) {
+  async function fetchData() {
     setIsLoading(true);
     try {
       const response = await fetch("/api/handlenewsletter", {
@@ -26,21 +28,22 @@ const Newsletter = () => {
       });
 
       if (!response.ok) {
-        toast.error(response.message);
-        setIsLoading(false);
+        throw new Error("Failed to fetch data.");
       }
+
       const data = await response.json();
-      console.log(data);
-      setEmail(data);
-      setIsLoading(false);
+      setEmailData(data);
     } catch (error) {
-      toast.error("Failed to show data.");
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false);
     }
   }
 
   useEffect(() => {
-    formData(setEmail);
+    fetchData();
   }, []);
+
   return (
     <div>
       {isLoading ? (
@@ -55,16 +58,22 @@ const Newsletter = () => {
           <TableHeader>
             <TableColumn>#</TableColumn>
             <TableColumn>Email</TableColumn>
+            <TableColumn>Subscribed At</TableColumn>
           </TableHeader>
 
           <TableBody emptyContent="No Email Found">
-            {email?.map((mail, index) => (
+            {emailData?.map((mail, index) => (
               <TableRow
                 className="hover:bg-gray-100 transition-colors"
-                key={mail.id}
+                key={mail._id}
               >
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{mail.email}</TableCell>
+                <TableCell>
+                  {mail.createdAt
+                    ? format(new Date(mail.createdAt), "PPpp") // Format timestamp
+                    : "N/A"}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
