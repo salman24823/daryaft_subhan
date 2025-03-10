@@ -41,6 +41,7 @@ const Orders = () => {
 
   useEffect(() => {
     fetchData(setOrders);
+    setIsLoading(true);
   }, []);
 
   return (
