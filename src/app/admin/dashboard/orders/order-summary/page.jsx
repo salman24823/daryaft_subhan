@@ -1,6 +1,13 @@
 "use client";
 
-import { Card, CardBody, CardFooter, CardHeader, Divider, Spinner } from "@heroui/react";
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Divider,
+  Spinner,
+} from "@heroui/react";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -77,6 +84,28 @@ const OrderSummary = () => {
             </p>
           </CardBody>
           <Divider />
+
+          {/* Display Cart Items */}
+          <CardBody className="flex flex-col gap-4 p-4">
+            <h2 className="text-lg md:text-xl lg:text-2xl font-bold">
+              Items Details:
+            </h2>
+            {OrderData?.cart?.length > 0 ? (
+              OrderData.cart.map((item, index) => (
+                <div key={index} className="p-3 border rounded-lg shadow-sm">
+                  <p className="text-sm md:text-base">
+                    <strong>Color:</strong> {item.color || "N/A"}
+                  </p>
+                  <p className="text-sm md:text-base">
+                    <strong>Size:</strong> {item.size || "N/A"}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p className="text-sm md:text-base">No cart items available</p>
+            )}
+          </CardBody>
+
           <CardFooter className="flex flex-col md:flex-row justify-between items-start md:items-center p-4 gap-2">
             <p className="text-sm md:text-base">
               <strong>Date:</strong>{" "}

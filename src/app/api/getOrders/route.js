@@ -14,7 +14,6 @@ export async function GET(request) {
 
     // If product_id is provided, fetch a single product by ID
     const order = await ordersModel.findById(orderId);
-
     if (!order) {
       return NextResponse.json({ error: "Order not found" }, { status: 404 });
     }
