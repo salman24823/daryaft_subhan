@@ -53,11 +53,6 @@ const Layout = ({ children }) => {
       path: "/admin/dashboard/newsletter",
       icon: <Mail className="w-5 h-5 text-gray-600" />,
     },
-    {
-      name: "Banners",
-      path: "/admin/dashboard/banners",
-      icon: <Mail className="w-5 h-5 text-gray-600" />,
-    },
   ];
 
   const logout = () => {
