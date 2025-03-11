@@ -66,7 +66,7 @@ const Featured_products = () => {
             <div
               className={`New_arrival w-full grid gap-5 justify-between grid-cols-5`}
             >
-              {products.slice(-5).map((product) => (
+              {products.slice(-10).map((product) => (
                 <Link
                   key={product._id}
                   href={`/detail?product_id=${product._id}`}

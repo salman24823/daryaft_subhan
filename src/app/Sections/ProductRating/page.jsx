@@ -121,7 +121,7 @@ export default function ProductRating() {
                   <div className="space-y-4">
                     <div className="grid gap-2">
                       <Label htmlFor="title">Review Title</Label>
-                      <Input id="title" type="text" required placeholder="Summarize your experience" value={title} onChange={(e) => setTitle(e.target.value)} required />
+                      <Input id="title" type="text" required placeholder="Summarize your experience" value={title} onChange={(e) => setTitle(e.target.value)} />
                     </div>
 
                     <div className="grid gap-2">
