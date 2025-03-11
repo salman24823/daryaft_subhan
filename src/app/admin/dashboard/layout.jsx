@@ -4,7 +4,15 @@ import React from "react";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LogOut, X, Box, CopyPlus, Contact, ShoppingBag, Mail  } from "lucide-react"; // Assuming you're using Lucide icons
+import {
+  LogOut,
+  X,
+  Box,
+  CopyPlus,
+  Contact,
+  ShoppingBag,
+  Mail,
+} from "lucide-react"; // Assuming you're using Lucide icons
 import { Home } from "lucide-react";
 import { Button } from "@heroui/react";
 
@@ -54,7 +62,6 @@ const Layout = ({ children }) => {
 
   return (
     <>
-
       <div className="w-full min-h-screen bg-white flex">
         {/* Sidebar */}
         {pathname !== "/panel/change-password" && (
