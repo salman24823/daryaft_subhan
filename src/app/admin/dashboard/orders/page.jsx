@@ -60,7 +60,7 @@ const Orders = () => {
             <TableColumn>Name</TableColumn>
             <TableColumn>Phone</TableColumn>
             <TableColumn>Status</TableColumn>
-            <TableColumn>Price</TableColumn>
+            <TableColumn>Address</TableColumn>
             <TableColumn>Date</TableColumn>
           </TableHeader>
           <TableBody>
