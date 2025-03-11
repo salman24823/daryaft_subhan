@@ -53,7 +53,7 @@ const Summary = () => {
   }
 
   return (
-    <div className="p-4">
+    <div className="w-full p-6">
       {isLoading ? (
         <div className="w-full h-screen bg-white opacity-30 flex justify-center items-center">
           <Spinner className="!text-blue-600" size="lg" color="primary" />
@@ -62,58 +62,65 @@ const Summary = () => {
           </p>
         </div>
       ) : (
-        <Card className="w-full md:w-[80%] lg:w-[70%] max-w-3xl shadow-lg">
-          <CardHeader className="p-4">
-            <h1 className="text-lg md:text-xl lg:text-2xl font-bold">
-              Shipping Details:
-            </h1>
+        <Card className="w-full shadow-lg">
+          <CardHeader className="p-6 bg-gray-100">
+            <h1 className="text-xl md:text-2xl font-bold">Shipping Details:</h1>
           </CardHeader>
-          <CardBody className="flex flex-col gap-4 p-4">
-            <p className="text-sm md:text-base">
+          <CardBody className="flex flex-col gap-4 p-6">
+            <p className="text-base">
               <strong>Name:</strong> {OrderData?.name || "N/A"}
             </p>
-            <p className="text-sm md:text-base">
+            <p className="text-base">
               <strong>Address:</strong> {OrderData?.address || "N/A"}
             </p>
-            <p className="text-sm md:text-base">
+            <p className="text-base">
               <strong>Phone:</strong> {OrderData?.phone || "N/A"}
             </p>
-            <p className="text-sm md:text-base">
-              <strong>Payment Method:</strong>{" "}
-              {OrderData?.paymentMethod || "N/A"}
+            <p className="text-base">
+              <strong>Payment Method:</strong> {OrderData?.paymentMethod || "N/A"}
             </p>
           </CardBody>
           <Divider />
 
           {/* Display Cart Items */}
-          <CardBody className="flex flex-col gap-4 p-4">
-            <h2 className="text-lg md:text-xl lg:text-2xl font-bold">
-              Items Details:
-            </h2>
+          <CardBody className="p-6">
+            <h2 className="text-xl md:text-2xl font-bold mb-4">Items Details:</h2>
             {OrderData?.cart?.length > 0 ? (
-              OrderData.cart.map((item, index) => (
-                <div key={index} className="p-3 border rounded-lg shadow-sm">
-                  <p className="text-sm md:text-base">
-                    <strong>Color:</strong> {item.color || "N/A"}
-                  </p>
-                  <p className="text-sm md:text-base">
-                    <strong>Size:</strong> {item.size || "N/A"}
-                  </p>
-                </div>
-              ))
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {OrderData.cart.map((item, index) => (
+                  <div key={index} className="p-4 border rounded-lg shadow-sm flex flex-col items-center">
+                    {item.thumbnail && (
+                      <img
+                        src={item.thumbnail}
+                        alt={item.name || "Product Image"}
+                        className="w-32 h-32 object-cover rounded mb-3"
+                      />
+                    )}
+                    <p className="text-base">
+                      <strong>Color:</strong> {item.color || "N/A"}
+                    </p>
+                    <p className="text-base">
+                      <strong>Size:</strong> {item.size || "N/A"}
+                    </p>
+                    <p className="text-base">
+                      <strong>Quantity:</strong> {item.quantity || "N/A"}
+                    </p>
+                    <p className="text-base">
+                      <strong>Price:</strong> ${item.salePrice || "N/A"}
+                    </p>
+                  </div>
+                ))}
+              </div>
             ) : (
-              <p className="text-sm md:text-base">No cart items available</p>
+              <p className="text-base">No cart items available</p>
             )}
           </CardBody>
 
-          <CardFooter className="flex flex-col md:flex-row justify-between items-start md:items-center p-4 gap-2">
-            <p className="text-sm md:text-base">
-              <strong>Date:</strong>{" "}
-              {OrderData?.createdAt
-                ? new Date(OrderData.createdAt).toLocaleDateString()
-                : "N/A"}
+          <CardFooter className="flex flex-col md:flex-row justify-between items-start md:items-center p-6 gap-4 bg-gray-100">
+            <p className="text-base">
+              <strong>Date:</strong> {OrderData?.createdAt ? new Date(OrderData.createdAt).toLocaleDateString() : "N/A"}
             </p>
-            <p className="text-sm md:text-base">
+            <p className="text-base font-bold">
               <strong>Total Price:</strong> ${OrderData?.totalPrice || "N/A"}
             </p>
           </CardFooter>
