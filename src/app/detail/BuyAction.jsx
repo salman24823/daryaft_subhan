@@ -2,19 +2,17 @@ import { Button } from "@heroui/react";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
-const BuyAction = ({product , setVariantImage}) => {
-
-      // State for selected color, size, and quantity
+const BuyAction = ({ product, setVariantImage }) => {
+  // State for selected color, size, and quantity
   const [selectedColor, setSelectedColor] = useState(""); // Default color is black
   const [selectedSize, setSelectedSize] = useState("8"); // Default size is 8
   const [quantity, setQuantity] = useState(1); // Default quantity is 1
   const [loading, setLoading] = useState(false);
 
-
   // Handle color selection
-  const handleColorSelect = ({name , color , image} ) => {
+  const handleColorSelect = ({ name, color, image }) => {
     setSelectedColor(name);
-    setVariantImage(image)
+    setVariantImage(image);
   };
 
   // Handle size selection
@@ -33,20 +31,22 @@ const BuyAction = ({product , setVariantImage}) => {
       color: selectedColor,
       size: selectedSize,
       quantity: quantity,
-      id: product._id ,
-      thumbnail : product.thumbnail,
-      salePrice : product.salePrice,
-      name : product.name,
+      id: product._id,
+      thumbnail: product.thumbnail,
+      salePrice: product.salePrice,
+      name: product.name,
     };
 
-    console.log(productDetails,"productDetails")
-  
+    console.log(productDetails, "productDetails");
+
     // Get existing cart data from localStorage
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  
+
     // Check if product already exists in the cart
-    const existingIndex = cart.findIndex((item) => item.id === productDetails.id);
-  
+    const existingIndex = cart.findIndex(
+      (item) => item.id === productDetails.id
+    );
+
     if (existingIndex !== -1) {
       // If product exists, update the quantity
       cart[existingIndex].quantity += quantity;
@@ -54,18 +54,18 @@ const BuyAction = ({product , setVariantImage}) => {
       // If product does not exist, add it to the cart
       cart.push(productDetails);
     }
-  
+
     // Save updated cart back to localStorage
     localStorage.setItem("cart", JSON.stringify(cart));
 
-    location.replace(`/checkout`)
-  
+    location.replace(`/checkout`);
+
     console.log("Updated Cart:", cart);
   };
 
   const handleCart = () => {
     setLoading(true); // Set loading state to true
-  
+
     const productDetails = {
       color: selectedColor,
       size: selectedSize,
@@ -75,13 +75,15 @@ const BuyAction = ({product , setVariantImage}) => {
       salePrice: product.salePrice,
       name: product.name,
     };
-  
+
     console.log(productDetails, "productDetails");
-  
+
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  
-    const existingIndex = cart.findIndex((item) => item.id === productDetails.id);
-  
+
+    const existingIndex = cart.findIndex(
+      (item) => item.id === productDetails.id
+    );
+
     if (existingIndex !== -1) {
       // If product exists, update the quantity
       cart[existingIndex].quantity += quantity;
@@ -97,14 +99,9 @@ const BuyAction = ({product , setVariantImage}) => {
         toast.success("Product added to cart!"); // Show success toast for new item
       }, 1000);
     }
-  
+
     localStorage.setItem("cart", JSON.stringify(cart));
-  
-   
   };
-
-  
-
 
   return (
     <div className="select_color flex flex-col gap-4">
@@ -112,23 +109,22 @@ const BuyAction = ({product , setVariantImage}) => {
         Color: <span className="text-black font-bold">{selectedColor}</span>
       </span>
       <div className="colorselector flex gap-4">
-      {product.variations.map((color, index) => (
-        <button
-          key={index}
-          className={`w-8 h-8 rounded-full focus:ring-2 focus:ring-offset-2 focus:ring-[#B4531A] ${
-            selectedColor === color.colorName ? "ring-2 ring-[#B4531A]" : ""
-          }`}
-          style={{ backgroundColor: color.colorCode }}
-          onClick={() =>
-            handleColorSelect({
-              name: color.colorName,
-              color: color.colorCode,
-              image: color.image,
-            })
-          }
-        ></button>
-      ))}
-
+        {product.variations.map((color, index) => (
+          <button
+            key={index}
+            className={`w-8 h-8 border-slate-400 border rounded-full focus:ring-2 focus:ring-offset-2 focus:ring-[#B4531A] ${
+              selectedColor === color.colorName ? "ring-2 ring-[#B4531A]" : ""
+            }`}
+            style={{ backgroundColor: color.colorCode }}
+            onClick={() =>
+              handleColorSelect({
+                name: color.colorName,
+                color: color.colorCode,
+                image: color.image,
+              })
+            }
+          ></button>
+        ))}
       </div>
       <span className="text-gray-400">
         Size: <span className="text-black font-bold">{selectedSize}</span>
@@ -157,7 +153,11 @@ const BuyAction = ({product , setVariantImage}) => {
         />
       </div>
       <div className="detail_btn w-full flex gap-4 mt-6">
-        <Button isLoading={loading} onPress={handleCart} className="w-[50%] bg-[#B4531A] text-white text-lg font-bold border-none rounded-lg hover:bg-[#9C3E16] transition-all">
+        <Button
+          isLoading={loading}
+          onPress={handleCart}
+          className="w-[50%] bg-[#B4531A] text-white text-lg font-bold border-none rounded-lg hover:bg-[#9C3E16] transition-all"
+        >
           Add to Cart
         </Button>
         <Button

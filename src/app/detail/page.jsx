@@ -38,8 +38,8 @@ const Detail = () => {
     <main className="p-[9%] w-full bg-gray-50">
       {product ? (
         <div className="detailpage grid bg-white md:grid-cols-2 grid-cols-1 w-full">
+          
           {/* Image Section */}
-
           <div className="detail_img p-[5%]">
             <div className="prod_img flex">
               <div className="w-full">

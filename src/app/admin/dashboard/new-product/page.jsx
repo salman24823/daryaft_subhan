@@ -180,7 +180,7 @@ const NewProducts = () => {
             {productData.variations.map((v, index) => (
               <div key={index} className="flex flex-col items-center">
                 <div
-                  className="w-8 h-8 rounded-full"
+                  className="w-8 shadow-sm shadow-black h-8 rounded-full"
                   style={{ backgroundColor: v.colorCode }}
                 ></div>
                 <img
