@@ -12,6 +12,7 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const productId = searchParams.get('product_id');
     const category = searchParams.get('category');
+    const collectionName = searchParams.get('collectionName');
 
     // If product_id is provided, fetch a single product by ID
     if (productId) {
@@ -31,6 +32,14 @@ export async function GET(request) {
     // If category is provided, fetch products by category
     if (category) {
       const products = await ProductModel.find({ categories: category });
+
+      // Return the products data as a JSON response
+      return NextResponse.json(products);
+    }
+
+    // If category is provided, fetch products by category
+    if (collectionName) {
+      const products = await ProductModel.find({ collectionName: collectionName });
 
       // Return the products data as a JSON response
       return NextResponse.json(products);
