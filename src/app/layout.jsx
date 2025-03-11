@@ -38,11 +38,11 @@ export default function RootLayout({ children }) {
       <body className="overflow-x-hidden">
         <HeroUIProvider>
           <div className="flex flex-col items-center">
-            {/* <Header /> */}
+            <Header />
             <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
 
             {children}
-            {/* <Footer /> */}
+            <Footer />
           </div>
         </HeroUIProvider>
         <ToastContainer />
