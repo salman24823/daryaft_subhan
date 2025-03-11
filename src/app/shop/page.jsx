@@ -12,6 +12,7 @@ import {
   RectangleVertical,
 } from "lucide-react"; // Added Grid for 5 columns
 import { FaStar } from "react-icons/fa";
+import { Spinner } from "@heroui/react";
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
@@ -80,7 +81,9 @@ const Shop = () => {
       {/* Products Section */}
       <div className="p-[5%] flex flex-col gap-12 bg-gray-50">
         {loading ? (
-          <p>Loading products...</p>
+          <div className="w-full flex justify-center py-10">
+            <Spinner />
+          </div>
         ) : (
           <div>
             {/* Breadcrumbs */}
@@ -118,16 +121,16 @@ const Shop = () => {
 
             {/* Product Grid */}
             <div
-              className={`New_arrival w-full grid gap-5 justify-between ${gridClasses[columns]}`}
+              className={`New_arrival w-full grid gap-5 items-stretch justify-between ${gridClasses[columns]}`}
             >
               {products.map((product) => (
                 <Link
                   key={product._id}
                   href={`/detail?product_id=${product._id}`}
+                  className="product_card hover:cursor-pointer"
                 >
                   <div
                     key={product._id}
-                    className="product_card hover:cursor-pointer  h-[440px]"
                   >
                     <div className="card_image h-[70%] w-full">
                       <img
@@ -171,6 +174,7 @@ const Shop = () => {
           </div>
         )}
       </div>
+      
     </div>
   );
 };

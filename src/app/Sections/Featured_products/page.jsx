@@ -68,10 +68,10 @@ const Featured_products = () => {
                 <Link
                   key={product._id}
                   href={`/detail?product_id=${product._id}`}
+                  className="product_card hover:cursor-pointer"
                 >
                   <div
                     key={product._id}
-                    className="product_card hover:cursor-pointer  h-[440px]"
                   >
                     <div className="card_image h-[70%] w-full">
                       <img
