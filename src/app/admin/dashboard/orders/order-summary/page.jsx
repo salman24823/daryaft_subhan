@@ -9,10 +9,10 @@ import {
   Spinner,
 } from "@heroui/react";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-const OrderSummary = () => {
+const Summary = () => {
   const [OrderData, setOrderData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -123,4 +123,19 @@ const OrderSummary = () => {
   );
 };
 
-export default OrderSummary;
+export default function OrderSummary() {
+  return (
+    <Suspense
+      fallback={
+        <div className="w-full h-screen flex justify-center items-center text-black ">
+          <div className="flex gap-5">
+            <Spinner size="lg" />
+            <p>Loading...</p>
+          </div>
+        </div>
+      }
+    >
+      <Summary />
+    </Suspense>
+  );
+}
