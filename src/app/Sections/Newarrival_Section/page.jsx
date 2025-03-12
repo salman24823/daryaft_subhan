@@ -59,7 +59,7 @@ const Featured_products = () => {
             <div
               className={`New_arrival w-full grid gap-5 justify-between grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-2`}
             >
-              {products.slice(-10).map((product) => (
+              {products.slice(-8).map((product) => (
                 <Link
                   key={product._id}
                   href={`/detail?product_id=${product._id}`}
@@ -109,7 +109,7 @@ const Featured_products = () => {
             </div>
           </div>
         )}
-                  <Link href={"/"} className="self-end">
+                  <Link href={"/shop?collectionName=NewArrival"} className="self-end">
                     {" "}
                     <span className="flex justify-center mt-2 items-center gap-4">
                       View All

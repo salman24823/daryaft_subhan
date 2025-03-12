@@ -107,7 +107,7 @@ const Featured_products = () => {
             </div>
           </div>
         )}
-        <Link href={"/"} className="self-end">
+        <Link href={"/shop?collectionName=Featured"} className="self-end">
             {" "}
             <span className="flex justify-center mt-2 items-center gap-4">
               View All
