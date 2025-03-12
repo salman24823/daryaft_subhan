@@ -13,6 +13,7 @@ export async function GET(request) {
     const productId = searchParams.get('product_id');
     const category = searchParams.get('category');
     const collectionName = searchParams.get('collectionName');
+    const NewArrival = searchParams.get('NewArrival');
 
     // If product_id is provided, fetch a single product by ID
     if (productId) {
@@ -44,6 +45,16 @@ export async function GET(request) {
       // Return the products data as a JSON response
       return NextResponse.json(products);
     }
+
+    // If NewArrival is provided, fetch products by category
+    if (NewArrival) {
+      const products = await ProductModel.find();
+
+      // Return the products data as a JSON response
+      return NextResponse.json(products);
+    }
+
+
 
     // If neither product_id nor category is provided, return an error
     return NextResponse.json(

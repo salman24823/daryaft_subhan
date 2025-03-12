@@ -17,17 +17,17 @@ import Category from "./Sections/Category/page";
 export default function Home() {
   return (
    <>
-   <LandingSlider />
-   <Hero />
-   <Category />
-   <Featured_products />
-   <Newarrival />
-   <Trending_items />
-   <ServiceCards />
-   {/* <Customize_Section /> */}
-   <Faqs />
-   <ContactForm />
-   <NewsLetter />
+    <LandingSlider />
+    <Hero />
+    <Category />
+    <Featured_products />
+    <Newarrival />
+    <Trending_items />
+    <ServiceCards />
+    {/* <Customize_Section /> */}
+    <Faqs />
+    <ContactForm />
+    <NewsLetter />
    </>
   );
 }
