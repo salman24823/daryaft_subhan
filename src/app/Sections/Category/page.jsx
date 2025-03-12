@@ -6,22 +6,22 @@ const Category = () => {
     const categories = [
         {
           name: "Mens",
-          href: "/category/fashion",
+          href: "/shop?category=Men",
           image: "https://shopgroove.pk/cdn/shop/products/IMG-20221128-WA0007.jpg?v=1669639961&width=600",
         },
         {
           name: "Womens",
-          href: "/category/home",
+          href: "/shop?category=Women",
          image: "https://media.istockphoto.com/id/1293292206/photo/young-beautiful-girl-in-a-white-hoodie-posing-warm-oversized-hoodie-with-an-hood-stylish.webp?a=1&b=1&s=612x612&w=0&k=20&c=AyptsSWZPenmjbLZjDVrckXcr50Yqx2ZAW3SDi3drGg=",
         },
         {
           name: "Kids",
-          href: "/category/food",
+          href: "/shop?category=Kids",
          image: "https://plus.unsplash.com/premium_photo-1681884440024-0a147c1c617a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8S2lkcyUyMEhvb2RpZXxlbnwwfHwwfHx8MA%3D%3D",
         },
         {
           name: "Babies",
-          href: "/category/electronics",
+          href: "/shop?category=Men",
          image: "https://plus.unsplash.com/premium_photo-1675030735741-8899e68f9f49?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGJhYmllcyUyMEhvb2RpZXxlbnwwfHwwfHx8MA%3D%3D",
         },
         // {

@@ -1,6 +1,7 @@
 import React from "react";
 import SideDrawer from "./Drawer";
 import { Button } from "@heroui/react";
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -8,14 +9,16 @@ const Header = () => {
 
       {/* Logo Section */}
       <div className="flex items-center">
-        <Button className="bg-transparent text-white outline-none rounded-full focus:border-0">
-          Logo
-        </Button>
+        <Link href={"/"} className="bg-transparent text-white outline-none rounded-full focus:border-0">
+          Home
+        </Link>
       </div>
 
       {/* Placeholder for Menu */}
       <div className="flex">
+        <Link href={"/"}>
         <h1 className="kalam_font text-3xl text-white">Daryaft</h1>
+        </Link>
       </div>
 
       {/* Drawer Menu */}

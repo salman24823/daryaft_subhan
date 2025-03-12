@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Breadcrumbs from "../components/Breadcrumbs/page";
+import { useSearchParams } from "next/navigation";
+
 import {
   Columns2,
   Columns3,
@@ -14,11 +16,13 @@ import {
 import { FaStar } from "react-icons/fa";
 import { Spinner } from "@heroui/react";
 
-const Shop = () => {
+const ShopContent = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [category, setCategory] = useState("Men");
+  const [category, setCategory] = useState("");
+  const [collectionName, setCollectionName] = useState("");
   const [columns, setColumns] = useState(5); // Default 5 columns
+  const searchParams = useSearchParams();
 
   // Mapping object for grid classes
   const gridClasses = {
@@ -29,33 +33,50 @@ const Shop = () => {
     5: "grid-cols-5",
   };
 
-  const getProducts = async () => {
-    setLoading(true);
-    try {
-      const url = `/api/getProduct?category=${category}`;
-      console.log("Fetching from URL:", url);
+  useEffect(() => {
+    const getProducts = async () => {
+      if (!category && !collectionName) return; // Avoid unnecessary API calls
 
-      const response = await fetch(url);
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Error response:", errorData);
-        toast.error(errorData.error || "Failed to fetch products");
-        return;
+      setLoading(true);
+      try {
+        const url = category
+          ? `/api/getProduct?category=${category}`
+          : `/api/getProduct?collectionName=${collectionName}`
+          ? `/api/getProduct?NewArrival=NewArrival`
+          : "";
+
+        const response = await fetch(url);
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("Error response:", errorData);
+          toast.error(errorData.error || "Failed to fetch products");
+          return;
+        }
+
+        const data = await response.json();
+        console.log("Fetched data:", data);
+        setProducts(data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        toast.error("An error occurred while fetching products");
+      } finally {
+        setLoading(false);
       }
+    };
 
-      const data = await response.json();
-      console.log("Fetched data:", data);
-      setProducts(data);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-      toast.error("An error occurred while fetching products");
-    } finally {
-      setLoading(false);
-    }
-  };
+    getProducts();
+  }, [category, collectionName]); // Refetch products when category or collectionName changes
 
   useEffect(() => {
-    getProducts();
+    const categoryParam = searchParams.get("category");
+    const collectionParam = searchParams.get("collectionName");
+    if (categoryParam) {
+      setCategory(categoryParam);
+      setCollectionName(""); // Reset collectionName if category exists
+    } else if (collectionParam) {
+      setCollectionName(collectionParam);
+      setCategory(""); // Reset category if collectionName exists
+    }
 
     const updateColumns = () => {
       if (window.innerWidth < 768) {
@@ -71,12 +92,32 @@ const Shop = () => {
     window.addEventListener("resize", updateColumns);
 
     return () => window.removeEventListener("resize", updateColumns);
-  }, [category]);
+  }, [searchParams]);
 
   return (
     <div className="w-full">
       {/* Banner */}
       <div className="w-full h-[80vh] bg-[url(./../../public/banner/news2.png)] bg-cover bg-no-repeat"></div>
+      <div className="flex justify-center bg-gray-100 gap-5">
+        <a
+          href={"/shop?category=Men"}
+          className="text-medium py-5 px-2 hover:bg-[#be8049] w-24 text-center hover:text-white font-semibold text-gray-700"
+        >
+          Mens
+        </a>
+        <a
+          href={"/shop?category=Women"}
+          className="text-medium py-5 px-2 hover:bg-[#be8049] w-24 text-center hover:text-white font-semibold text-gray-700"
+        >
+          Womens
+        </a>
+        <a
+          href={"/shop?category=Kids"}
+          className="text-medium py-5 px-2 hover:bg-[#be8049] w-24 text-center hover:text-white font-semibold text-gray-700"
+        >
+          Kids
+        </a>
+      </div>
 
       {/* Products Section */}
       <div className="p-[5%] flex flex-col gap-12 bg-gray-50">
@@ -120,62 +161,79 @@ const Shop = () => {
             </div>
 
             {/* Product Grid */}
-            <div
-              className={`New_arrival w-full grid gap-5 items-stretch justify-between ${gridClasses[columns]}`}
-            >
-              {products.map((product) => (
-                <Link
-                  key={product._id}
-                  href={`/detail?product_id=${product._id}`}
-                  className="product_card hover:cursor-pointer"
+            <div>
+              {products.length === 0 ? (
+                <p className="text-center">No products found.</p>
+              ) : (
+                <div
+                  className={`New_arrival w-full grid gap-5 items-stretch justify-between ${gridClasses[columns]}`}
                 >
-                  <div
-                    key={product._id}
-                  >
-                    <div className="card_image h-[70%] w-full">
-                      <img
-                        src={product.thumbnail || "/product.png"}
-                        alt={product.name}
-                        width={300}
-                        height={300}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="card_cont w-full h-auto flex flex-col justify-between p-3">
-                      <span className="text-gray-500 text-medium">
-                        {product.collectionName}
-                      </span>
-                      <strong className="text-medium text-gray-800">
-                        {product.name}
-                      </strong>
-                      <div className="flex justify-between">
-                        <div className="flex gap-3">
-                          <span className="font-bold">
-                            ${product.salePrice}
-                          </span>
-                          <span className="line-through text-red-600 font-semibold">
-                            ${product.regularPrice}
-                          </span>
+                  {products.map((product) => (
+                    <Link
+                      key={product._id}
+                      href={`/detail?product_id=${product._id}`}
+                      className="product_card hover:cursor-pointer"
+                    >
+                      <div key={product._id}>
+                        <div className="card_image h-[70%] w-full">
+                          <img
+                            src={product.thumbnail || "/product.png"}
+                            alt={product.name}
+                            width={300}
+                            height={300}
+                            className="w-full h-full object-cover"
+                          />
                         </div>
-
-                        <span className="flex items-center gap-2 text-gray-400">
-                          <FaStar className="text-yellow-500" />
-                          4.9{" "}
-                          <span className="border-gray-400 border-l-2 px-2">
-                            2278
+                        <div className="card_cont w-full h-auto flex flex-col justify-between p-3">
+                          <span className="text-gray-500 text-medium">
+                            {product.collectionName}
                           </span>
-                        </span>
+                          <strong className="text-medium text-gray-800">
+                            {product.name}
+                          </strong>
+                          <div className="flex justify-between">
+                            <div className="flex gap-3">
+                              <span className="font-bold">
+                                ${product.salePrice}
+                              </span>
+                              <span className="line-through text-red-600 font-semibold">
+                                ${product.regularPrice}
+                              </span>
+                            </div>
+
+                            <span className="flex items-center gap-2 text-gray-400">
+                              <FaStar className="text-yellow-500" />
+                              4.9{" "}
+                              <span className="border-gray-400 border-l-2 px-2">
+                                2278
+                              </span>
+                            </span>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}
       </div>
-      
     </div>
+  );
+};
+
+const Shop = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="w-full h-screen flex justify-center items-center">
+          <Spinner />
+        </div>
+      }
+    >
+      <ShopContent />
+    </Suspense>
   );
 };
 
