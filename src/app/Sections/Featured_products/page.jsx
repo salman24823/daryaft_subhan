@@ -63,7 +63,7 @@ const Featured_products = () => {
                   href={`/detail?product_id=${product._id}`}
                   className="product_card hover:cursor-pointer"
                 >
-                  <div
+                  <div className=""
                     key={product._id}
                   >
                     <div className="card_image h-[70%] w-full">
@@ -75,7 +75,7 @@ const Featured_products = () => {
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <div className="card_cont w-full h-auto flex flex-col justify-between p-3">
+                    <div className="card_cont w-full h-[7.5rem] flex flex-col justify-between p-3">
                       <div className="flex gap-3">
                       {product.categories.map((category)=> <p className="text-gray-600 text-sm font-semibold">{category}</p> )}
                       </div>

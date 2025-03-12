@@ -44,14 +44,14 @@ const Footer = () => {
             data-aos-delay="0"
           >
             <div className="logo flex gap-2 items-center">
-              <BiSolidUpArrow className="text-[2rem] text-white" />
-              <h1 className="text-2xl font-bold text-white">Alishaimpex</h1>
+              
+              <h1 className="text-2xl font-bold text-white">Daryaft</h1>
             </div>
             <div className="sin">
               <h2 className="text-transparent text-[4rem]">since 1980.</h2>
             </div>
             <span className="mt-8 text-white">
-              2025 <span className="text-white cursor-pointer">Alishaimpex.</span> All Rights reserved.
+              2025 <span className="text-white cursor-pointer">Daryaft.</span> All Rights reserved.
             </span>
           </div>
 
@@ -118,7 +118,7 @@ const Footer = () => {
             >
               <span className="text-[1.5rem] font-semibold">Email</span>
               <Link href="/">
-                <span className="font-light text-white hover:text-white">support@alishaimpex.com</span>
+                <span className="font-light text-white hover:text-white">support@daryaft.com</span>
               </Link>
             </div>
           </div>
@@ -153,7 +153,7 @@ const Footer = () => {
         <span
           className="self-center text-white text-sm"
         >
-          Copyright @ 2025 <span className="text-white cursor-pointer">Alishaimpex.</span> All Rights reserved.
+          Copyright @ 2025 <span className="text-white cursor-pointer">Daryaft.</span> All Rights reserved.
         </span>
       </footer>
     </div>
