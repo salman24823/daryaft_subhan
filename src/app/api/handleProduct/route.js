@@ -2,6 +2,9 @@ import dbConnection from "@/config/dbConnection";
 import ProductModel from "@/models/productModel";
 import { NextResponse } from "next/server";
 
+export const revalidate = 0;
+
+
 export async function GET() {
   try {
     // Connect to the database

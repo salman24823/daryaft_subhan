@@ -2,6 +2,9 @@ import dbConnection from "@/config/dbConnection";
 import newsletterModel from "@/models/newsletterModel";
 import { NextResponse } from "next/server";
 
+export const revalidate = 0;
+
+
 export async function POST(req) {
   try {
     await dbConnection();
