@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Breadcrumbs from "../components/Breadcrumbs/page";
 import { useSearchParams } from "next/navigation";
@@ -16,7 +16,7 @@ import {
 import { FaStar } from "react-icons/fa";
 import { Spinner } from "@heroui/react";
 
-const Shop = () => {
+const ShopContent = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState("");
@@ -42,7 +42,8 @@ const Shop = () => {
         const url = category
           ? `/api/getProduct?category=${category}`
           : `/api/getProduct?collectionName=${collectionName}`
-          ? `/api/getProduct?NewArrival=NewArrival` : ""
+          ? `/api/getProduct?NewArrival=NewArrival`
+          : "";
 
         const response = await fetch(url);
         if (!response.ok) {
@@ -219,6 +220,20 @@ const Shop = () => {
         )}
       </div>
     </div>
+  );
+};
+
+const Shop = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="w-full h-screen flex justify-center items-center">
+          <Spinner />
+        </div>
+      }
+    >
+      <ShopContent />
+    </Suspense>
   );
 };
 

@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default function Breadcrumbs() {
+function BreadcrumbsContent() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -51,5 +52,13 @@ export default function Breadcrumbs() {
         )}
       </ol>
     </nav>
+  );
+}
+
+export default function Breadcrumbs() {
+  return (
+    <Suspense fallback={<p>Loading breadcrumbs...</p>}>
+      <BreadcrumbsContent />
+    </Suspense>
   );
 }
