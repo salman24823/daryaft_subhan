@@ -49,6 +49,8 @@ const Products = () => {
       return;
     }
 
+
+    
     try {
       const productToUpdate = products.find((product) => product._id === id);
       const response = await fetch("/api/handleProduct", {
