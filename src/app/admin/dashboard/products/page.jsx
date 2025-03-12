@@ -13,6 +13,7 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
 const Products = () => {
+
   const [products, setProducts] = useState([]);
   const [salePrice, setSalePrice] = useState();
   const [isEditing, setIsEditing] = useState(false);
@@ -82,7 +83,6 @@ const Products = () => {
 
       toast.success("Product deleted successfully");
 
-      // Refresh product list after deletion
       getProducts();
       setIsLoading(false);
     } catch (error) {
@@ -96,6 +96,7 @@ const Products = () => {
 
   return (
     <div>
+      <button onClick={()=> console.log(products,"products") }>clg</button>
       {isLoading ? (
         <div className="w-full h-screen bg-white opacity-30 flex justify-center items-center">
           <Spinner className="!text-blue-600" size="lg" color="primary" />
@@ -107,16 +108,11 @@ const Products = () => {
         <Table className="text-nowrap">
           <TableHeader>
             <TableColumn>#</TableColumn>
+            <TableColumn>Thumbnail</TableColumn>
             <TableColumn>Name</TableColumn>
-            <TableColumn>Description</TableColumn>
             <TableColumn>Regular Price</TableColumn>
             <TableColumn>Sales Price</TableColumn>
-            <TableColumn>Stock Status</TableColumn>
             <TableColumn>Catogery</TableColumn>
-            <TableColumn>Tags</TableColumn>
-            <TableColumn>Variation</TableColumn>
-            <TableColumn>Size</TableColumn>
-            <TableColumn>Thumbnail</TableColumn>
             <TableColumn>MetaTitle</TableColumn>
             <TableColumn>MetaDescription</TableColumn>
             <TableColumn>Actions</TableColumn>
@@ -129,10 +125,12 @@ const Products = () => {
                 key={index.id}
               >
                 <TableCell>{index + 1}</TableCell>
-                <TableCell className="text-nowrap">{product.name}</TableCell>
                 <TableCell className="text-nowrap">
-                  {product.description}
+                  <div className="overflow-x-hidden w-12">
+                    <img src={product.thumbnail} className="w-10 h-10" />
+                  </div>
                 </TableCell>
+                <TableCell className="text-nowrap">{product.name}</TableCell>
                 <TableCell className="text-nowrap">
                   {isEditing === true ? (
                     <input type="text" />
@@ -155,21 +153,8 @@ const Products = () => {
                   )}
                 </TableCell>
                 <TableCell className="text-nowrap">
-                  {product.stockStatus}
-                </TableCell>
-                <TableCell className="text-nowrap">
-                  {product.category}
-                </TableCell>
-                <TableCell className="text-nowrap">{product.tags}</TableCell>
-                <TableCell className="text-nowrap">
-                  {product.variation}
-                </TableCell>
-                <TableCell className="text-nowrap">{product.sizes}</TableCell>
-                <TableCell className="text-nowrap">
-                  <div className="overflow-x-scroll w-[100px]">
-                    {product.thumbnail}
-                  </div>
-                </TableCell>
+                  {product.categories}
+                </TableCell>          
                 <TableCell className="text-nowrap">
                   {isEditing === true ? (
                     <input type="text" />

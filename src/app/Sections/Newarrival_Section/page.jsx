@@ -47,13 +47,6 @@ const Featured_products = () => {
       <div className="p-[5%] flex flex-col items-center gap-12 bg-gray-50">
         <div className="text-center">
           <h2 className="heading--primary">New Arrival Stock</h2>
-          <Link href={"/"} className="self-center">
-            {" "}
-            <span className="flex justify-center mt-2 items-center gap-4">
-              View All
-              <FaArrowRight />
-            </span>
-          </Link>
         </div>
 
         {loading ? (
@@ -64,7 +57,7 @@ const Featured_products = () => {
           <div>
             {/* Product Grid */}
             <div
-              className={`New_arrival w-full grid gap-5 justify-between grid-cols-5`}
+              className={`New_arrival w-full grid gap-5 justify-between grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-2`}
             >
               {products.slice(-10).map((product) => (
                 <Link
@@ -85,9 +78,9 @@ const Featured_products = () => {
                       />
                     </div>
                     <div className="card_cont w-full h-auto flex flex-col justify-between p-3">
-                      <span className="text-gray-500 text-medium">
-                        {product.collectionName}
-                      </span>
+                    <div className="flex gap-3">
+                      {product.categories.map((category)=> <p className="text-gray-600 text-sm font-semibold">{category}</p> )}
+                      </div>
                       <strong className="text-medium text-gray-800">
                         {product.name}
                       </strong>
@@ -116,6 +109,13 @@ const Featured_products = () => {
             </div>
           </div>
         )}
+                  <Link href={"/"} className="self-end">
+                    {" "}
+                    <span className="flex justify-center mt-2 items-center gap-4">
+                      View All
+                      <FaArrowRight />
+                    </span>
+                  </Link>
       </div>
     </section>
   );

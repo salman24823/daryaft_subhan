@@ -77,6 +77,11 @@ const Shop = () => {
     <div className="w-full">
       {/* Banner */}
       <div className="w-full h-[80vh] bg-[url(./../../public/banner/news2.png)] bg-cover bg-no-repeat"></div>
+      <div className="flex justify-center bg-gray-100 gap-5">
+        <p className="text-medium py-5 px-2 hover:bg-[#be8049] w-24 text-center hover:text-white font-semibold text-gray-700">Men</p>
+        <p className="text-medium py-5 px-2 hover:bg-[#be8049] w-24 text-center hover:text-white font-semibold text-gray-700">Women</p>
+        <p className="text-medium py-5 px-2 hover:bg-[#be8049] w-24 text-center hover:text-white font-semibold text-gray-700">Children</p>
+      </div>
 
       {/* Products Section */}
       <div className="p-[5%] flex flex-col gap-12 bg-gray-50">
