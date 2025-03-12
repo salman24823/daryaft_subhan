@@ -41,9 +41,8 @@ const Shop = () => {
       try {
         const url = category
           ? `/api/getProduct?category=${category}`
-          : `/api/getProduct?collectionName=${collectionName}`;
-
-        console.log("Fetching from URL:", url);
+          : `/api/getProduct?collectionName=${collectionName}`
+          ? `/api/getProduct?NewArrival=NewArrival` : ""
 
         const response = await fetch(url);
         if (!response.ok) {
