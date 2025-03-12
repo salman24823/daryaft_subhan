@@ -14,6 +14,12 @@
 }
 /* product page */
 
+.admin-page .site-header,
+.admin-page .site-footer {
+  display: none;
+}
+
+
 .product_page {
   background-image: url(./../../public/product/bg.png);
 }

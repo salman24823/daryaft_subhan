@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <div className="flex justify-between items-center w-[90%] py-2 rounded-full z-50 fixed top-2">
+    <div  className="site-header flex justify-between items-center w-[90%] py-2 rounded-full z-50 fixed top-2">
 
       {/* Logo Section */}
       <div className="flex items-center">

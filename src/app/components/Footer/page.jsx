@@ -34,7 +34,7 @@ const Footer = () => {
   ];
 
   return (
-    <div className="w-full relative bg-[#a16c3d] overflow-hidden text-white">
+    <div className="site-footer w-full relative bg-[#a16c3d] overflow-hidden text-white">
       <footer className="flex flex-col gap-6 p-[5%]">
         <div className="ft_cont grid grid-cols-[1.5fr,1fr,1fr,1fr] py-[3%] gap-6">
 
