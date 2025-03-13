@@ -11,6 +11,8 @@ import ProductRating from "../Sections/ProductRating/page";
 const Detail = () => {
   const [product, setProduct] = useState();
 
+  const [images, setImages] = useState([]);
+
   const [variantImmage, setVariantImage] = useState();
 
   const searchParams = useSearchParams();
@@ -30,6 +32,10 @@ const Detail = () => {
       const response = await fetch(`/api/getProduct?product_id=${productId}`);
       const data = await response.json();
       setProduct(data);
+      setImages([
+        data.thumbnail,
+        ...data.variations.map((variation) => variation.image),
+      ]);
     } catch (error) {
       console.error(error);
     }
@@ -46,8 +52,19 @@ const Detail = () => {
                 <img
                   src={variantImmage ? variantImmage : product.thumbnail}
                   alt="Product Image"
+                  onClick={() => console.log(images, "product")}
                   className="w-[90%] rounded-lg"
                 />
+              <div>
+                  {images.map((img, index) => (
+                    <img
+                      key={index}
+                      src={img}
+                      alt={`Product Image ${index}`}
+                      width={100}
+                    />
+                  ))}
+                </div>
               </div>
               <div className="image_ico w-[10%] flex flex-col justify-between items-center">
                 <div className="flex flex-col gap-2">
