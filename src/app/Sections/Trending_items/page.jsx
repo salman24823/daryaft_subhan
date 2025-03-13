@@ -39,6 +39,8 @@ const Featured_products = () => {
 
   return (
     <section className="w-full">
+      <div className='w-full h-[80vh] bg-[url(./../../public/banner/news2.png)] bg-cover bg-no-repeat'> 
+      </div>
       <div className="p-[5%] flex flex-col items-center gap-12 bg-gray-50">
         <div className="text-center">
           <h2 className="heading--primary">Trending Products</h2>
