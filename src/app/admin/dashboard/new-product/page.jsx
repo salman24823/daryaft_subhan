@@ -9,7 +9,7 @@ import { ChevronDown } from "lucide-react";
 
 const NewProducts = () => {
 
-  const [ collectionName , setCollectionName ] = useState("Featured")
+  const [ collectionName , setCollectionName ] = useState("")
   const categoryOptions = ["Men", "Women", "Kids", "Accessories"];
 
 
@@ -20,7 +20,7 @@ const NewProducts = () => {
     salePrice: "",
     stockStatus: "instock",
     categories: [],
-    collectionName: collectionName,
+    collectionName,
     tags: [],
     variations: [],
     sizes: [], // New field for sizes
@@ -29,6 +29,13 @@ const NewProducts = () => {
     metaTitle: "",
     metaDescription: "",
   });
+
+  const handleCollectionChange = (option) => {
+    setProductData((prev) => ({
+      ...prev,
+      collectionName: option, // Update the correct property in state
+    }));
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -95,8 +102,11 @@ const NewProducts = () => {
   return (
     <div className="grid grid-cols-10 gap-4">
 
+      <button onClick={()=> console.log(productData,collectionName,"productData") }>onclick</button>
+
       {/* Left Column */}
       <div className="col-span-7 bg-white p-6 rounded-lg shadow-sm">
+
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Add New Product
@@ -401,32 +411,25 @@ const NewProducts = () => {
 
         </div>
 
-        {/* Collection Name */}
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Collection Name
           </label>
           <Dropdown placement="bottom-start">
-              <DropdownTrigger>
-                <Button
-                  variant="bordered"
-                  className="w-full flex justify-between"
-                >
-                  {collectionName}
-                  <ChevronDown className="text-gray-500" />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                {["Featured", "Trending"].map((option) => (
-                  <DropdownItem
-                    key={option}
-                    onPress={() => setCollectionName(option)}
-                  >
-                    {option}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
+            <DropdownTrigger>
+              <Button variant="bordered" className="w-full flex justify-between">
+                {productData.collectionName || "Select Collection"}
+                <ChevronDown className="text-gray-500" />
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu>
+              {["Featured", "Trending"].map((option) => (
+                <DropdownItem key={option} onPress={() => handleCollectionChange(option)}>
+                  {option}
+                </DropdownItem>
+              ))}
+            </DropdownMenu>
+          </Dropdown>
         </div>
 
       </div>
