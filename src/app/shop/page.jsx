@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import React, { Suspense, useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import Breadcrumbs from "../components/Breadcrumbs/page";
 import { useSearchParams } from "next/navigation";
 
@@ -58,7 +57,6 @@ const ShopContent = () => {
         setProducts(data);
       } catch (error) {
         console.error("Error fetching products:", error);
-        toast.error("An error occurred while fetching products");
       } finally {
         setLoading(false);
       }
