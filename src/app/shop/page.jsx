@@ -191,7 +191,7 @@ const ShopContent = () => {
                         </div>
                         <div className="card_cont w-full h-[7.5rem] flex flex-col justify-between p-3">
                           <span className="text-gray-500 text-medium">
-                            {product.collectionName}
+                          {product.categories.map((category)=> <p className="text-gray-600 text-sm font-semibold">{category}</p> )}
                           </span>
                           <strong className="text-medium text-gray-800">
                             {product.name}
