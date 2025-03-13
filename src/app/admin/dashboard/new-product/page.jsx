@@ -102,8 +102,6 @@ const NewProducts = () => {
   return (
     <div className="grid grid-cols-10 gap-4">
 
-      <button onClick={()=> console.log(productData,collectionName,"productData") }>onclick</button>
-
       {/* Left Column */}
       <div className="col-span-7 bg-white p-6 rounded-lg shadow-sm">
 
