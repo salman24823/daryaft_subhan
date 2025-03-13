@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
-import { toast } from "react-toastify";
 import { FaStar } from "react-icons/fa";
 import { Spinner } from "@heroui/react";
 const Featured_products = () => {
@@ -21,7 +20,6 @@ const Featured_products = () => {
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Error response:", errorData);
-        toast.error(errorData.error || "Failed to fetch products");
         return;
       }
 
@@ -30,7 +28,6 @@ const Featured_products = () => {
       setProducts(data);
     } catch (error) {
       console.error("Error fetching products:", error);
-      toast.error("An error occurred while fetching products");
     } finally {
       setLoading(false);
     }
