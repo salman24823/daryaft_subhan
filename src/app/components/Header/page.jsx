@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import SideDrawer from "./Drawer";
 import { Button } from "@heroui/react";
 import Link from "next/link";
+import Cart from "./Cart";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -29,9 +30,7 @@ const Header = () => {
     >
       {/* Logo Section */}
       <div className="flex px-6 items-center">
-        <Link href={"/"} className="bg-transparent text-white outline-none rounded-full focus:border-0">
-          Home
-        </Link>
+        <SideDrawer />
       </div>
 
       {/* Placeholder for Menu */}
@@ -43,7 +42,7 @@ const Header = () => {
 
       {/* Drawer Menu */}
       <div>
-        <SideDrawer />
+        <Cart />
       </div>
     </div>
   );
