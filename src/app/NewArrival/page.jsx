@@ -19,8 +19,6 @@ import { Spinner } from "@heroui/react";
 const ShopContent = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [category, setCategory] = useState("");
-  const [collectionName, setCollectionName] = useState("");
   const [columns, setColumns] = useState(5); // Default 5 columns
   const searchParams = useSearchParams();
 
@@ -38,15 +36,8 @@ const ShopContent = () => {
 
       setLoading(true);
       try {
-        let url = ""
 
-        if(category){
-          url = `/api/getProduct?category=${category}`
-        } else if(collectionName){
-          url = `/api/getProduct?collectionName=${collectionName}`
-        }
-
-        const response = await fetch(url);
+        const response = await fetch("/api/newArrival");
         if (!response.ok) {
           const errorData = await response.json();
           console.error("Error response:", errorData);
@@ -66,18 +57,10 @@ const ShopContent = () => {
     };
 
     getProducts();
-  }, [category, collectionName]); // Refetch products when category or collectionName changes
+  }, []); // Refetch products when category or collectionName changes
 
   useEffect(() => {
-    const categoryParam = searchParams.get("category");
-    const collectionParam = searchParams.get("collectionName");
-    if (categoryParam) {
-      setCategory(categoryParam);
-      setCollectionName(""); // Reset collectionName if category exists
-    } else if (collectionParam) {
-      setCollectionName(collectionParam);
-      setCategory(""); // Reset category if collectionName exists
-    } 
+
 
     const updateColumns = () => {
       if (window.innerWidth < 768) {
