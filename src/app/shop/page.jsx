@@ -189,7 +189,7 @@ const ShopContent = () => {
                             className="w-full h-full object-cover img_show"
                           />
                         </div>
-                        <div className="card_cont w-full h-auto flex flex-col justify-between p-3">
+                        <div className="card_cont w-full h-[7.5rem] flex flex-col justify-between p-3">
                           <span className="text-gray-500 text-medium">
                             {product.collectionName}
                           </span>
