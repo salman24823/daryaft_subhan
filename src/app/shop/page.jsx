@@ -173,20 +173,20 @@ const ShopContent = () => {
                       className="product_card hover:cursor-pointer"
                     >
                       <div key={product._id}>
-                        <div className="card_image h-[70%] w-full">
+                        <div className="card_image h-[70%] w-full relative">
                           <img
                             src={product.thumbnail || "/product.png"}
                             alt={product.name}
                             width={300}
                             height={300}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover img_hide  absolute"
                           />
                           <img
                             src={product.hoverImage || "/product.png"}
                             alt={product.name}
                             width={300}
                             height={300}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover img_show"
                           />
                         </div>
                         <div className="card_cont w-full h-auto flex flex-col justify-between p-3">
