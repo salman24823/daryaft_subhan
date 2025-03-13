@@ -25,6 +25,7 @@ const NewProducts = () => {
     variations: [],
     sizes: [], // New field for sizes
     thumbnail: null,
+    hoverImage : null,
     metaTitle: "",
     metaDescription: "",
   });
@@ -253,6 +254,66 @@ const NewProducts = () => {
             ))}
           </div>
         </div>
+
+        {/* Add Tags Section */}
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Add Tags
+          </label>
+          <input
+            type="text"
+            onKeyDown={addTag}
+            className="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="e.g., Summer, Casual, Cotton"
+          />
+          <div className="mt-2 flex flex-wrap gap-2">
+            {productData.tags.map((tag, index) => (
+              <div
+                key={index}
+                className="flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full text-sm"
+              >
+                <span>{tag}</span>
+                <button
+                  onClick={() => removeTag(index)}
+                  className="text-xs text-red-500"
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Meta Title */}
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Meta Title
+          </label>
+          <input
+            type="text"
+            name="metaTitle"
+            value={productData.metaTitle}
+            onChange={handleInputChange}
+            className="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="e.g., Men's Cotton T-Shirt - Summer Collection"
+          />
+        </div>
+
+        {/* Meta Description */}
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Meta Description
+          </label>
+          <textarea
+            name="metaDescription"
+            value={productData.metaDescription}
+            onChange={handleInputChange}
+            className="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="e.g., Shop the latest Men's Cotton T-Shirt from our Summer Collection. Soft, breathable, and stylish."
+            rows="3"
+          ></textarea>
+        </div>
+
       </div>
 
       {/* Right Column */}
@@ -299,42 +360,48 @@ const NewProducts = () => {
             )}
           </CldUploadWidget>
 
-
-
-
-
-
         </div>
 
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Add Tags
+            Product hover Image
           </label>
-          <input
-            type="text"
-            onKeyDown={addTag}
-            className="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="e.g., Summer, Casual, Cotton"
-          />
-          <div className="mt-2 flex flex-wrap gap-2">
-            {productData.tags.map((tag, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full text-sm"
+
+          {productData.hoverImage ? (
+            <img
+              src={productData.hoverImage}
+              alt="Product hoverImage"
+              className="w-full mt-2 rounded-lg"
+            />
+          ) : (
+            <div className="w-full h-40 bg-gray-100 mt-2 rounded-lg flex items-center justify-center text-gray-400">
+              hoverImage Preview
+            </div>
+          )}
+
+          <CldUploadWidget
+            uploadPreset="ml_default"
+            options={{ sources: ["local", "url"] }}
+            onSuccess={(result) =>
+              setProductData((prevData) => ({
+                ...prevData,
+                hoverImage: result.info.secure_url,
+              }))
+            }
+          >
+            {({ open }) => (
+              <button
+                className="text-white mt-2 font-semibold text-sm rounded-lg px-4 py-2 bg-blue-500"
+                onClick={() => open()}
               >
-                <span>{tag}</span>
-                <button
-                  onClick={() => removeTag(index)}
-                  className="text-xs text-red-500"
-                >
-                  ×
-                </button>
-              </div>
-            ))}
-          </div>
+                Upload Image
+              </button>
+            )}
+          </CldUploadWidget>
+
         </div>
 
-        {/* Meta Title */}
+        {/* Collection Name */}
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Collection Name
@@ -362,36 +429,6 @@ const NewProducts = () => {
             </Dropdown>
         </div>
 
-
-        {/* Meta Title */}
-        <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Meta Title
-          </label>
-          <input
-            type="text"
-            name="metaTitle"
-            value={productData.metaTitle}
-            onChange={handleInputChange}
-            className="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="e.g., Men's Cotton T-Shirt - Summer Collection"
-          />
-        </div>
-
-        {/* Meta Description */}
-        <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Meta Description
-          </label>
-          <textarea
-            name="metaDescription"
-            value={productData.metaDescription}
-            onChange={handleInputChange}
-            className="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="e.g., Shop the latest Men's Cotton T-Shirt from our Summer Collection. Soft, breathable, and stylish."
-            rows="3"
-          ></textarea>
-        </div>
       </div>
 
     </div>

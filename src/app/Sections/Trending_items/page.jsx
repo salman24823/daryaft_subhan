@@ -70,6 +70,13 @@ const Featured_products = () => {
                           height={300}
                           className="w-full h-full object-cover"
                         />
+                                  <img
+                            src={product.hoverImage || "/product.png"}
+                            alt={product.name}
+                            width={300}
+                            height={300}
+                            className="w-full h-full object-cover"
+                          />
                       </div>
                       <div className="card_cont w-full h-auto flex flex-col justify-between p-3">
                       <div className="flex gap-3">
