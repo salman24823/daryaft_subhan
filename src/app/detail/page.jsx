@@ -184,7 +184,7 @@ const Detail = () => {
           </div>
         </div>
       )}
-      <ProductRating />
+      <ProductRating productId={product?._id} />
     </main>
   );
 };
