@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import ReviewModel from "@/models/ReviewModel"; // Ensure this is the correct path
 import dbConnection from "@/config/dbConnection";
+import ReviewModel from "@/models/reviewModel";
 
 export const revalidate = 0; // Revalidate the data every 0 minutes
 

@@ -1,14 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { CldUploadWidget } from "next-cloudinary";
 import MDEditor from "@uiw/react-md-editor";
 import ActionButton from "./ActionButton";
-import { Button, Checkbox, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@heroui/react";
+import { Button, Checkbox, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Spinner } from "@heroui/react";
 import { ChevronDown } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
-const NewProducts = () => {
+const Products = () => {
 
     // get product id from url
   const searchParams = useSearchParams();
@@ -35,8 +35,6 @@ const NewProducts = () => {
   });
 
   useEffect(()=> {
-
-
 
     async function getProduct(){
         const response = await fetch(`/api/getProduct?product_id=${product_id}`)
@@ -460,4 +458,19 @@ const NewProducts = () => {
   );
 };
 
-export default NewProducts;
+export default function NewProducts() {
+  return (
+    <Suspense
+      fallback={
+        <div className="w-full h-screen flex justify-center items-center text-black ">
+          <div className="flex gap-5">
+            <Spinner size="lg" />
+            <p>Loading...</p>
+          </div>
+        </div>
+      }
+    >
+      <Products />
+    </Suspense>
+  );
+}
