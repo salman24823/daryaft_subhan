@@ -184,10 +184,10 @@ const Products = () => {
                 <TableCell className="text-nowrap">
                   <div className="flex gap-2">
                     <button
-                      className="bg-red-400 texxt-white w-6 h-6 p-2 rounded-lg text-gray-600"
+                      className="bg-red-400 text-white p-2 rounded-lg"
                       onClick={() => deleteProduct(product._id)}
                     >
-                      <Trash2 />
+                      <Trash2 className="text-white w-6 h-6" />
                     </button>
                   </div>
                 </TableCell>
