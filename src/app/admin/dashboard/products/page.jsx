@@ -127,8 +127,6 @@ const Products = () => {
             <TableColumn>Regular Price</TableColumn>
             <TableColumn>Sales Price</TableColumn>
             <TableColumn>Category</TableColumn>
-            <TableColumn>MetaTitle</TableColumn>
-            <TableColumn>MetaDescription</TableColumn>
             <TableColumn>Actions</TableColumn>
           </TableHeader>
 
@@ -140,12 +138,15 @@ const Products = () => {
                 onClick={()=> location.replace(`/admin/dashboard/products/edit?product_id=${product._id}`) }
               >
                 <TableCell>{index + 1}</TableCell>
+
                 <TableCell className="text-nowrap">
                   <div className="overflow-x-hidden w-12">
                     <img src={product.thumbnail} className="w-10 h-10" alt="thumbnail" />
                   </div>
                 </TableCell>
+
                 <TableCell className="text-nowrap">{product.name}</TableCell>
+
                 <TableCell className="text-nowrap">
                   {editingRow[product._id] ? (
                     <input
@@ -160,6 +161,7 @@ const Products = () => {
                     <p>{product.regularPrice}</p>
                   )}
                 </TableCell>
+
                 <TableCell className="text-nowrap">
                   {editingRow[product._id] ? (
                     <input
@@ -174,45 +176,13 @@ const Products = () => {
                     <p>{product.salePrice}</p>
                   )}
                 </TableCell>
+
                 <TableCell className="text-nowrap">
                   {product.categories}
                 </TableCell>
-                <TableCell className="text-nowrap">
-                  {editingRow[product._id] ? (
-                    <input
-                      type="text"
-                      className="px-2 py-1 border-gray-500 border rounded-md"
-                      value={product.metaTitle}
-                      onChange={(e) =>
-                        handleInputChange(product._id, "metaTitle", e.target.value)
-                      }
-                    />
-                  ) : (
-                    <p>{product.metaTitle}</p>
-                  )}
-                </TableCell>
-                <TableCell className="text-nowrap">
-                  {editingRow[product._id] ? (
-                    <input
-                      type="text"
-                      className="px-2 py-1 border-gray-500 border rounded-md"
-                      value={product.metaDescription}
-                      onChange={(e) =>
-                        handleInputChange(product._id, "metaDescription", e.target.value)
-                      }
-                    />
-                  ) : (
-                    <p>{product.metaDescription}</p>
-                  )}
-                </TableCell>
+
                 <TableCell className="text-nowrap">
                   <div className="flex gap-2">
-                    <button
-                      onClick={() => editProduct(product._id)}
-                      className="text-gray-600 p-2 bg-yellow-400 rounded-lg"
-                    >
-                      {editingRow[product._id] ? <Check /> : <Pencil />}
-                    </button>
                     <button
                       className="bg-red-400 p-2 rounded-lg text-gray-600"
                       onClick={() => deleteProduct(product._id)}
@@ -221,6 +191,7 @@ const Products = () => {
                     </button>
                   </div>
                 </TableCell>
+
               </TableRow>
             ))}
           </TableBody>
