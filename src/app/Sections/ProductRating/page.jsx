@@ -27,7 +27,7 @@ export default function ProductRating({ productId }) {
 
   const [submitted, setSubmitted] = useState(false);
 
-  const [averageRating, setAverageRating] = useState(4.2);
+  const [averageRating, setAverageRating] = useState(0);
   const [totalRatings, setTotalRatings] = useState("Loading ");
 
   const handleRatingSubmit = async () => {

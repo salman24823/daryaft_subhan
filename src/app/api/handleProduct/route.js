@@ -64,16 +64,15 @@ export async function POST(req) {
     );
   }
 }
-
 export async function PUT(req) {
   try {
     // Connect to the database
     await dbConnection();
 
     // Parse request body
-    const { salePrice, id } = await req.json();
+    const { productData, product_id } = await req.json();
 
-    if (!id || !salePrice) {
+    if (!productData || !product_id) {
       return new NextResponse(
         JSON.stringify({ error: "Missing required fields" }),
         { status: 400 }
@@ -82,8 +81,8 @@ export async function PUT(req) {
 
     // Find and update the product
     const updatedProduct = await ProductModel.findByIdAndUpdate(
-      id,
-      { salePrice },
+      product_id,
+      { $set: productData }, // Properly updating fields
       { new: true }
     );
 
@@ -95,9 +94,10 @@ export async function PUT(req) {
     }
 
     return new NextResponse(
-      JSON.stringify({ success: true, product: updatedProduct }),
+      JSON.stringify({ message: "Product updated successfully", updatedProduct }),
       { status: 200 }
     );
+
   } catch (error) {
     console.error("Error updating product:", error);
     return new NextResponse(
@@ -106,7 +106,6 @@ export async function PUT(req) {
     );
   }
 }
-
 
 
 export async function DELETE(req) {

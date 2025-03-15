@@ -135,8 +135,9 @@ const Products = () => {
           <TableBody emptyContent="No Product Found">
             {products.map((product, index) => (
               <TableRow
-                className="hover:bg-gray-100 transition-colors"
+                className="hover:bg-gray-100 hover:cursor-pointer transition-colors"
                 key={product._id}
+                onClick={()=> location.replace(`/admin/dashboard/products/edit?product_id=${product._id}`) }
               >
                 <TableCell>{index + 1}</TableCell>
                 <TableCell className="text-nowrap">
