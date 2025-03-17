@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import React, { Suspense, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import Breadcrumbs from "../components/Breadcrumbs/page";
 import { useSearchParams } from "next/navigation";
 
@@ -18,8 +19,6 @@ import { Spinner } from "@heroui/react";
 const ShopContent = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [category, setCategory] = useState("");
-  const [collectionName, setCollectionName] = useState("");
   const [columns, setColumns] = useState(5); // Default 5 columns
   const searchParams = useSearchParams();
 
@@ -37,18 +36,12 @@ const ShopContent = () => {
 
       setLoading(true);
       try {
-        let url = ""
 
-        if(category){
-          url = `/api/getProduct?category=${category}`
-        } else if(collectionName){
-          url = `/api/getProduct?collectionName=${collectionName}`
-        }
-
-        const response = await fetch(url);
+        const response = await fetch("/api/newArrival");
         if (!response.ok) {
           const errorData = await response.json();
           console.error("Error response:", errorData);
+          toast.error(errorData.error || "Failed to fetch products");
           return;
         }
 
@@ -57,24 +50,17 @@ const ShopContent = () => {
         setProducts(data);
       } catch (error) {
         console.error("Error fetching products:", error);
+        toast.error("An error occurred while fetching products");
       } finally {
         setLoading(false);
       }
     };
 
     getProducts();
-  }, [category, collectionName]); // Refetch products when category or collectionName changes
+  }, []); // Refetch products when category or collectionName changes
 
   useEffect(() => {
-    const categoryParam = searchParams.get("category");
-    const collectionParam = searchParams.get("collectionName");
-    if (categoryParam) {
-      setCategory(categoryParam);
-      setCollectionName(""); // Reset collectionName if category exists
-    } else if (collectionParam) {
-      setCollectionName(collectionParam);
-      setCategory(""); // Reset category if collectionName exists
-    } 
+
 
     const updateColumns = () => {
       if (window.innerWidth < 768) {
@@ -179,7 +165,7 @@ const ShopContent = () => {
                             alt={product.name}
                             width={300}
                             height={300}
-                            className="w-full h-full object-cover img_hide  absolute"
+                            className="w-full h-full object-cover img_hide absolute"
                           />
                           <img
                             src={product.hoverImage || "/product.png"}
@@ -189,9 +175,11 @@ const ShopContent = () => {
                             className="w-full h-full object-cover img_show"
                           />
                         </div>
+                      
                         <div className="card_cont w-full h-[7.5rem] flex flex-col justify-between p-3">
-                          <span className="text-gray-500 text-medium">
+                          <span className="">
                           {product.categories.map((category)=> <p className="text-gray-600 text-sm font-semibold">{category}</p> )}
+
                           </span>
                           <strong className="text-medium text-gray-800">
                             {product.name}

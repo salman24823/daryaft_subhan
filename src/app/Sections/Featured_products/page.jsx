@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
-import { toast } from "react-toastify";
 import { FaStar } from "react-icons/fa";
 import { Spinner } from "@heroui/react";
 const Featured_products = () => {
@@ -21,7 +20,6 @@ const Featured_products = () => {
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Error response:", errorData);
-        toast.error(errorData.error || "Failed to fetch products");
         return;
       }
 
@@ -30,7 +28,6 @@ const Featured_products = () => {
       setProducts(data);
     } catch (error) {
       console.error("Error fetching products:", error);
-      toast.error("An error occurred while fetching products");
     } finally {
       setLoading(false);
     }
@@ -63,19 +60,26 @@ const Featured_products = () => {
                   href={`/detail?product_id=${product._id}`}
                   className="product_card hover:cursor-pointer"
                 >
-                  <div
+                  <div className=""
                     key={product._id}
                   >
-                    <div className="card_image h-[70%] w-full">
+                    <div className="card_image h-[70%] w-full relative">
                       <img
                         src={product.thumbnail || "/product.png"}
                         alt={product.name}
                         width={300}
                         height={300}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover img_hide absolute"
+                      />
+                      <img
+                        src={product.hoverImage || "/product.png"}
+                        alt={product.name}
+                        width={300}
+                        height={300}
+                        className="w-full h-full object-cover img_show "
                       />
                     </div>
-                    <div className="card_cont w-full h-auto flex flex-col justify-between p-3">
+                    <div className="card_cont w-full h-[7.5rem] flex flex-col justify-between p-3">
                       <div className="flex gap-3">
                       {product.categories.map((category)=> <p className="text-gray-600 text-sm font-semibold">{category}</p> )}
                       </div>

@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
-import { toast } from "react-toastify";
 import { FaStar } from "react-icons/fa";
 import { Spinner } from "@heroui/react";
 const Featured_products = () => {
@@ -21,7 +20,6 @@ const Featured_products = () => {
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Error response:", errorData);
-        toast.error(errorData.error || "Failed to fetch products");
         return;
       }
 
@@ -30,7 +28,6 @@ const Featured_products = () => {
       setProducts(data);
     } catch (error) {
       console.error("Error fetching products:", error);
-      toast.error("An error occurred while fetching products");
     } finally {
       setLoading(false);
     }
@@ -42,10 +39,11 @@ const Featured_products = () => {
 
   return (
     <section className="w-full">
+      <div className='w-full h-[80vh] bg-[url(./../../public/banner/news2.png)] bg-cover bg-no-repeat'> 
+      </div>
       <div className="p-[5%] flex flex-col items-center gap-12 bg-gray-50">
         <div className="text-center">
           <h2 className="heading--primary">Trending Products</h2>
-
         </div>
 
         {loading ? (
@@ -66,14 +64,21 @@ const Featured_products = () => {
                     className="product_card hover:cursor-pointer"
                   >
                     <div key={product._id}>
-                      <div className="card_image h-[70%] w-full">
+                      <div className="card_image h-[70%] w-full relative">
                         <img
                           src={product.thumbnail || "/product.png"}
                           alt={product.name}
                           width={300}
                           height={300}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover absolute img_hide"
                         />
+                                  <img
+                            src={product.hoverImage || "/product.png"}
+                            alt={product.name}
+                            width={300}
+                            height={300}
+                            className="w-full h-full object-cover img_show"
+                          />
                       </div>
                       <div className="card_cont w-full h-auto flex flex-col justify-between p-3">
                       <div className="flex gap-3">

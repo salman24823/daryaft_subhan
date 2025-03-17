@@ -65,19 +65,26 @@ const Featured_products = () => {
                   href={`/detail?product_id=${product._id}`}
                   className="product_card hover:cursor-pointer"
                 >
-                  <div
+                  <div className=""
                     key={product._id}
                   >
-                    <div className="card_image h-[70%] w-full">
+                    <div className="card_image h-[70%] w-full relative">
                       <img
                         src={product.thumbnail || "/product.png"}
                         alt={product.name}
                         width={300}
                         height={300}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover img_hide absolute"
                       />
+                                <img
+                            src={product.hoverImage || "/product.png"}
+                            alt={product.name}
+                            width={300}
+                            height={300}
+                            className="w-full h-full object-cover img_show"
+                          />
                     </div>
-                    <div className="card_cont w-full h-auto flex flex-col justify-between p-3">
+                    <div className="card_cont w-full h-[7.5rem] flex flex-col justify-between p-3">
                     <div className="flex gap-3">
                       {product.categories.map((category)=> <p className="text-gray-600 text-sm font-semibold">{category}</p> )}
                       </div>
@@ -109,7 +116,7 @@ const Featured_products = () => {
             </div>
           </div>
         )}
-                  <Link href={"/shop?collectionName=NewArrival"} className="self-end">
+                  <Link href={"/NewArrival"} className="self-end">
                     {" "}
                     <span className="flex justify-center mt-2 items-center gap-4">
                       View All

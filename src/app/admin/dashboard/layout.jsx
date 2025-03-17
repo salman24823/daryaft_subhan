@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -18,6 +18,15 @@ import { Button } from "@heroui/react";
 
 const Layout = ({ children }) => {
   const pathname = usePathname();
+  const isAdmin = pathname.includes("admin"); // Check if the path contains "admin"
+
+  useEffect(() => {
+    if (isAdmin) {
+      document.body.classList.add("admin-page");
+    } else {
+      document.body.classList.remove("admin-page");
+    }
+  }, [isAdmin]);
 
   // State for controlling the sidebar visibility
   const [sidebarOpen, setSidebarOpen] = useState(false);

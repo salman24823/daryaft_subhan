@@ -1,17 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { CldUploadWidget } from "next-cloudinary";
 import MDEditor from "@uiw/react-md-editor";
 import ActionButton from "./ActionButton";
-import { Button, Checkbox, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@heroui/react";
+import { Button, Checkbox, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Spinner } from "@heroui/react";
 import { ChevronDown } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
-const NewProducts = () => {
+const Products = () => {
+
+    // get product id from url
+  const searchParams = useSearchParams();
+    const product_id = searchParams.get("product_id");
 
   const [ collectionName , setCollectionName ] = useState("")
   const categoryOptions = ["Men", "Women", "Kids", "Accessories"];
-
 
   const [productData, setProductData] = useState({
     name: "",
@@ -29,6 +33,23 @@ const NewProducts = () => {
     metaTitle: "",
     metaDescription: "",
   });
+
+  useEffect(()=> {
+
+    async function getProduct(){
+        const response = await fetch(`/api/getProduct?product_id=${product_id}`)
+
+        if (!response.ok) {
+          console.error("Error response:", errorData);
+          return;
+        }
+
+        const data = await response.json();
+        setProductData(data);
+    } 
+
+    getProduct()
+  },[searchParams])
 
   const handleCollectionChange = (option) => {
     setProductData((prev) => ({
@@ -107,7 +128,7 @@ const NewProducts = () => {
 
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Add New Product
+            Edit Product Name
           </label>
           <input
             type="text"
@@ -328,6 +349,7 @@ const NewProducts = () => {
       <div className="col-span-3 bg-white p-6 rounded-lg shadow-sm">
         <ActionButton
           productData={productData}
+          product_id={product_id}
           setProductData={setProductData}
         />
 
@@ -436,4 +458,19 @@ const NewProducts = () => {
   );
 };
 
-export default NewProducts;
+export default function NewProducts() {
+  return (
+    <Suspense
+      fallback={
+        <div className="w-full h-screen flex justify-center items-center text-black ">
+          <div className="flex gap-5">
+            <Spinner size="lg" />
+            <p>Loading...</p>
+          </div>
+        </div>
+      }
+    >
+      <Products />
+    </Suspense>
+  );
+}

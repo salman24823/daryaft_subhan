@@ -2,6 +2,9 @@ import dbConnection from "@/config/dbConnection";
 import ProductModel from "@/models/productModel";
 import { NextResponse } from "next/server";
 
+export const revalidate = 0;
+
+
 export async function GET() {
   try {
     // Connect to the database
@@ -61,47 +64,50 @@ export async function POST(req) {
     );
   }
 }
-
 export async function PUT(req) {
   try {
     // Connect to the database
     await dbConnection();
-    // Parse the request body
-    const { salePrice , id } = await req.json();
 
-    console.log(salePrice , id,"salePrice , id")
-    return
-    // Validate required fields
-    if (
-      !productData.name ||
-      !productData.description ||
-      !productData.regularPrice ||
-      !productData.categories
-    ) {
+    // Parse request body
+    const { productData, product_id } = await req.json();
+
+    if (!productData || !product_id) {
       return new NextResponse(
         JSON.stringify({ error: "Missing required fields" }),
         { status: 400 }
       );
     }
-    // Update the product document
+
+    // Find and update the product
     const updatedProduct = await ProductModel.findByIdAndUpdate(
-      productId,
-      productData,
+      product_id,
+      { $set: productData }, // Properly updating fields
       { new: true }
     );
-    // Return success response
+
+    if (!updatedProduct) {
+      return new NextResponse(
+        JSON.stringify({ error: "Product not found" }),
+        { status: 404 }
+      );
+    }
+
     return new NextResponse(
-      JSON.stringify({ success: true, product: updatedProduct }),
+      JSON.stringify({ message: "Product updated successfully", updatedProduct }),
       { status: 200 }
     );
+
   } catch (error) {
-    console.error("Error uploading product:", error);
+    console.error("Error updating product:", error);
     return new NextResponse(
-      JSON.stringify({ error: "Failed to upload product" }),
+      JSON.stringify({ error: "Failed to update product" }),
       { status: 500 }
     );
   }
 }
+
+
 export async function DELETE(req) {
   try {
     // Connect to the database

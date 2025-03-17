@@ -14,6 +14,12 @@
 }
 /* product page */
 
+.admin-page .site-header,
+.admin-page .site-footer {
+  display: none;
+}
+
+
 .product_page {
   background-image: url(./../../public/product/bg.png);
 }
@@ -180,7 +186,24 @@ td{
 .sin {
   -webkit-text-stroke: 1px var(--red-color);
 }
-
+.img_show{
+  opacity: 0;
+  transition: all .8s;
+}
+.img_hide{
+  transition: all .8s;
+}
+.card_image:hover .img_hide{
+  opacity: 0;
+}
+.card_image:hover .img_show{
+  opacity: 100;
+  transform: scale(1.1);
+}
+.card_image{
+  position: relative;
+  overflow: hidden;
+}
 
 /* Footer Animation */
 

@@ -13,10 +13,8 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
 const Products = () => {
-
   const [products, setProducts] = useState([]);
-  const [salePrice, setSalePrice] = useState();
-  const [isEditing, setIsEditing] = useState(false);
+  const [editingRow, setEditingRow] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
   async function getProducts() {
@@ -31,23 +29,36 @@ const Products = () => {
         toast.error(response.message);
       }
       const data = await response.json();
-      console.log(data, "data");
       setProducts(data);
       setIsLoading(false);
     } catch (error) {
-      toast.error("Failed to submit form.");
+      toast.error("Failed to fetch products.");
     }
   }
-  async function editProduct(id) {
-    setIsEditing(true);
 
+  const toggleEdit = (id) => {
+    setEditingRow((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
+  async function editProduct(id) {
+    if (!editingRow[id]) {
+      toggleEdit(id); // Start editing if not already in edit mode
+      return;
+    }
+
+
+    
     try {
+      const productToUpdate = products.find((product) => product._id === id);
       const response = await fetch("/api/handleProduct", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ salePrice, id }),
+        body: JSON.stringify({ salePrice: productToUpdate.salePrice, id }),
       });
 
       if (!response.ok) {
@@ -57,8 +68,7 @@ const Products = () => {
 
       toast.success("Successfully updated");
       getProducts();
-      setIsEditing(false);
-      setIsLoading(false);
+      toggleEdit(id); // Exit editing mode after saving
     } catch (error) {
       console.log(error);
       toast.error("Failed to update");
@@ -76,19 +86,24 @@ const Products = () => {
       });
 
       const data = await response.json();
-      console.log(data);
       if (!response.ok) {
         throw new Error(data.message || "Failed to delete product");
       }
 
       toast.success("Product deleted successfully");
-
       getProducts();
-      setIsLoading(false);
     } catch (error) {
       toast.error("Failed to delete product");
     }
   }
+
+  const handleInputChange = (id, field, value) => {
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product._id === id ? { ...product, [field]: value } : product
+      )
+    );
+  };
 
   useEffect(() => {
     getProducts();
@@ -96,7 +111,6 @@ const Products = () => {
 
   return (
     <div>
-      <button onClick={()=> console.log(products,"products") }>clg</button>
       {isLoading ? (
         <div className="w-full h-screen bg-white opacity-30 flex justify-center items-center">
           <Spinner className="!text-blue-600" size="lg" color="primary" />
@@ -112,86 +126,72 @@ const Products = () => {
             <TableColumn>Name</TableColumn>
             <TableColumn>Regular Price</TableColumn>
             <TableColumn>Sales Price</TableColumn>
-            <TableColumn>Catogery</TableColumn>
-            <TableColumn>MetaTitle</TableColumn>
-            <TableColumn>MetaDescription</TableColumn>
+            <TableColumn>Category</TableColumn>
             <TableColumn>Actions</TableColumn>
           </TableHeader>
 
           <TableBody emptyContent="No Product Found">
             {products.map((product, index) => (
               <TableRow
-                className="hover:bg-gray-100 transition-colors"
-                key={index.id}
+                className="hover:bg-gray-100 hover:cursor-pointer transition-colors"
+                key={product._id}
+                onClick={()=> location.replace(`/admin/dashboard/products/edit?product_id=${product._id}`) }
               >
                 <TableCell>{index + 1}</TableCell>
+
                 <TableCell className="text-nowrap">
                   <div className="overflow-x-hidden w-12">
-                    <img src={product.thumbnail} className="w-10 h-10" />
+                    <img src={product.thumbnail} className="w-10 h-10" alt="thumbnail" />
                   </div>
                 </TableCell>
+
                 <TableCell className="text-nowrap">{product.name}</TableCell>
+
                 <TableCell className="text-nowrap">
-                  {isEditing === true ? (
-                    <input type="text" />
+                  {editingRow[product._id] ? (
+                    <input
+                      type="text"
+                      className="px-2 py-1 border-gray-500 border rounded-md"
+                      value={product.regularPrice}
+                      onChange={(e) =>
+                        handleInputChange(product._id, "regularPrice", e.target.value)
+                      }
+                    />
                   ) : (
                     <p>{product.regularPrice}</p>
                   )}
                 </TableCell>
+
                 <TableCell className="text-nowrap">
-                  {isEditing === true ? (
+                  {editingRow[product._id] ? (
                     <input
                       type="text"
-                      value={salePrice}
-                      onChange={(e) => {
-                        setSalePrice(e.target.value);
-                        console.log(e.target.value); // Logs the latest value correctly
-                      }}
+                      className="px-2 py-1 border-gray-500 border rounded-md"
+                      value={product.salePrice}
+                      onChange={(e) =>
+                        handleInputChange(product._id, "salePrice", e.target.value)
+                      }
                     />
                   ) : (
                     <p>{product.salePrice}</p>
                   )}
                 </TableCell>
+
                 <TableCell className="text-nowrap">
                   {product.categories}
-                </TableCell>          
-                <TableCell className="text-nowrap">
-                  {isEditing === true ? (
-                    <input type="text" />
-                  ) : (
-                    <p>{product.metaTitle}</p>
-                  )}
                 </TableCell>
-                <TableCell className="text-nowrap">
-                  {isEditing === true ? (
-                    <input type="text" />
-                  ) : (
-                    <p>{product.metaDescription}</p>
-                  )}
-                </TableCell>
+
                 <TableCell className="text-nowrap">
                   <div className="flex gap-2">
-                    {isEditing === false ? (
-                      <button
-                        onClick={() => setIsEditing(true)}
-                        className="text-gray-600 p-2 bg-yellow-400 rounded-lg"
-                      >
-                        <Pencil onClick={() => editProduct(product._id)} />
-                      </button>
-                    ) : (
-                      <button onClick={editProduct} className="text-gray-600">
-                        <Check />
-                      </button>
-                    )}
-
                     <button
-                      className="bg-red-400 p-2 rounded-lg text-gray-600"
+                      className="text-white hover:bg-red-500 bg-transparent p-2 rounded-lg group"
                       onClick={() => deleteProduct(product._id)}
                     >
-                      <Trash2 />
+                      <Trash2 className="text-red-500 group-hover:text-white w-6 h-6" />
                     </button>
                   </div>
                 </TableCell>
+
               </TableRow>
             ))}
           </TableBody>
