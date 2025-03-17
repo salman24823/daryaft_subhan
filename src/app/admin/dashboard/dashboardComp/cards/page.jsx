@@ -1,54 +1,79 @@
 "use client";
 
-import { useState } from "react";
-import { Users, Package, Activity } from "lucide-react";
-import { HandCoins } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Users, Package, HandCoins } from "lucide-react";
+import { toast } from "react-toastify";
 
 const Cards = () => {
   const [stats, setStats] = useState({
-    users: 20000,
-    products: 15000,
-    pendings: 5000,
-    revenue: 250000,
+    totalOrders: 0,
+    totalCustomers: 0,
+    totalRevenue: 0,
   });
+
+  async function fetchCardInfo() {
+    try {
+      const response = await fetch("/api/handleOrder", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const data = await response.json();
+      console.log(data, "data");
+
+      if (data.Orders) {
+        const totalOrders = data.Orders.length;
+        const uniqueCustomers = new Set(data.Orders.map((order) => order.email)).size;
+        const totalRevenue = data.Orders.reduce((sum, order) => sum + (order.price || 0), 0);
+
+        setStats({
+          totalOrders,
+          totalCustomers: uniqueCustomers,
+          totalRevenue,
+        });
+      }
+    } catch (error) {
+      toast.error("Failed to fetch data");
+    }
+  }
+
+  useEffect(() => {
+    fetchCardInfo();
+  }, []);
 
   const cardData = [
     {
-      title: "Total Customers",
-      value: stats.users,
-      icon: <Users className="text-blue-500 w-6 h-6" />,
-      bgColor: "bg-blue-100",
-      hoverBgColor: "hover:bg-blue-200",
-    },
-    {
       title: "Total Orders",
-      value: stats.products,
-      icon: <Package className="text-yellow-500 w-6 h-6" />,
-      bgColor: "bg-yellow-100",
-      hoverBgColor: "hover:bg-yellow-200",
+      value: stats.totalOrders,
+      icon: <Package className="text-blue-600" />,
+      bgColor: "bg-blue-100",
     },
     {
-      title: "Total Pendings",
-      value: `PKR ${stats.pendings.toLocaleString()}`,
-      icon: <HandCoins className="text-red-500 w-6 h-6" />,
-      bgColor: "bg-red-100",
-      hoverBgColor: "hover:bg-red-200",
+      title: "Total Customers",
+      value: stats.totalCustomers,
+      icon: <Users className="text-green-600" />,
+      bgColor: "bg-green-100",
     },
     {
       title: "Total Revenue",
-      value: `PKR ${stats.revenue.toLocaleString()}`,
-      icon: <Activity className="text-green-500 w-6 h-6" />,
-      bgColor: "bg-green-100",
-      hoverBgColor: "hover:bg-green-200",
+      value: `$${stats.totalRevenue.toFixed(2)}`,
+      icon: <HandCoins className="text-yellow-600" />,
+      bgColor: "bg-yellow-100",
     },
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {cardData.map((card, index) => (
         <div
           key={index}
-          className={`${card.bgColor} ${card.hoverBgColor} hover:-translate-y-1 cursor-pointer rounded-lg shadow-md p-4 transition-all duration-300 ease-in-out transform`}
+          className={`${card.bgColor} hover:bg-opacity-75 hover:-translate-y-1 cursor-pointer rounded-lg shadow-md p-4 transition-all duration-300 ease-in-out transform`}
         >
           <div className="flex justify-between items-center">
             <div>
@@ -59,9 +84,7 @@ const Cards = () => {
                 {card.value}
               </h2>
             </div>
-            <div className={`p-3 !bg-white rounded-full ${card.bgColor}`}>
-              {card.icon}
-            </div>
+            <div className="p-3 bg-white rounded-full">{card.icon}</div>
           </div>
           <p className="text-gray-500 text-xs mt-3">From 01, March</p>
         </div>
