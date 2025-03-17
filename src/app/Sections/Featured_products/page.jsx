@@ -79,15 +79,15 @@ const Featured_products = () => {
                         className="w-full h-full object-cover img_show "
                       />
                     </div>
-                    <div className="card_cont w-full h-[7.5rem] flex flex-col justify-between p-3">
+                    <div className="card_cont w-full h-[7.2rem] flex flex-col  justify-between p-3">
                       <div className="flex gap-3">
                       {product.categories.map((category)=> <p className="text-gray-600 text-sm font-semibold">{category}</p> )}
                       </div>
-                      <strong className="text-medium text-gray-800">
+                      <strong className="text-[14px] lg:text-medium text-gray-800">
                         {product.name}
                       </strong>
-                      <div className="flex justify-between">
-                        <div className="flex gap-3">
+                      <div className="w-full  flex justify-between ">
+                        <div className="flex gap-2 lg:gap-3">
                           <span className="font-bold">
                             ${product.salePrice}
                           </span>
@@ -96,10 +96,10 @@ const Featured_products = () => {
                           </span>
                         </div>
 
-                        <span className="flex items-center gap-2 text-gray-400">
+                        <span className="flex items-center  text-gray-400">
                           <FaStar className="text-yellow-500" />
                           4.9{" "}
-                          <span className="border-gray-400 border-l-2 px-2">
+                          <span className="rating_count border-gray-400 border-l-2 px-2">
                             2278
                           </span>
                         </span>

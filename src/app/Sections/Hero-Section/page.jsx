@@ -56,9 +56,9 @@ const Hero = () => {
 
 
       {/* Main Content */}
-      <div className="SECTION--primary !gap-28 mb-48">
+      <div className="grid grid-cols-1 min-[996px]:grid-cols-12 gap-20 xl:!gap-28 mb-48">
         {/* Left Content */}
-        <div className="flex relative flex-col items-end justify-center space-y-6">
+        <div className="col-span-1  min-[996px]:col-span-6 flex relative flex-col items-center sm:items-end justify-center space-y-6">
           <h2
             className="heading--primary max-[770px]:text-6xl text-8xl leading-tight !font-extrabold"
             data-aos="slide-right"
@@ -66,7 +66,7 @@ const Hero = () => {
             Daryaft
           </h2>
           <p
-            className="des text-gray-700 text-end w-3/4 font-normal text-lg leading-relaxed"
+            className="des p-3 text-gray-700 text-center sm:text-end sm:w-3/4 font-normal text-lg leading-relaxed"
             data-aos="fade-in"
           >
             At Daryaft, we believe clothing is more than fabric—it’s an
@@ -87,14 +87,14 @@ const Hero = () => {
         </div>
 
         {/* Right Content */}
-        <div className="flex justify-start items-center">
-          <div className="relative">
+        <div className="col-span-1  min-[996px]:col-span-6 flex justify-start sm:justify-center lg:justify-start items-center ">
+          <div className="relative w-[full] flex justify-center ">
 
             {/* Image Left */}
             <Image
               data-aos="fade-right"
               data-aos-delay="100"
-              className="w-80 transform scale-100 hover:scale-105 transition-transform duration-1000"
+              className=" w-48 sm:w-60 md:w-80 xl:w-80   transform scale-100 hover:scale-105 transition-transform duration-1000"
               src={IMG_L}
               alt="Image Left"
             />
@@ -103,7 +103,7 @@ const Hero = () => {
             <Image
               data-aos="fade-up"
               data-aos-delay="300"
-              className="absolute w-80 left-36 z-10 top-10 transform scale-95 hover:scale-105 transition-transform duration-1000"
+              className="w-48 sm:w-60 absolute   md:w-80 xl:w-80 left-36 z-10 top-10 transform scale-95 hover:scale-105 transition-transform duration-1000"
               src={IMG_C}
               alt="Image Center"
             />
@@ -112,7 +112,7 @@ const Hero = () => {
             <Image
               data-aos="fade-left"
               data-aos-delay="500"
-              className="absolute w-80 -top-5 z-20 left-16 transform scale-90 hover:scale-105 transition-transform duration-1000"
+              className="w-48 sm:w-60 absolute   md:w-80 xl:w-80 -top-5 z-20 left-16 transform scale-90 hover:scale-105 transition-transform duration-1000"
               src={IMG_R}
               alt="Image Right"
             />

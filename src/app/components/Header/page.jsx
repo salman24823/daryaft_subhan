@@ -5,6 +5,7 @@ import SideDrawer from "./Drawer";
 import { Button } from "@heroui/react";
 import Link from "next/link";
 import Cart from "./Cart";
+import { FaPhoneAlt } from "react-icons/fa";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -24,25 +25,32 @@ const Header = () => {
 
   return (
     <div
-      className={`site-header flex justify-between items-center w-[90%] py-2 rounded-full z-50 fixed top-2 transition-colors duration-300 ${
+      className={`site-header   w-[90%] py-2 rounded-full z-50 fixed top-2 transition-colors duration-300 ${
         isScrolled ? "bg-[#a8744a]" : "bg-transparent"
       }`}
     >
-      {/* Logo Section */}
-      <div className="flex px-6 items-center">
-        <SideDrawer />
-      </div>
 
-      {/* Placeholder for Menu */}
-      <div className="flex">
+      <div className="w-full flex justify-between ">
+      <div className="menu_icon flex  items-center ">
+        <SideDrawer  />
+      </div>
+      <div className="">
         <Link href={"/"}>
-          <h1 className="kalam_font text-3xl text-white">Daryaft</h1>
+          <h1 className="header_logo text-4xl text-white font-bold px-4">Daryaft</h1>
         </Link>
       </div>
+      <div className="flex items-center">
+      <div className="header_phone">
+      <Link href={"/"}>
+      <FaPhoneAlt className="text-white w-5 h-5"/>
+      </Link>
+      </div>
 
-      {/* Drawer Menu */}
+      
       <div>
         <Cart />
+      </div>
+      </div>
       </div>
     </div>
   );
