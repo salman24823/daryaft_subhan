@@ -2,6 +2,28 @@ import dbConnection from "@/config/dbConnection";
 import customizeModel from "@/models/customizeModel";
 import { NextResponse } from "next/server";
 
+export async function GET() {
+  try {
+    // ✅ Connect to the database
+    await dbConnection();
+
+    // ✅ Fetch all customizations
+    const customizers = await customizeModel.find({});
+
+    // ✅ Return response with status code
+    return NextResponse.json(
+      { success: true, data: customizers },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("❌ Failed fetching data:", error.message);
+    return NextResponse.json(
+      { success: false, error: "Failed to fetch data", details: error.message },
+      { status: 500 }
+    );
+  }
+}
+
 export async function POST(req) {
   try {
     // Connect to the database
@@ -42,7 +64,10 @@ export async function POST(req) {
   } catch (error) {
     console.error("❌ Error uploading customizer details:", error.message);
     return NextResponse.json(
-      { error: "Failed to upload customizer information", details: error.message },
+      {
+        error: "Failed to upload customizer information",
+        details: error.message,
+      },
       { status: 500 }
     );
   }
