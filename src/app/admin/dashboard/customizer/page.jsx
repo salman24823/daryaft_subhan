@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@heroui/react";
+import { Trash2 } from "lucide-react";
 import { CldUploadWidget } from "next-cloudinary";
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
@@ -154,6 +155,7 @@ const Customizer = () => {
                 <th className="border border-gray-300 px-4 py-2">Color Code</th>
                 <th className="border border-gray-300 px-4 py-2">Vector</th>
                 <th className="border border-gray-300 px-4 py-2">Logo</th>
+                <th className="border border-gray-300 px-4 py-2">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -186,6 +188,11 @@ const Customizer = () => {
                     ) : (
                       "N/A"
                     )}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    <button className="px-4 py-2 bg-red-500 rounded">
+                    <Trash2  />
+                    </button>
                   </td>
                 </tr>
               ))}
