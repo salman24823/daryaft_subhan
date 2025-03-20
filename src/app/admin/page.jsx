@@ -3,6 +3,7 @@
 import { Button } from "@heroui/react";
 import { Eye, EyeOff, User } from "lucide-react";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Admin() {
   const [isView, setIsView] = useState(false);
@@ -22,7 +23,13 @@ export default function Admin() {
   };
   
   async function submitForm(){
-    console.log(formData,"formData")
+    // console.log(formData,"formData")
+    if(formData.username == "admin" || formData.password == "123"){
+      toast.success("Login success")
+      location.replace("/admin/dashboard")
+    }else{
+      toast.error("Invalid username or password")
+    }
   }
 
   return (
