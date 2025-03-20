@@ -121,6 +121,7 @@ const Products = () => {
       ) : (
         <Table className="text-nowrap">
           <TableHeader>
+
             <TableColumn>#</TableColumn>
             <TableColumn>Thumbnail</TableColumn>
             <TableColumn>Name</TableColumn>
@@ -128,6 +129,7 @@ const Products = () => {
             <TableColumn>Sales Price</TableColumn>
             <TableColumn>Category</TableColumn>
             <TableColumn>Actions</TableColumn>
+            
           </TableHeader>
 
           <TableBody emptyContent="No Product Found">

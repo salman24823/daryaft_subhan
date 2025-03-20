@@ -17,6 +17,7 @@ const checkOutSchema = new mongoose.Schema({
   address: { type: String, required: true },
   paymentMethod: { type: String, required: true },
   cart: { type: [cartItemSchema], required: true }, // Store cart items as an array of objects
+  status: { type: String , default: "Processing"}, 
   createdAt: { type: Date, default: Date.now }
 });
 

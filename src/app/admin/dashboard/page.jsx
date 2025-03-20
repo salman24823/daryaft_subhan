@@ -2,8 +2,8 @@ import React from "react";
 import Cards from "./dashboardComp/cards/page";
 import LineChart from "./dashboardComp/LineChart/page";
 import PieChart from "./dashboardComp/PieChart/page";
-import CustomerTable from "./dashboardComp/Tables/CustomerTable/page";
-import EmployeeTable from "./dashboardComp/Tables/EmployeeTable/page";
+import OrderTable from "./dashboardComp/Tables/OrderTable/page";
+import FormTable from "./dashboardComp/Tables/FormTable/page";
 
 const Dashboard = () => {
   return (
@@ -25,10 +25,10 @@ const Dashboard = () => {
       {/* tables */}
       <div className="grid grid-cols-4 gap-4">
         <div className="col-span-3">
-          <CustomerTable />
+          <OrderTable />
         </div>
         <div className="col-span-1">
-          <EmployeeTable />
+          <FormTable />
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -28,91 +28,112 @@ ChartJS.register(
 );
 
 const LineChart = () => {
-  const [timeRange, setTimeRange] = React.useState("monthly");
+  const [timeRange, setTimeRange] = useState("monthly");
+  const [salesData, setSalesData] = useState({
+    daily: { labels: [], datasets: [] },
+    monthly: { labels: [], datasets: [] },
+    yearly: { labels: [], datasets: [] },
+  });
 
-  const salesData = {
-    daily: {
-      labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-      datasets: [
-        {
-          label: "Daily Sales",
-          data: [300, 250, 200, 350, 400, 400, 300],
-          borderColor: "rgba(75, 192, 192, 1)",
-          backgroundColor: "#e1e1e12e", // Slightly more opaque to highlight the background
-          tension: 0.4,
-          fill: true, // Enables background fill under the line
-        },
-      ],
-    },
-    monthly: {
-      labels: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
-      datasets: [
-        {
-          label: "Monthly Sales",
-          data: [
-            9000, 7500, 1000, 2000, 12000, 9000, 7500, 8500, 9500, 10000, 11000,
-            12000,
-          ],
-          borderColor: "rgba(153, 102, 255, 1)",
-          backgroundColor: "#e1e1e12e", // Slightly more opaque to highlight the background
-          tension: 0.4,
-          fill: true, // Enables background fill under the line
-        },
-      ],
-    },
-    yearly: {
-      labels: [ "2019" , "2020" ,"2021","2022", "2023", "2024", "2025"],
-      datasets: [
-        {
-          label: "Yearly Sales",
-          data: [ 70000 , 15000 , 10000 , 30000, 45000, 60000, 90000],
-          borderColor: "rgba(255, 159, 64, 1)",
-          backgroundColor: "#e1e1e12e", // Slightly more opaque to highlight the background
-          tension: 0.4,
-          fill: true, // Enables background fill under the line
-        },
-      ],
-    },
+  const processData = (orders) => {
+    const dailySales = {};
+    const monthlySales = {};
+    const yearlySales = {};
+
+    orders.forEach((order) => {
+      const date = new Date(order.createdAt);
+      const day = date.toLocaleDateString('en-US', { weekday: 'short' });
+      const month = date.toLocaleDateString('en-US', { month: 'short' });
+      const year = date.getFullYear().toString();
+
+      const total = order.cart.reduce((sum, item) => sum + item.salePrice * item.quantity, 0);
+
+      dailySales[day] = (dailySales[day] || 0) + total;
+      monthlySales[month] = (monthlySales[month] || 0) + total;
+      yearlySales[year] = (yearlySales[year] || 0) + total;
+    });
+
+    setSalesData({
+      daily: {
+        labels: Object.keys(dailySales),
+        datasets: [
+          {
+            label: "Daily Sales",
+            data: Object.values(dailySales),
+            borderColor: "rgba(75, 192, 192, 1)",
+            backgroundColor: "#e1e1e12e",
+            tension: 0.4,
+            fill: true,
+          },
+        ],
+      },
+      monthly: {
+        labels: Object.keys(monthlySales),
+        datasets: [
+          {
+            label: "Monthly Sales",
+            data: Object.values(monthlySales),
+            borderColor: "rgba(153, 102, 255, 1)",
+            backgroundColor: "#e1e1e12e",
+            tension: 0.4,
+            fill: true,
+          },
+        ],
+      },
+      yearly: {
+        labels: Object.keys(yearlySales),
+        datasets: [
+          {
+            label: "Yearly Sales",
+            data: Object.values(yearlySales),
+            borderColor: "rgba(255, 159, 64, 1)",
+            backgroundColor: "#e1e1e12e",
+            tension: 0.4,
+            fill: true,
+          },
+        ],
+      },
+    });
   };
+
+  const fetchOrders = async () => {
+    try {
+      const response = await fetch("/api/handleOrder", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const data = await response.json();
+      processData(data.Orders);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
 
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    // plugins: {
-    //   legend: {
-    //     position: "top",
-    //   },
-    //   title: {
-    //     display: true,
-    //     text: `Sales Data (${
-    //       timeRange.charAt(0).toUpperCase() + timeRange.slice(1)
-    //     })`,
-    //   },
-    // },
     scales: {
       x: {
         grid: {
-          display: true, // Enables vertical grid lines for a boxed background
-          color: "rgba(200, 200, 200, 0.2)", // Light gray for subtle grid effect
+          display: true,
+          color: "rgba(200, 200, 200, 0.2)",
         },
       },
       y: {
         grid: {
-          display: true, // Enables horizontal grid lines for a boxed background
-          color: "rgba(200, 200, 200, 0.2)", // Light gray to match the x-axis grid
+          display: true,
+          color: "rgba(200, 200, 200, 0.2)",
         },
       },
     },
@@ -120,14 +141,12 @@ const LineChart = () => {
 
   return (
     <div className="bg-white h-full flex flex-col p-6 rounded-lg shadow-md">
-
-
       <div className="w-full flex justify-between">
         <h1 className="py-2 px-10 bg-gray-100 rounded-full shadow-sm">
           Detailed Analysis
         </h1>
         <Tabs
-        color="white"
+          color="white"
           value={timeRange}
           radius="full"
           aria-label="Options"
@@ -140,12 +159,9 @@ const LineChart = () => {
         </Tabs>
       </div>
 
-
       <div className="flex-1">
         <Line data={salesData[timeRange]} options={options} />
       </div>
-
-
     </div>
   );
 };

@@ -25,19 +25,26 @@ const Cards = () => {
       }
 
       const data = await response.json();
-      console.log(data, "data");
 
-      if (data.Orders) {
+      if (Array.isArray(data.Orders)) {
         const totalOrders = data.Orders.length;
         const uniqueCustomers = new Set(data.Orders.map((order) => order.email)).size;
-        const totalRevenue = data.Orders.reduce((sum, order) => sum + (order.price || 0), 0);
-
+        
+        const totalRevenue = data.Orders.reduce((sum, order) => {
+            const orderTotal = Array.isArray(order.cart)
+                ? order.cart.reduce((cartSum, item) => cartSum + (Number(item.salePrice) * Number(item.quantity) || 0), 0)
+                : 0;
+            return sum + orderTotal;
+        }, 0);
+    
+    
         setStats({
-          totalOrders,
-          totalCustomers: uniqueCustomers,
-          totalRevenue,
+            totalOrders,
+            totalCustomers: uniqueCustomers,
+            totalRevenue,
         });
-      }
+    }
+    
     } catch (error) {
       toast.error("Failed to fetch data");
     }
@@ -62,7 +69,7 @@ const Cards = () => {
     },
     {
       title: "Total Revenue",
-      value: `$${stats.totalRevenue.toFixed(2)}`,
+      value: `${stats.totalRevenue} PKR`,
       icon: <HandCoins className="text-yellow-600" />,
       bgColor: "bg-yellow-100",
     },
@@ -77,7 +84,7 @@ const Cards = () => {
         >
           <div className="flex justify-between items-center">
             <div>
-              <h4 className="text-gray-600 text-xs font-semibold uppercase tracking-wide">
+              <h4 onClick={()=> console.log(stats,"stats") } className="text-gray-600 text-xs font-semibold uppercase tracking-wide">
                 {card.title}
               </h4>
               <h2 className="text-2xl font-bold text-gray-900 mt-1">
