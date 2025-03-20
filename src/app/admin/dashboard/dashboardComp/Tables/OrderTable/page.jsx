@@ -33,10 +33,11 @@ const OrderTable = () => {
 
       const data = await response.json();
       setOrders(data);
+      setIsLoading(false);
 
-      setIsLoading(true);
     } catch (error) {
       toast.error("Failed to fetch data");
+      setIsLoading(false);
     }
   }
 
@@ -64,7 +65,7 @@ const OrderTable = () => {
             <TableColumn>Amount</TableColumn>
           </TableHeader>
           <TableBody>
-            {orders?.Orders?.slice(-5).map((data, index) => (
+            {orders?.Orders?.slice(-8).map((data, index) => (
               <TableRow
                 className="hover:bg-gray-100 transition-colors cursor-pointer"
                 key={data.index}
