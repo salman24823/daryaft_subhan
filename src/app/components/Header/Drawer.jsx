@@ -65,12 +65,12 @@ export default function SideDrawer() {
               <button onClick={() => scrollToSection("trending-items")} className="sl">Trending Items</button>
 
               <div className="cat_dp">
-                <button onClick={() => location.replace("/shop")} className="sl">Categories</button>
+                <button onClick={() => scrollToSection("category")} className="sl">Categories</button>
                 <div className="cat_hide flex flex-col">
                   <button onClick={() => location.replace("/shop?category=Men")} className="sl gap-3">Mens</button>
                   <button onClick={() => location.replace("/shop?category=Women")} className="sl gap-3">Womens</button>
                   <button onClick={() => location.replace("/shop?category=Kids")} className="sl gap-3">Kids</button>
-                  <button onClick={() => location.replace("/")} className="sl gap-3">Custom Print</button>
+                  <button onClick={() => scrollToSection("custom")} className="sl gap-3">Custom Print</button>
                 </div>
               </div>
 

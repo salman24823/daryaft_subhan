@@ -69,7 +69,7 @@ export default function CustomizeSection() {
         </h2>
       </div>
 
-      <div className="w-[90%] my-20 overflow-hidden">
+      <div id="custom" className="w-screen my-20 overflow-hidden">
         <Slider className="" {...settings}>
           {SlidesData.map((slide, index) => (
             <div key={slide.id} className="py-4">

@@ -12,6 +12,7 @@ import Newarrival from "./Sections/Newarrival_Section/page";
 import Trending_items from "./Sections/Trending_items/page";
 import Featured_products from "./Sections/Featured_products/page";
 import Category from "./Sections/Category/page";
+import CustomizeSection from "./components/Customize_section/page";
 
 
 export default function Home() {
@@ -24,7 +25,7 @@ export default function Home() {
     <Newarrival />
     <Trending_items />
     <ServiceCards />
-    {/* <Customize_Section /> */}
+    <CustomizeSection />
     <Faqs />
     <ContactForm />
     <NewsLetter />

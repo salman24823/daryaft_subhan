@@ -32,7 +32,7 @@ const Category = () => {
       ]
     
       return (
-        <section className="main_cnt w-full">
+        <section id='category' className="main_cnt w-full">
         <div className='p-[5%] px-4 md:px-6 lg:px-8 w-full'>
           <div className="container mx-auto">
             <h2 className="heading--primary text-center mb-8">Shop by Category</h2>
