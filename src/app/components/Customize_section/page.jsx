@@ -47,7 +47,7 @@ export default function CustomizeSection() {
   }, []);
 
   const [SlidesData, setSlidesData] = useState([
-    { image: V1, heading: "Lorem Ipsum Dolor", btn: "Customize Now" },
+    { image: V1, heading: "Hoodie Ipsum Dolor", btn: "Customize Now", link : "/customizer" },
     { image: V2, heading: "Lorem Ipsum Dolor", btn: "Customize Now" },
     { image: V3, heading: "Lorem Ipsum Dolor", btn: "Customize Now" },
     { image: V1, heading: "Lorem Ipsum Dolor", btn: "Customize Now" },
@@ -88,7 +88,7 @@ export default function CustomizeSection() {
                     <h1 className="my-3 !text-gray-900 sub-heading--primary text-center">
                       {slide.heading}
                     </h1>
-                    <Button className="BUTTON--primary w-3/4">
+                    <Button onPress={()=> location.replace(slide.link) } className="BUTTON--primary w-3/4">
                       {slide.btn}
                     </Button>
                   </div>
