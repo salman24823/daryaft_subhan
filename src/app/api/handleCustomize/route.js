@@ -73,3 +73,34 @@ export async function POST(req) {
   }
 }
 
+export async function DELETE(req) {
+  try {
+    await dbConnection();
+    
+    // Parse JSON body from request
+    const body = await req.json();
+    const { id } = body; // Use 'id' instead of '_id'
+
+    if (!id) {
+      throw new Error("ID is required.");
+    }
+    
+    if (!customizeModel) {
+      throw new Error("Customize Model is not defined.");
+    }
+
+    // Delete from database
+    const deletedItem = await customizeModel.findByIdAndDelete(id);
+    if (!deletedItem) {
+      throw new Error("No item found with the given ID.");
+    }
+
+    return NextResponse.json({ success: true }, { status: 200 });
+  } catch (error) {
+    console.error("Error deleting customizer:", error.message);
+    return NextResponse.json(
+      { error: error.message || "Failed to delete customizer" },
+      { status: 500 }
+    );
+  }
+}

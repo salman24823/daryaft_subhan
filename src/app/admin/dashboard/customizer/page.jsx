@@ -70,6 +70,28 @@ const Customizer = () => {
     }
   }
 
+  async function deleteData(id) {
+    try {
+      const response = await fetch("/api/handleCustomize", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete data.");
+      }
+
+      // 🔥 Remove the deleted item from state
+      setCustomData((prevData) => prevData.filter((item) => item._id !== id));
+
+      toast.success("Data deleted successfully.");
+    } catch (error) {
+      console.error("Error from catch:", error);
+      toast.error("Not able to delete data.");
+    }
+  }
+
   return (
     <>
       {/* Upload Form */}
@@ -159,7 +181,7 @@ const Customizer = () => {
               </tr>
             </thead>
             <tbody>
-              {customData.map((item) => (
+              {customData.map((item, index) => (
                 <tr key={item._id} className="text-center">
                   <td className="border border-gray-300 px-4 py-2">
                     {item.colorName || "N/A"}
@@ -190,8 +212,11 @@ const Customizer = () => {
                     )}
                   </td>
                   <td className="border border-gray-300 px-4 py-2">
-                    <button className="px-4 py-2 bg-red-500 rounded">
-                    <Trash2  />
+                    <button
+                      className="px-4 py-2 bg-red-500 rounded"
+                      onClick={() => deleteData(item._id)}
+                    >
+                      <Trash2 />
                     </button>
                   </td>
                 </tr>
