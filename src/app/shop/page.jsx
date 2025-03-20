@@ -96,7 +96,7 @@ const ShopContent = () => {
     <div className="w-full">
       {/* Banner */}
       <div className="w-full h-[80vh] bg-[url(./../../public/banner/news2.png)] bg-cover bg-no-repeat"></div>
-      <div className="flex justify-center bg-gray-100 gap-5">
+      <div id="categories" className="flex justify-center bg-gray-100 gap-5">
         <a
           href={"/shop?category=Men"}
           className="text-medium py-5 px-2 hover:bg-[#be8049] w-24 text-center hover:text-white font-semibold text-gray-700"

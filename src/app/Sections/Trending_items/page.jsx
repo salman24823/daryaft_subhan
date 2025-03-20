@@ -40,7 +40,7 @@ const Featured_products = () => {
   }, [collectionName]);
 
   return (
-    <section className="w-full">
+    <section id="trending-items" className="w-full">
        <div className='w-full h:auto xl:h-[80vh] bg-[url()] bg-cover bg-no-repeat'> 
               <Image  className="p-section-banner object-cover" src={TrendingBanner} alt="" />
             </div>

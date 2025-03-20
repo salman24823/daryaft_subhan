@@ -38,7 +38,7 @@ const Featured_products = () => {
   }, [collectionName]);
 
   return (
-    <section className="w-full">
+    <section id="featured-products" className="w-full">
       <div className="p-[5%] flex flex-col items-center gap-12 bg-gray-50">
         <div className="text-center">
           <h2 className="heading--primary">Featured Products</h2>

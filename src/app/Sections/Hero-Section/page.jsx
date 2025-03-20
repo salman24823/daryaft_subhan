@@ -56,7 +56,7 @@ const Hero = () => {
 
 
       {/* Main Content */}
-      <div className="grid grid-cols-1 min-[996px]:grid-cols-12 gap-20 xl:!gap-28 mb-48">
+      <div id="about" className="grid grid-cols-1 min-[996px]:grid-cols-12 gap-20 xl:!gap-28 mb-48">
         {/* Left Content */}
         <div className="col-span-1  min-[996px]:col-span-6 flex relative flex-col items-center sm:items-end justify-center space-y-6">
           <h2
