@@ -43,6 +43,10 @@
 
 }
 
+.header_logo{
+  font-family: "Allura", cursive;
+
+}
 .heading--primary {
   color: #a16c3d;
   font-family: "Lora", serif;
@@ -181,6 +185,26 @@
 td{
   @apply py-[3%]
 }
+.sl{
+  transition:all .2s;
+  @apply text-[1.2rem] font-bold
+}
+.sl:hover{
+  color: #a16c3d;
+  margin-left:15px ;
+}
+
+.cat_hide{
+  transition: all .5s;
+  height: 0px;
+  overflow: hidden;
+  @apply rounded-sm
+}
+.cat_dp:hover .cat_hide{
+  height: 80%;
+  padding: 15px;
+  box-shadow: 0px 0px 5px silver;
+}
 /* SINCE Text */
 
 .sin {
@@ -268,6 +292,12 @@ td{
   border-radius: 5px;
 }
 
+.p-section-banner{
+  height: 100%;
+  width: 100%;
+  
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -330,5 +360,31 @@ td{
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+@media (min-width: 640px) {
+}
+@media (max-width: 768px) {
+  .menu_icon{
+    position: fixed;
+    top: 90%;
+  }
+  .menu_icon_btn{
+    background-color: white ;
+    color:#000000;
+    padding: 0;
+    box-shadow: 0px 0px 10px silver;
+  }
+}
+@media (max-width: 1024px) {
+  .rating_count{
+    display: none;
+  }
+}
+@media (min-width: 1280px) {
+}
+@media (min-width: 1536px) {
+  body {
+    @apply flex flex-col items-center;
   }
 }

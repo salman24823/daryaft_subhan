@@ -2,10 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import ArrivalBanner from "/public/banner/newarrival.png"
 import { FaArrowRight } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { FaStar } from "react-icons/fa";
 import { Spinner } from "@heroui/react";
+import Image from "next/image";
 const Featured_products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -41,7 +43,8 @@ const Featured_products = () => {
   return (
     <section className="w-full">
 
-      <div className='w-full h-[80vh] bg-[url(./../../public/banner/newarrival.png)] bg-cover bg-no-repeat'> 
+      <div className='w-full h:auto xl:h-[80vh] bg-[url()] bg-cover bg-no-repeat'> 
+        <Image  className="p-section-banner object-cover" src={ArrivalBanner} alt="" />
       </div>
 
       <div className="p-[5%] flex flex-col items-center gap-12 bg-gray-50">
@@ -88,7 +91,7 @@ const Featured_products = () => {
                     <div className="flex gap-3">
                       {product.categories.map((category)=> <p className="text-gray-600 text-sm font-semibold">{category}</p> )}
                       </div>
-                      <strong className="text-medium text-gray-800">
+                      <strong className="text-[14px] lg:text-medium text-gray-800">
                         {product.name}
                       </strong>
                       <div className="flex justify-between">
@@ -104,7 +107,7 @@ const Featured_products = () => {
                         <span className="flex items-center gap-2 text-gray-400">
                           <FaStar className="text-yellow-500" />
                           4.9{" "}
-                          <span className="border-gray-400 border-l-2 px-2">
+                          <span className="rating_count border-gray-400 border-l-2 px-2">
                             2278
                           </span>
                         </span>

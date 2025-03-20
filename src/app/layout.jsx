@@ -11,6 +11,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+      <link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" />
+<link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet"/>
+      <link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" />
+<link href="https://fonts.googleapis.com/css2?family=Barriecito&family=Lilita+One&family=Tektur:wght@400..900&display=swap" rel="stylesheet"/>
         {/* Lora font family */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />

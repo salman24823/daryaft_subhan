@@ -12,6 +12,7 @@ import {
   Contact,
   ShoppingBag,
   Mail,
+  Pencil,
 } from "lucide-react"; // Assuming you're using Lucide icons
 import { Home } from "lucide-react";
 import { Button } from "@heroui/react";
@@ -61,6 +62,11 @@ const Layout = ({ children }) => {
       name: "NewsLetter",
       path: "/admin/dashboard/newsletter",
       icon: <Mail className="w-5 h-5 text-gray-600" />,
+    },
+    {
+      name: "Customizer",
+      path: "/admin/dashboard/customizer",
+      icon: <Pencil  className="w-5 h-5 text-gray-600" />,
     },
   ];
 
