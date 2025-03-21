@@ -79,6 +79,7 @@ export default function CustomizeSection() {
                   : "scale-90 opacity-70"
                   }`}
               >
+              
                 <div>
                   <Image
                     src={slide.image}
