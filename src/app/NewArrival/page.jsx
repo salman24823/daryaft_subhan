@@ -5,6 +5,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Breadcrumbs from "../components/Breadcrumbs/page";
 import { useSearchParams } from "next/navigation";
+import TrendingBanner from "/public/banner/news2.png";
 
 import {
   Columns2,
@@ -15,6 +16,7 @@ import {
 } from "lucide-react"; // Added Grid for 5 columns
 import { FaStar } from "react-icons/fa";
 import { Spinner } from "@heroui/react";
+import Image from "next/image";
 
 const ShopContent = () => {
   const [products, setProducts] = useState([]);
@@ -33,10 +35,8 @@ const ShopContent = () => {
 
   useEffect(() => {
     const getProducts = async () => {
-
       setLoading(true);
       try {
-
         const response = await fetch("/api/newArrival");
         if (!response.ok) {
           const errorData = await response.json();
@@ -60,8 +60,6 @@ const ShopContent = () => {
   }, []); // Refetch products when category or collectionName changes
 
   useEffect(() => {
-
-
     const updateColumns = () => {
       if (window.innerWidth < 768) {
         setColumns(1); // Mobile (smaller than md)
@@ -81,7 +79,13 @@ const ShopContent = () => {
   return (
     <div className="w-full">
       {/* Banner */}
-      <div className="w-full h-[80vh] bg-[url(./../../public/banner/news2.png)] bg-cover bg-no-repeat"></div>
+      <div className="w-full h:auto xl:h-[80vh] bg-[url()] bg-cover bg-no-repeat">
+        <Image
+          className="p-section-banner object-cover"
+          src={TrendingBanner}
+          alt=""
+        />
+      </div>
       <div className="flex justify-center bg-gray-100 gap-5">
         <a
           href={"/shop?category=Men"}
@@ -175,11 +179,14 @@ const ShopContent = () => {
                             className="w-full h-full object-cover img_show"
                           />
                         </div>
-                      
+
                         <div className="card_cont w-full h-[7.5rem] flex flex-col justify-between p-3">
                           <span className="">
-                          {product.categories.map((category)=> <p className="text-gray-600 text-sm font-semibold">{category}</p> )}
-
+                            {product.categories.map((category) => (
+                              <p className="text-gray-600 text-sm font-semibold">
+                                {category}
+                              </p>
+                            ))}
                           </span>
                           <strong className="text-[14px] md:text-medium text-gray-800">
                             {product.name}

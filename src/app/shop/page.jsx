@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { Suspense, useEffect, useState } from "react";
 import Breadcrumbs from "../components/Breadcrumbs/page";
 import { useSearchParams } from "next/navigation";
+import TrendingBanner from "/public/banner/news2.png"
 
 import {
   Columns2,
@@ -14,6 +15,7 @@ import {
 } from "lucide-react"; // Added Grid for 5 columns
 import { FaStar } from "react-icons/fa";
 import { Spinner } from "@heroui/react";
+import Image from "next/image";
 
 const ShopContent = () => {
   const [products, setProducts] = useState([]);
@@ -95,7 +97,9 @@ const ShopContent = () => {
   return (
     <div className="w-full">
       {/* Banner */}
-      <div className="w-full h-[80vh] bg-[url(./../../public/banner/news2.png)] bg-cover bg-no-repeat"></div>
+      <div className='w-full h:auto xl:h-[80vh] bg-[url()] bg-cover bg-no-repeat'> 
+        <Image  className="p-section-banner object-cover" src={TrendingBanner} alt="" />
+      </div>
       <div id="categories" className="flex justify-center bg-gray-100 gap-5">
         <a
           href={"/shop?category=Men"}

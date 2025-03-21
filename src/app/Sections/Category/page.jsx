@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import Custom from '/public/custom.png'
 import React from 'react'
 
 const Category = () => {
@@ -20,9 +21,9 @@ const Category = () => {
          image: "https://plus.unsplash.com/premium_photo-1681884440024-0a147c1c617a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8S2lkcyUyMEhvb2RpZXxlbnwwfHwwfHx8MA%3D%3D",
         },
         {
-          name: "Babies",
+          name: "Custom Print",
           href: "/shop?category=Men",
-         image: "https://plus.unsplash.com/premium_photo-1675030735741-8899e68f9f49?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGJhYmllcyUyMEhvb2RpZXxlbnwwfHwwfHx8MA%3D%3D",
+         image: "https://animestore.pk/cdn/shop/files/65d19afa95662f99d17448f877012a2c_jpg_750x750_jpg_700x.webp?v=1736344527",
         },
         // {
         //   name: "Business",

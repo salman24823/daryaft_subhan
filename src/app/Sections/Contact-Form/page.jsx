@@ -48,7 +48,7 @@ const ContactForm = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-2 max-[770px]:grid-cols-1 max-md:gap-48 gap-8 px-[5%] max-[770px]:pt-2 max-[770px]:pb-20 pt-44 pb-72 bg-gradient-to-r from-[#815832] via-[#8f5a28] to-[#c77d37]">
+    <div className="grid grid-cols-2 max-[770px]:grid-cols-1 max-md:gap-48 gap-8 px-[5%] max-[770px]:pt-2 max-[770px]:pb-20 pt-44 pb-72 bg-gradient-to-r from-[#815832] via-[#8f5a28] to-[#c77d37] overflow-hidden">
       {/* Left Section */}
       <div
         className="flex flex-col gap-6"

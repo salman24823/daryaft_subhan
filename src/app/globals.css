@@ -388,3 +388,8 @@ td{
     @apply flex flex-col items-center;
   }
 }
+@media (min-width: 1936px) {
+  body {
+    @apply flex flex-col items-center px-[10%];
+  }
+}

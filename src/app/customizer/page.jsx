@@ -75,8 +75,8 @@ export default function Customizer() {
   };
 
   return (
-    <div className="w-full h-screen grid gap-5 p-2 mt-20 grid-cols-10">
-      <div className="col-span-2 h-full">
+    <div className="w-full gap-20 h-[110vh] md:h-auto lg:h-screen grid lg-gap-5 p-2 mt-20 grid-col-1 lg:grid-cols-10">
+      <div className="col-span-1 lg:col-span-3 h-full ">
         <div className="h-full bg-white shadow-lg p-6 border border-gray-300 rounded-xl backdrop-blur-md bg-opacity-80">
           <div className="grid grid-cols-3 mb-6 rounded-full overflow-hidden">
             <Button
@@ -381,9 +381,9 @@ export default function Customizer() {
             )}
           </div>
         </div>
-      </div>
+      </div> 
 
-      <div className="col-span-8 flex items-start justify-center">
+      <div className="col-span-1  lg:col-span-7 flex items-start justify-center">
         <div className="flex justify-center items-center w-1/2 h-auto relative">
           {/* Hoodie Vector Image */}
           <img
