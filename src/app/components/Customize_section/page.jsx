@@ -15,7 +15,6 @@ import V3 from "@/../../public/anime/3.png";
 
 export default function CustomizeSection() {
   const [activeSlide, setActiveSlide] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
 
   const settings = {
     dots: false,
@@ -37,27 +36,6 @@ export default function CustomizeSection() {
     ],
   };
 
-  // Fetch toggle state from API
-  useEffect(() => {
-    const fetchState = async () => {
-      try {
-        console.log("Fetching state from API...");
-        const res = await fetch("/api/state");
-        if (!res.ok) throw new Error("Failed to fetch state");
-        const data = await res.json();
-        console.log("API Response:", data);
-        
-        if (data && typeof data.statusState === "boolean") {
-          setIsVisible(data.statusState);
-        }
-      } catch (error) {
-        console.error("Error fetching state:", error);
-      }
-    };
-
-    fetchState();
-  }, []);
-
   // AOS Initialization
   useEffect(() => {
     AOS.init({
@@ -74,11 +52,6 @@ export default function CustomizeSection() {
     { image: V1, heading: "Lorem Ipsum Dolor", btn: "Customize Now" },
     { image: V2, heading: "Lorem Ipsum Dolor", btn: "Customize Now" },
   ];
-
-  if (!isVisible) {
-    console.log("Section is hidden due to toggle state");
-    return null; // Hide section if the toggle is OFF
-  }
 
   return (
     <>
