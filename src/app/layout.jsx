@@ -53,8 +53,8 @@ export default function RootLayout({ children }) {
           </div>
         </HeroUIProvider>
         <ToastContainer />
-      </body>
       <TawkChat />
+      </body>
 
     </html>
   );
