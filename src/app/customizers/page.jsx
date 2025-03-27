@@ -6,9 +6,11 @@ import ModalViewer from "../components/ModelViewer/page";
 
 const Product = () => {
   const [panelType, setPanelType] = useState("color");
+
   const [selectedColor, setSelectedColor] = useState("#4A90E2");
   const [selectedLogo, setSelectedLogo] = useState("https://utfs.io/f/vm2okaME29juIbAIO5rumr8HTLDGP7M1wWp2qZcBhf5lR0nk");
   const [logoPosition, setLogoPosition] = useState("right");
+  
   const [logoOptions, setLogoOptions] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -75,7 +77,7 @@ const Product = () => {
               Logo
             </Button>
             <Button className="rounded-none py-2 bg-gray-200 text-gray-700 hover:bg-gray-300">
-              Stock
+              Review
             </Button>
           </div>
 
@@ -176,7 +178,7 @@ const Product = () => {
           </div>
         </div>
 
-        {/* 3D Viewer Section */}
+        {/* @D Viewer Section */}
         <div className="col-span-3 p-6 bg-gray-100 border border-gray-300 rounded-xl shadow-inner">
           <ModalViewer
             selectedColor={selectedColor}

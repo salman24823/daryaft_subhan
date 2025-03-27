@@ -43,14 +43,13 @@ const Customizer = () => {
 
   return (
     <div>
-      {/* Checkbox */}
+
       <div className="flex flex-col gap-2 mb-4">
         <Checkbox isSelected={isSelected} onValueChange={handleToggle}>
-          Designing
+          {isSelected ? "Enabled" : "Disabled"}
         </Checkbox>
-        <p className="text-default-500">Selected: {isSelected ? "true" : "false"}</p>
       </div>
-
+      
       {/* Other details */}
       <div className="flex w-full flex-col">
         <Tabs aria-label="Options">
@@ -64,6 +63,8 @@ const Customizer = () => {
             <Zipper />
           </Tab>
         </Tabs>
+
+
       </div>
     </div>
   );

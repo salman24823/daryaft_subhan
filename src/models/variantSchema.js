@@ -5,7 +5,7 @@ const variantSchema = new mongoose.Schema({
     variantImage: { type: String, required: true },
     variantColorName: { type: String, required: true },
     variantColorCode: { type: String, required: true },
-    stuffName: { type: String }
+    stuffName: [{ type: String }]
 });
 
 const Variant = mongoose.models.Variant || mongoose.model('Variant', variantSchema);

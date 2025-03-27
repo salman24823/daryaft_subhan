@@ -1,18 +1,26 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@heroui/react";
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, RadioGroup, Radio } from "@heroui/react";
 import { CldUploadWidget } from "next-cloudinary";
 
 export default function Customizer() {
-  const [panelType, setPanelType] = useState("color");
   const [selectedColor, setSelectedColor] = useState("#4A90E2");
   const [selectedLogo, setSelectedLogo] = useState(
     "https://utfs.io/f/vm2okaME29juIbAIO5rumr8HTLDGP7M1wWp2qZcBhf5lR0nk"
   );
   const [logoPosition, setLogoPosition] = useState({ x: "end", y: "center" }); // Updated to use justify and items
-  const [logoOptions, setLogoOptions] = useState([]);
   const [logoSize, setLogoSize] = useState("md");
+  const [quantity, setQuantity] = useState(1);
+
+  const [selected, setSelected] = React.useState("");
+  const [selectedHoodieImage, setSelectedHoodieImage] = useState(
+    "https://res.cloudinary.com/dr0vskm6n/image/upload/v1742363939/236d2355-ef94-45ae-b51b-8d4cfb1cdbf5-removebg-preview_1_bxrczt.png"
+  );
+
+  const [stuff, setStuff] = useState([]);
+  const [panelType, setPanelType] = useState("color");
+  const [logoOptions, setLogoOptions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -35,25 +43,24 @@ export default function Customizer() {
     { name: "Black", hex: "#000000" },
   ];
 
+  const fetchVariation = async () => {
+    try {
+      // Replace with actual API call
+      const response = await fetch("/api/handleCustomizer");
+      const data = await response.json();
+      setStuff(data)
+    } catch (err) {
+      setError("Failed to load logos");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     // Simulate fetching logo options from an API
-    const fetchLogoOptions = async () => {
-      try {
-        // Replace with actual API call
-        const response = await fetch("https://api.example.com/logos");
-        const data = await response.json();
-        setLogoOptions(data.logoUrls);
-      } catch (err) {
-        setError("Failed to load logos");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    // fetchLogoOptions();
+    fetchVariation()
   }, []);
 
-  const [quantity, setQuantity] = useState(1);
 
   const handleDecrement = () => {
     if (quantity > 1) {
@@ -74,38 +81,40 @@ export default function Customizer() {
     setLogoPosition((prev) => ({ ...prev, [axis]: value }));
   };
 
+  const handleColorSelect = (product) => {
+    setSelectedColor(product.variantColorCode);
+    setSelectedHoodieImage(product.variantImage);
+  };
+
   return (
     <div className="w-full gap-20 h-[110vh] md:h-auto lg:h-screen grid lg-gap-5 p-2 mt-20 grid-col-1 lg:grid-cols-10">
       <div className="col-span-1 lg:col-span-3 h-full ">
         <div className="h-full bg-white shadow-lg p-6 border border-gray-300 rounded-xl backdrop-blur-md bg-opacity-80">
           <div className="grid grid-cols-3 mb-6 rounded-full overflow-hidden">
             <Button
-              className={`rounded-none py-2 ${
-                panelType === "color"
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              }`}
+              className={`rounded-none py-2 ${panelType === "color"
+                ? "bg-blue-600 text-white"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                }`}
               onPress={() => setPanelType("color")}
             >
               Color
             </Button>
             <Button
-              className={`rounded-none py-2 ${
-                panelType === "logo"
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              }`}
+              className={`rounded-none py-2 ${panelType === "logo"
+                ? "bg-blue-600 text-white"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                }`}
               onPress={() => setPanelType("logo")}
             >
               Logo
             </Button>
 
             <Button
-              className={`rounded-none py-2 ${
-                panelType === "stock"
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              }`}
+              className={`rounded-none py-2 ${panelType === "stock"
+                ? "bg-blue-600 text-white"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                }`}
               onPress={() => setPanelType("stock")}
             >
               Stock
@@ -116,22 +125,59 @@ export default function Customizer() {
           <div className="w-full">
             {panelType === "color" ? (
               <>
-                <h2 className="text-lg font-semibold text-gray-900 mt-6 mb-4 w-full text-center">
+                <h2 onClick={fetchVariation} className="text-lg font-semibold text-gray-900 mt-6 mb-4 w-full text-center">
                   Choose Your Color
                 </h2>
-                <div className="flex flex-wrap gap-3 justify-center">
-                  {colorOptions.map((color, index) => (
-                    <div key={index} className="text-center">
-                      <Button
-                        className="w-12 min-w-12 min-h-12 h-12 rounded-full border border-gray-400 shadow-md hover:scale-110 transition"
-                        style={{ backgroundColor: color.hex }}
-                        onPress={() => setSelectedColor(color.hex)}
-                      />
-                      <p className="text-sm text-gray-700 mt-1 font-medium">
-                        {color.name}
-                      </p>
-                    </div>
+                <h2  onClick={() => console.log(stuff,selected, "stuff and selected")} className="text-lg font-semibold text-gray-900 mt-6 mb-4 w-full text-center">
+                  stuff
+                </h2>
+
+
+                <RadioGroup
+                  label="Select your stuff"
+                  value={selected}
+                  onValueChange={setSelected}
+                >
+                  {stuff[0]?.stuffName?.map((value) => (
+                    <Radio key={value} value={value}>
+                      {value}
+                    </Radio>
                   ))}
+                </RadioGroup>
+
+
+                <div className="flex flex-wrap gap-3 justify-center">
+                  {stuff.map((product) => {
+                    // Check if this color is available for the selected material
+                    const isAvailable = !selected || product.stuffName.includes(selected);
+
+                    return (
+                      <div key={product._id} className="text-center">
+                        <Button
+                          onPress={() => isAvailable && handleColorSelect(product)}
+
+                          className={`
+          w-10 h-10 rounded-full border-2 shadow-md transition
+          ${selectedColor === product.variantColorCode ?
+                              'ring-2 ring-offset-2 ring-blue-500' :
+                              'border-transparent'
+                            }
+          ${isAvailable ?
+                              'hover:scale-110 cursor-pointer' :
+                              'opacity-50 cursor-not-allowed'
+                            }
+        `}
+                          style={{ backgroundColor: product.variantColorCode }}
+                          isDisabled={!isAvailable}
+                        />
+                        <p className={`text-xs mt-1 ${isAvailable ? 'text-gray-700' : 'text-gray-400'
+                          }`}>
+                          {product.variantColorName}
+                          {!isAvailable && ' (Unavailable)'}
+                        </p>
+                      </div>
+                    );
+                  })}
                 </div>
               </>
             ) : panelType == "logo" ? (
@@ -142,31 +188,28 @@ export default function Customizer() {
 
                 <div className="rounded-full overflow-hidden mb-4 grid grid-cols-3">
                   <Button
-                    className={`px-0 rounded-none py-2 ${
-                      logoPosition.y === "start"
-                        ? "bg-gray-500 text-white"
-                        : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                    }`}
+                    className={`px-0 rounded-none py-2 ${logoPosition.y === "start"
+                      ? "bg-gray-500 text-white"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                      }`}
                     onPress={() => handleLogoPositionChange("y", "start")}
                   >
                     Top
                   </Button>
                   <Button
-                    className={`px-0 rounded-none py-2 ${
-                      logoPosition.y === "center"
-                        ? "bg-gray-500 text-white"
-                        : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                    }`}
+                    className={`px-0 rounded-none py-2 ${logoPosition.y === "center"
+                      ? "bg-gray-500 text-white"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                      }`}
                     onPress={() => handleLogoPositionChange("y", "center")}
                   >
                     Middle
                   </Button>
                   <Button
-                    className={`px-0 rounded-none py-2 ${
-                      logoPosition.y === "end"
-                        ? "bg-gray-500 text-white"
-                        : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                    }`}
+                    className={`px-0 rounded-none py-2 ${logoPosition.y === "end"
+                      ? "bg-gray-500 text-white"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                      }`}
                     onPress={() => handleLogoPositionChange("y", "end")}
                   >
                     Bottom
@@ -175,31 +218,28 @@ export default function Customizer() {
 
                 <div className="rounded-full overflow-hidden mb-4 grid grid-cols-3">
                   <Button
-                    className={`px-0 rounded-none py-2 ${
-                      logoPosition.x === "start"
-                        ? "bg-gray-500 text-white"
-                        : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                    }`}
+                    className={`px-0 rounded-none py-2 ${logoPosition.x === "start"
+                      ? "bg-gray-500 text-white"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                      }`}
                     onPress={() => handleLogoPositionChange("x", "start")}
                   >
                     Left
                   </Button>
                   <Button
-                    className={`px-0 rounded-none py-2 ${
-                      logoPosition.x === "center"
-                        ? "bg-gray-500 text-white"
-                        : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                    }`}
+                    className={`px-0 rounded-none py-2 ${logoPosition.x === "center"
+                      ? "bg-gray-500 text-white"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                      }`}
                     onPress={() => handleLogoPositionChange("x", "center")}
                   >
                     Center
                   </Button>
                   <Button
-                    className={`px-0 rounded-none py-2 ${
-                      logoPosition.x === "end"
-                        ? "bg-gray-500 text-white"
-                        : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                    }`}
+                    className={`px-0 rounded-none py-2 ${logoPosition.x === "end"
+                      ? "bg-gray-500 text-white"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                      }`}
                     onPress={() => handleLogoPositionChange("x", "end")}
                   >
                     Right
@@ -209,31 +249,28 @@ export default function Customizer() {
                 {/* // Update the buttons for logo size */}
                 <div className="rounded-full overflow-hidden mb-4 grid grid-cols-3">
                   <Button
-                    className={`px-0 rounded-none py-2 ${
-                      logoSize === "sm"
-                        ? "bg-gray-500 text-white"
-                        : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                    }`}
+                    className={`px-0 rounded-none py-2 ${logoSize === "sm"
+                      ? "bg-gray-500 text-white"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                      }`}
                     onPress={() => handleLogoSizeChange("sm")}
                   >
                     Small
                   </Button>
                   <Button
-                    className={`px-0 rounded-none py-2 ${
-                      logoSize === "md"
-                        ? "bg-gray-500 text-white"
-                        : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                    }`}
+                    className={`px-0 rounded-none py-2 ${logoSize === "md"
+                      ? "bg-gray-500 text-white"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                      }`}
                     onPress={() => handleLogoSizeChange("md")}
                   >
                     Medium
                   </Button>
                   <Button
-                    className={`px-0 rounded-none py-2 ${
-                      logoSize === "lg"
-                        ? "bg-gray-500 text-white"
-                        : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                    }`}
+                    className={`px-0 rounded-none py-2 ${logoSize === "lg"
+                      ? "bg-gray-500 text-white"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                      }`}
                     onPress={() => handleLogoSizeChange("lg")}
                   >
                     Large
@@ -252,11 +289,10 @@ export default function Customizer() {
                     {logoOptions.map((logo, index) => (
                       <div
                         key={index}
-                        className={`p-2 border-2 rounded-lg cursor-pointer hover:border-blue-500 transition ${
-                          selectedLogo === logo
-                            ? "border-blue-600 shadow-lg"
-                            : "border-gray-300"
-                        }`}
+                        className={`p-2 border-2 rounded-lg cursor-pointer hover:border-blue-500 transition ${selectedLogo === logo
+                          ? "border-blue-600 shadow-lg"
+                          : "border-gray-300"
+                          }`}
                         onClick={() => setSelectedLogo(logo)}
                       >
                         {/* <p>Hi : {logo} </p> */}
@@ -321,17 +357,17 @@ export default function Customizer() {
                   <h2 className="font-semibold text-gray-700">Hoodie Size :</h2>
 
                   <div>
-                  <Dropdown>
-                    <DropdownTrigger>
-                      <Button className="rounded-full" variant="bordered">Select Size</Button>
-                    </DropdownTrigger>
-                    <DropdownMenu aria-label="Static Actions">
-                      <DropdownItem key="new">Small</DropdownItem>
-                      <DropdownItem key="copy">Medium</DropdownItem>
-                      <DropdownItem key="edit">Large</DropdownItem>
-                      <DropdownItem key="edit">Extra Large</DropdownItem>
-                    </DropdownMenu>
-                  </Dropdown>
+                    <Dropdown>
+                      <DropdownTrigger>
+                        <Button className="rounded-full" variant="bordered">Select Size</Button>
+                      </DropdownTrigger>
+                      <DropdownMenu aria-label="Static Actions">
+                        <DropdownItem key="new">Small</DropdownItem>
+                        <DropdownItem key="copy">Medium</DropdownItem>
+                        <DropdownItem key="edit">Large</DropdownItem>
+                        <DropdownItem key="edit">Extra Large</DropdownItem>
+                      </DropdownMenu>
+                    </Dropdown>
                   </div>
                 </div>
 
@@ -381,13 +417,13 @@ export default function Customizer() {
             )}
           </div>
         </div>
-      </div> 
+      </div>
 
       <div className="col-span-1  lg:col-span-7 flex items-start justify-center">
         <div className="flex justify-center items-center w-1/2 h-auto relative">
           {/* Hoodie Vector Image */}
           <img
-            src="https://res.cloudinary.com/dr0vskm6n/image/upload/v1742363939/236d2355-ef94-45ae-b51b-8d4cfb1cdbf5-removebg-preview_1_bxrczt.png"
+            src={selectedHoodieImage}
             alt="Hoodie"
             className="w-full h-full"
           />

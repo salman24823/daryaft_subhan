@@ -1,16 +1,17 @@
 "use client";
 
-import { Button, Tab, Tabs } from "@heroui/react";
+import { Button, Checkbox } from "@heroui/react";
 import { CldUploadWidget } from "next-cloudinary";
 import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 const Hoodie = () => {
     const [variants, setVariants] = useState([]);
-    const [stuffList, setStuffList] = useState([]); // Fixed state for multiple stuff items
+    const [stuffList, setStuffList] = useState([]);
     const [stuffName, setStuffName] = useState("");
     const [loading, setLoading] = useState(false);
 
+    const [selectedStuff, setSelectedStuff] = useState({});
 
     useEffect(() => {
         fetchVariants();
@@ -20,51 +21,19 @@ const Hoodie = () => {
     async function fetchVariants() {
         try {
             const response = await fetch("/api/handleCustomizer");
-            if (!response.ok) throw new Error("Failed to fetch variants");
-
             const data = await response.json();
             setVariants(data);
+
+            const initialSelectedStuff = {};
+            data.forEach(variant => {
+                initialSelectedStuff[variant._id] = variant.stuffName || []; // Note: stuffName not stuffNames
+            });
+            setSelectedStuff(initialSelectedStuff);
         } catch (error) {
             console.error("Error fetching variants:", error);
         }
     }
 
-    async function fetchStuff() {
-        try {
-            const response = await fetch("/api/handleStuff", { method: "GET" });
-            if (!response.ok) throw new Error("Failed to fetch stuff");
-
-            const data = await response.json();
-            setStuffList(data.stuff || []); // Ensure array format
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    async function handleStuff() {
-        if (!stuffName) return alert("Stuff name cannot be empty.");
-
-        setLoading(true);
-        try {
-            const response = await fetch("/api/handleStuff", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ stuffName }),
-            });
-
-            if (!response.ok) throw new Error("Failed to add stuff");
-
-            const data = await response.json();
-            setStuffList((prev) => [...prev, data.stuff]);
-            setStuffName("");
-
-            toast.success("Successfully added stuff");
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setLoading(false);
-        }
-    }
 
     const addVariation = async (colorName, colorCode, imageUrl) => {
         if (!colorName || !colorCode || !imageUrl) return;
@@ -114,28 +83,74 @@ const Hoodie = () => {
         }
     };
 
-    async function updateVariant(variantStuff){
-        console.log(variantStuff , "console")
-        return
-        const response = await fetch("/api/handleCustomizer",{
-            method: "PUT",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                variantID,
-                variantStuff,
-            })
-        })
+    async function fetchStuff() {
+        try {
+            const response = await fetch("/api/handleStuff", { method: "GET" });
+            if (!response.ok) throw new Error("Failed to fetch stuff");
+
+            const data = await response.json();
+            console.log(data, "data")
+            setStuffList(data.stuff); // Ensure array format
+
+        } catch (error) {
+            console.error(error);
+        }
     }
-    
+
+    async function handleStuff() {
+        if (!stuffName) return alert("Stuff name cannot be empty.");
+
+        setLoading(true);
+        try {
+            const response = await fetch("/api/handleStuff", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ stuffName }),
+            });
+
+            if (!response.ok) throw new Error("Failed to add stuff");
+
+            fetchStuff()
+            setStuffName("");
+
+            toast.success("Successfully added stuff");
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const handleCheckboxChange = async (variantId, stuffName) => {
+        setSelectedStuff((prev) => {
+            const prevSelected = prev[variantId] || [];
+            const updatedStuff = prevSelected.includes(stuffName)
+                ? prevSelected.filter(name => name !== stuffName)  // Remove if exists
+                : [...prevSelected, stuffName];  // Add if not exists
+
+            // API call to update variant with names
+            fetch("/api/handleStuff", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ variantId, stuffNames: updatedStuff }),
+            })
+                .then((res) => res.json())
+                .then((data) => console.log("Updated Variant:", data))
+                .catch((error) => console.error("Update error:", error));
+
+            return { ...prev, [variantId]: updatedStuff };
+        });
+    };
+
+
     return (
         <>
-            <div className="p-6 bg-white rounded-lg shadow-md">
+            <div onClick={() => console.log(selectedStuff, "variants from db")} className="p-6 bg-white rounded-lg shadow-md">
                 <div className="mb-8 flex justify-between">
-                    <label className="block text-lg font-semibold text-gray-800">Add Variations</label>
+                    <label className="block text-lg font-semibold text-gray-800" onClick={fetchStuff}>Add Variations</label>
 
                     <div className="flex gap-2">
+
                         <div className="flex rounded-xl border border-blue-500 overflow-hidden items-center">
                             <input
                                 type="text"
@@ -187,27 +202,25 @@ const Hoodie = () => {
                             <button onClick={() => removeVariation(index, v._id)} className="text-xs text-red-500 mt-2">
                                 Remove
                             </button>
+                            <div className="w-full">
+                                {stuffList.map((s) => {
+                                    const isChecked = selectedStuff[v._id]?.includes(s.stuffName) ?? false;
+                                    return (
+                                        <Checkbox
+                                            key={`${v._id}-${s.stuffName}`}
+                                            color="primary"
+                                            size="sm"
+                                            isSelected={isChecked}
+                                            onChange={() => handleCheckboxChange(v._id, s.stuffName)}
+                                        >
+                                            {s.stuffName}
+                                        </Checkbox>
+                                    );
+                                })}
+                            </div>
                         </div>
                     ))}
                 </div>
-            </div>
-
-            <div className="p-6 mt-4 bg-white rounded-lg shadow-md">
-                <Tabs isVertical>
-                    {stuffList.map(({ _id, stuffName }) => (
-                        <Tab title={stuffName} key={_id}>
-                            <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-6">
-                                {variants.map((v, index) => (
-                                    <div onClick={()=> updateVariant(stuffName) } key={index} className="flex flex-col items-center p-4 bg-gray-50 rounded-lg shadow-sm">
-                                        <div className="w-10 h-10 rounded-full" style={{ backgroundColor: v.variantColorCode }}></div>
-                                        <img src={v.variantImage} alt={v.variantColorName} className="w-24 h-24 mt-4 object-cover" />
-                                        <p className="text-sm font-medium text-gray-700 mt-3">{v.variantColorName}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </Tab>
-                    ))}
-                </Tabs>
             </div>
         </>
     );
