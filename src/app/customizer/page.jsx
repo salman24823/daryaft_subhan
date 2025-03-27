@@ -29,19 +29,12 @@ export default function Customizer() {
     setLogoSize(size);
   };
 
-  const colorOptions = [
-    { name: "White", hex: "#ffffff" },
-    { name: "Green", hex: "#33FF57" },
-    { name: "Blue", hex: "#3357FF" },
-    { name: "Pink", hex: "#FF33A1" },
-    { name: "Purple", hex: "#A133FF" },
-    { name: "Teal", hex: "#33FFA1" },
-    { name: "Orange", hex: "#FFA133" },
-    { name: "Lime", hex: "#57FF33" },
-    { name: "Sky Blue", hex: "#33A1FF" },
-    { name: "Rose", hex: "#FF3357" },
-    { name: "Black", hex: "#000000" },
-  ];
+  function handleAddToCart(){
+
+    console.log(selectedColor,selected,selectedHoodieImage,logoSize,logoPosition,quantity,selectedLogo,"addto cart data")
+
+  }
+
 
   const fetchVariation = async () => {
     try {
@@ -70,11 +63,6 @@ export default function Customizer() {
 
   const handleIncrement = () => {
     setQuantity(quantity + 1);
-  };
-
-  const handleAddToCart = () => {
-    console.log(`Added ${quantity} items to cart`);
-    // Add your cart logic here
   };
 
   const handleLogoPositionChange = (axis, value) => {
