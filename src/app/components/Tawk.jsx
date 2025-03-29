@@ -1,16 +1,21 @@
-'use client';
+"use client";
+import { useEffect } from "react";
 
-import TawkMessengerReactUmd from "@tawk.to/tawk-messenger-react";
+const TawkTo = () => {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://embed.tawk.to/67e7c36501c5b0190a989b42/1ingl6i01";
+    script.async = true;
+    script.charset = "UTF-8";
+    script.setAttribute("crossorigin", "*");
+    document.body.appendChild(script);
 
-// @ts-ignore
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
-const TawkChat = () => {
-  return (
-    <TawkMessengerReactUmd
-      propertyId={process.env.NEXT_PUBLIC_TAWK_PROPERTY_ID}
-      widgetId={process.env.NEXT_PUBLIC_TAWK_WIDGET_ID}
-    />
-  );
+  return null; // No UI element needed
 };
 
-export default TawkChat;
+export default TawkTo;

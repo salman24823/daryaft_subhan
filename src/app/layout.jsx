@@ -6,7 +6,7 @@ import { extractRouterConfig } from "uploadthing/server";
 import { ToastContainer } from "react-toastify";
 import Header from "./components/Header/page";
 import Footer from "./components/Footer/page";
-import TawkChat from "./components/Tawk";
+import TawkTo from "./components/Tawk";
 
 export default function RootLayout({ children }) {
   return (
@@ -53,7 +53,7 @@ export default function RootLayout({ children }) {
           </div>
         </HeroUIProvider>
         <ToastContainer />
-      <TawkChat />
+      <TawkTo />
       </body>
 
     </html>
