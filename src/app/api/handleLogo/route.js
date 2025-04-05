@@ -1,39 +1,51 @@
+import dbConnection from "@/config/dbConnection";
+import logoModel from "@/models/logoModel";
 import { NextResponse } from "next/server";
 
 export const revalidate = 0;
 
 export async function GET() {
   try {
+    dbConnection()
+
     // Fetch all logos from the database
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_LOGO_API_URL}/api/handleLogo`,
-      {
-        method: "GET", // Use GET method
-        headers: {
-          "Content-Type": "application/json", // Set the content type to JSON
-        },
-      }
-    );
+    const logo = await logoModel.find();
 
-    const data = await response.json(); // Assuming the response is in JSON format
+    console.log(logo,"logo")
 
-    console.log(data, "ABCD");
-
-    // Map through the logos and extract only the URLs
-    const logoUrls = data.logos.map((logo) => logo.url);
-
-    console.log(logoUrls,"logoUrls")
-
-    return new NextResponse(
-      JSON.stringify({ logoUrls }, { message: "Success" }),
-      {
-        status: 200,
-      }
-    );
+    return new NextResponse(JSON.stringify({ logo }, { message: "Success" }), {
+      status: 200,
+    });
   } catch (error) {
     console.error("Error fetching logos:", error);
     return NextResponse.json(
       { message: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function POST(req) {
+  try {
+    await dbConnection();
+    const { logo } = await req.json();
+
+    if (!logo) {
+      return NextResponse.json({ error: "logo is required" }, { status: 400 });
+    }
+
+    // Save only logo; createdAt is auto-generated
+    const result = new logoModel({ url : logo });
+    await result.save();
+
+    return NextResponse.json(
+      { success: true, message: "Newsletter subscribed!" },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error("Error uploading Newsletter:", error);
+    return NextResponse.json(
+      { error: "Failed to upload Newsletter" },
       { status: 500 }
     );
   }

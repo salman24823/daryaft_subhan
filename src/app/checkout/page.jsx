@@ -179,7 +179,7 @@ const Checkout = () => {
               </Button>
             </form>
 
-            <p className="mt-10 text-center text-sm font-semibold text-gray-500">
+            <p onClick={()=> console.log(cart,"cart") } className="mt-10 text-center text-sm font-semibold text-gray-500">
               By placing this order you agree to the{" "}
               <a
                 href="#"
@@ -263,7 +263,7 @@ const Checkout = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

@@ -5,6 +5,7 @@ import { Tabs, Tab, Checkbox } from "@heroui/react";
 import Hoodie from "./Hoodie";
 import Shirt from "./Shirt";
 import Zipper from "./Zipper";
+import Logo from "./Logo";
 
 const Customizer = () => {
   const [isSelected, setIsSelected] = useState(false);
@@ -61,6 +62,9 @@ const Customizer = () => {
           </Tab>
           <Tab key="zipper" title="Zipper">
             <Zipper />
+          </Tab>
+          <Tab key="logo" title="Logo">
+            <Logo />
           </Tab>
         </Tabs>
 

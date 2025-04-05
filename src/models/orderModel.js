@@ -4,10 +4,17 @@ const cartItemSchema = new mongoose.Schema({
   color: { type: String },
   size: { type: String, required: true },
   quantity: { type: Number, required: true },
-  id: { type: String, required: true },
+  id: { type: String, default : "N/A" },
   thumbnail: { type: String, required: true },
   salePrice: { type: Number, required: true },
-  name: { type: String, required: true }
+  name: { type: String, default : "N/A" } ,
+
+  colorCode: { type: String, default : "N/A" } ,
+  logoPrice: { type: String, default : "N/A" } ,
+  logoPosition: { type: String, default : "N/A" } ,
+  logoSize: { type: String, default : "N/A" } ,
+  selectedLogo: { type: String, default : "N/A" } ,
+  stuffPrice: { type: String, default : "N/A" } ,
 });
 
 const checkOutSchema = new mongoose.Schema({

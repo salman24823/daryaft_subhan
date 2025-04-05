@@ -178,7 +178,7 @@ const Product = () => {
           </div>
         </div>
 
-        {/* @D Viewer Section */}
+        {/* 3D Viewer Section */}
         <div className="col-span-3 p-6 bg-gray-100 border border-gray-300 rounded-xl shadow-inner">
           <ModalViewer
             selectedColor={selectedColor}

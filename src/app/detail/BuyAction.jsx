@@ -76,6 +76,7 @@ const BuyAction = ({ product, setVariantImage }) => {
       name: product.name,
     };
 
+
     console.log(productDetails, "productDetails");
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -112,9 +113,8 @@ const BuyAction = ({ product, setVariantImage }) => {
         {product.variations.map((color, index) => (
           <button
             key={index}
-            className={`w-8 h-8 border-slate-400 border rounded-full focus:ring-2 focus:ring-offset-2 focus:ring-[#B4531A] ${
-              selectedColor === color.colorName ? "ring-2 ring-[#B4531A]" : ""
-            }`}
+            className={`w-8 h-8 border-slate-400 border rounded-full focus:ring-2 focus:ring-offset-2 focus:ring-[#B4531A] ${selectedColor === color.colorName ? "ring-2 ring-[#B4531A]" : ""
+              }`}
             style={{ backgroundColor: color.colorCode }}
             onClick={() =>
               handleColorSelect({
@@ -133,9 +133,8 @@ const BuyAction = ({ product, setVariantImage }) => {
         {product.sizes.map((size, index) => (
           <button
             key={index}
-            className={`px-4 py-2 border-2 border-gray-300 rounded-lg hover:border-[#B4531A] hover:text-[#B4531A] transition-all ${
-              selectedSize === size ? "!border-[#B4531A] text-[#B4531A]" : ""
-            }`}
+            className={`px-4 py-2 border-2 border-gray-300 rounded-lg hover:border-[#B4531A] hover:text-[#B4531A] transition-all ${selectedSize === size ? "!border-[#B4531A] text-[#B4531A]" : ""
+              }`}
             onClick={() => handleSizeSelect(size)}
           >
             {size}
