@@ -1,8 +1,8 @@
 import "./globals.css";
 import { HeroUIProvider } from "@heroui/react";
-import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
-import { ourFileRouter } from "./api/uploadthing/core";
-import { extractRouterConfig } from "uploadthing/server";
+// import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+// import { ourFileRouter } from "./api/uploadthing/core";
+// import { extractRouterConfig } from "uploadthing/server";
 import { ToastContainer } from "react-toastify";
 import Header from "./components/Header/page";
 import Footer from "./components/Footer/page";
@@ -46,7 +46,7 @@ export default function RootLayout({ children }) {
         <HeroUIProvider>
           <div className="flex flex-col items-center">
             <Header />
-            <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+            {/* <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} /> */}
 
             {children}
             <Footer />

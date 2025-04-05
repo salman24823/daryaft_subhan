@@ -6,12 +6,12 @@ export const revalidate = 0;
 
 export async function GET() {
   try {
-    dbConnection()
+    dbConnection();
 
     // Fetch all logos from the database
     const logo = await logoModel.find();
 
-    console.log(logo,"logo")
+    console.log(logo, "logo");
 
     return new NextResponse(JSON.stringify({ logo }, { message: "Success" }), {
       status: 200,
@@ -28,24 +28,48 @@ export async function GET() {
 export async function POST(req) {
   try {
     await dbConnection();
-    const { logo } = await req.json();
+    const { logo, logoPrice } = await req.json();
 
-    if (!logo) {
-      return NextResponse.json({ error: "logo is required" }, { status: 400 });
+    if (!logo || !logoPrice) {
+      return NextResponse.json(
+        { error: "logo & price is required" },
+        { status: 400 }
+      );
     }
 
     // Save only logo; createdAt is auto-generated
-    const result = new logoModel({ url : logo });
+    const result = new logoModel({ url: logo, logoPrice });
     await result.save();
 
     return NextResponse.json(
-      { success: true, message: "Newsletter subscribed!" },
+      { success: true, message: "Logo Uploaded!" },
       { status: 201 }
     );
   } catch (error) {
-    console.error("Error uploading Newsletter:", error);
+    console.error("Error uploading Logo:", error);
     return NextResponse.json(
-      { error: "Failed to upload Newsletter" },
+      { error: "Failed to upload Logo" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(req) {
+  try {
+    await dbConnection();
+    const { id } = await req.json();
+
+    if (!id) {
+      return NextResponse.json({ error: "ID is required" }, { status: 400 });
+    }
+
+    await logoModel.findByIdAndDelete(id);
+
+    return NextResponse.json({ success: true }, { status: 200 });
+  } catch (error) {
+    console.error("Unable to delete", error);
+    return NextResponse.json(
+      { error: "Failed to delete Logo" },
       { status: 500 }
     );
   }
