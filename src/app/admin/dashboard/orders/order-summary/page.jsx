@@ -123,7 +123,7 @@ const Summary = () => {
                       <strong>Quantity:</strong> {item.quantity || "N/A"}
                     </p>
                     <p className="text-sm">
-                      <strong>Price:</strong> ${item.salePrice || "N/A"}
+                      <strong>Price:</strong> {item.salePrice || "N/A"}
                     </p>
                     <Divider className="my-2" />
                     <p className="text-sm">
@@ -148,10 +148,10 @@ const Summary = () => {
                       {item.logoPosition.y || "N/A"} = Y
                     </p>
                     <p className="text-sm">
-                      <strong>Logo Price:</strong> ${item.logoPrice || "0"}
+                      <strong>Logo Price:</strong> {item.logoPrice || "0"}
                     </p>
                     <p className="text-sm">
-                      <strong>Stuff Price:</strong> ${item.stuffPrice || "0"}
+                      <strong>Stuff Price:</strong> {item.stuffPrice || "0"}
                     </p>
                   </div>
                 ))}
@@ -170,7 +170,7 @@ const Summary = () => {
                 : "N/A"}
             </p>
             <p className="text-lg font-bold text-gray-800">
-              <strong>Total Price:</strong> ${OrderData?.totalPrice || "N/A"}
+              <strong>Total Price:</strong> {OrderData?.totalPrice || "N/A"}
             </p>
           </CardFooter>
         </Card>
