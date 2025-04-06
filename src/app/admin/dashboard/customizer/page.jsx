@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Tabs, Tab, Checkbox } from "@heroui/react";
+import React, { useState } from "react";
+import { Checkbox, Tabs, Tab } from "@heroui/react";
 import Hoodie from "./Hoodie";
 import Shirt from "./Shirt";
 import Zipper from "./Zipper";
@@ -9,66 +9,64 @@ import Logo from "./Logo";
 
 const Customizer = () => {
   const [isSelected, setIsSelected] = useState(false);
+  const [activeTab, setActiveTab] = useState("hoodie");
 
-  // Fetch state from API when the component mounts
-  useEffect(() => {
-    const fetchState = async () => {
-      try {
-        const res = await fetch("/api/state");
-        const data = await res.json();
-        if (data && typeof data.statusState === "boolean") {
-          setIsSelected(data.statusState);
-        }
-      } catch (error) {
-        console.error("Error fetching state:", error);
-      }
-    };
-
-    fetchState();
-  }, []);
-
-  // Handle checkbox toggle and update API
   const handleToggle = async (newState) => {
     setIsSelected(newState);
-
+  
     try {
-      await fetch("/api/state", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ statusState: newState }),
+      const response = await fetch('/api/handleState', {
+        method: 'PUT', // or 'POST' depending on your API design
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ isSelected: newState }),
       });
+  
+      if (!response.ok) {
+        throw new Error('Failed to update toggle state');
+      }
+  
+      const data = await response.json();
+      console.log('Toggle updated:', data);
     } catch (error) {
-      console.error("Error updating state:", error);
+      console.error('Error updating toggle:', error);
     }
   };
+  
 
   return (
     <div>
-
+      {/* Toggle checkbox */}
       <div className="flex flex-col gap-2 mb-4">
+
+      </div>
+
+      <div className="flex gap-5">
+        {/* Tabs */}
+        <Tabs selectedKey={activeTab} onSelectionChange={setActiveTab}>
+          <Tab key="hoodie" title="Hoodie" />
+          <Tab key="shirt" title="Shirt" />
+          <Tab key="zipper" title="Zipper" />
+          <Tab key="logo" title="Logo" />
+        </Tabs>
+
         <Checkbox isSelected={isSelected} onValueChange={handleToggle}>
           {isSelected ? "Enabled" : "Disabled"}
         </Checkbox>
       </div>
-      
-      {/* Other details */}
-      <div className="flex w-full flex-col">
-        <Tabs aria-label="Options">
-          <Tab key="hoodie" title="Hoodie">
-            <Hoodie />
-          </Tab>
-          <Tab key="shirt" title="Shirt">
-            <Shirt />
-          </Tab>
-          <Tab key="zipper" title="Zipper">
-            <Zipper />
-          </Tab>
-          <Tab key="logo" title="Logo">
-            <Logo />
-          </Tab>
-        </Tabs>
 
-
+      {/* Tab Content */}
+      <div className="mt-4">
+        {activeTab === "hoodie" ? (
+          <Hoodie />
+        ) : activeTab === "shirt" ? (
+          <Shirt />
+        ) : activeTab === "zipper" ? (
+          <Zipper />
+        ) : activeTab === "logo" ? (
+          <Logo />
+        ) : null}
       </div>
     </div>
   );

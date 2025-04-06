@@ -52,7 +52,7 @@ export default function Customizer() {
           <div className="grid grid-cols-3 mb-6 rounded-full overflow-hidden">
             <Button
               className={`rounded-none py-2 ${panelType === "color"
-                ? "bg-blue-600 text-white"
+                ? "bg-[#a16c3d] text-white"
                 : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                 }`}
               onPress={() => setPanelType("color")}
@@ -61,7 +61,7 @@ export default function Customizer() {
             </Button>
             <Button
               className={`rounded-none py-2 ${panelType === "logo"
-                ? "bg-blue-600 text-white"
+                ? "bg-[#a16c3d] text-white"
                 : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                 }`}
               onPress={() => setPanelType("logo")}
@@ -70,7 +70,7 @@ export default function Customizer() {
             </Button>
             <Button
               className={`rounded-none py-2 ${panelType === "stock"
-                ? "bg-blue-600 text-white"
+                ? "bg-[#a16c3d] text-white"
                 : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                 }`}
               onPress={() => setPanelType("stock")}
