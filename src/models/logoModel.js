@@ -6,12 +6,17 @@ const formSchema = new mongoose.Schema(
     url: {
       type: String,
       required: true,
-    }
+    },
+    logoPrice: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true } // Automatically add createdAt and updatedAt
 );
 
 // Create a model
-const logoModel = mongoose.models.logoModel || mongoose.model("logoModel", formSchema);
+const logoModel =
+  mongoose.models.logoModel || mongoose.model("logoModel", formSchema);
 
 export default logoModel;
