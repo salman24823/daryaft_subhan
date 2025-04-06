@@ -43,7 +43,6 @@ export default function Home() {
 
   return (
     <>
-      <p onClick={() => console.log(status, "status")} >asd</p>
       <LandingSlider />
       <Hero />
       <Category />
