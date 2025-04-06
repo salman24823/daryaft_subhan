@@ -171,7 +171,7 @@ const Logo = ({ selectedLogo, setSelectedLogo ,logoPosition, setLogoPosition, se
           >
             {({ open }) => (
               <button
-                className="text-white font-semibold text-sm rounded-lg px-4 py-2 bg-blue-500"
+                className="text-white font-semibold text-sm rounded-lg px-4 py-2 bg-[#a16c3d]"
                 onClick={() => open()}
               >
                 Upload Logo
