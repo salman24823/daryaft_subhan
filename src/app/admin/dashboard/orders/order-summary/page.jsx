@@ -15,21 +15,17 @@ import { toast } from "react-toastify";
 const Summary = () => {
   const [OrderData, setOrderData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
   const searchParams = useSearchParams();
 
   useEffect(() => {
     const orderId = searchParams.get("order_id");
-
-    console.log(orderId, "orderId");
-
     if (orderId) {
       fetchOrder(orderId);
     }
   }, [searchParams]);
 
   async function fetchOrder(orderId) {
-    setIsLoading(false);
+    setIsLoading(true);
     try {
       const response = await fetch(`/api/getOrders?order_id=${orderId}`, {
         method: "GET",
@@ -43,8 +39,8 @@ const Summary = () => {
       }
 
       const data = await response.json();
-      console.log(data);
       setOrderData(data);
+      console.log(data)
       setIsLoading(false);
     } catch (error) {
       toast.error("Error fetching order details");
@@ -62,11 +58,14 @@ const Summary = () => {
           </p>
         </div>
       ) : (
-        <Card className="w-full shadow-lg">
-          <CardHeader className="p-6 bg-gray-100">
-            <h1 className="text-xl md:text-2xl font-bold">Shipping Details:</h1>
+        <Card className="w-full shadow-xl border rounded-2xl">
+          {/* Shipping Details */}
+          <CardHeader className="bg-gray-100 rounded-t-2xl px-6 py-4 border-b">
+            <h1 className="text-xl md:text-2xl font-bold text-gray-800">
+              Shipping Details
+            </h1>
           </CardHeader>
-          <CardBody className="flex flex-col gap-4 p-6">
+          <CardBody className="px-6 py-4 space-y-2 bg-white">
             <p className="text-base">
               <strong>Name:</strong> {OrderData?.name || "N/A"}
             </p>
@@ -77,50 +76,98 @@ const Summary = () => {
               <strong>Phone:</strong> {OrderData?.phone || "N/A"}
             </p>
             <p className="text-base">
-              <strong>Payment Method:</strong> {OrderData?.paymentMethod || "N/A"}
+              <strong>Payment Method:</strong>{" "}
+              {OrderData?.paymentMethod || "N/A"}
             </p>
           </CardBody>
+
           <Divider />
 
-          {/* Display Cart Items */}
-          <CardBody className="p-6">
-            <h2 className="text-xl md:text-2xl font-bold mb-4">Items Details:</h2>
+          {/* Cart Items */}
+          <CardBody className="px-6 py-4 bg-gray-50">
+            <h2 className="text-xl md:text-2xl font-bold mb-4 text-gray-800">
+              Cart Items
+            </h2>
             {OrderData?.cart?.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {OrderData.cart.map((item, index) => (
-                  <div key={index} className="p-4 border rounded-lg shadow-sm flex flex-col items-center">
+                  <div
+                    key={index}
+                    className="bg-white border rounded-xl shadow-sm p-4 flex flex-col gap-2"
+                  >
                     {item.thumbnail && (
                       <img
                         src={item.thumbnail}
                         alt={item.name || "Product Image"}
-                        className="w-32 h-32 object-cover rounded mb-3"
+                        className="w-full h-40 object-cover rounded mb-2"
                       />
                     )}
-                    <p className="text-base">
-                      <strong>Color:</strong> {item.color || "N/A"}
+                    <p className="text-sm">
+                      <strong>Name:</strong> {item.name || "N/A"}
                     </p>
-                    <p className="text-base">
+                    <p className="text-sm flex items-center gap-2">
+                      <strong>Color:</strong> {item.color || "N/A"}{" "}
+                      {item.colorCode && (
+                        <span
+                          className="inline-block w-4 h-4 rounded-full border"
+                          style={{ backgroundColor: item.colorCode }}
+                          title={item.colorCode}
+                        ></span>
+                      )}
+                    </p>
+                    <p className="text-sm">
                       <strong>Size:</strong> {item.size || "N/A"}
                     </p>
-                    <p className="text-base">
+                    <p className="text-sm">
                       <strong>Quantity:</strong> {item.quantity || "N/A"}
                     </p>
-                    <p className="text-base">
+                    <p className="text-sm">
                       <strong>Price:</strong> ${item.salePrice || "N/A"}
+                    </p>
+                    <Divider className="my-2" />
+                    <p className="text-sm">
+                      <strong>Logo:</strong>
+                      {item.selectedLogo ? (
+                        <img
+                          src={item.selectedLogo}
+                          alt="Logo"
+                          className="w-14 h-14 object-contain" // You can adjust the width and height as needed
+                        />
+                      ) : (
+                        "N/A"
+                      )}
+                    </p>
+
+                    <p className="text-sm">
+                      <strong>Logo Size:</strong> {item.logoSize || "N/A"}
+                    </p>
+                    <p className="text-sm">
+                      <strong>Logo Position:</strong>{" "}
+                      {item.logoPosition || "N/A"}
+                    </p>
+                    <p className="text-sm">
+                      <strong>Logo Price:</strong> ${item.logoPrice || "0"}
+                    </p>
+                    <p className="text-sm">
+                      <strong>Stuff Price:</strong> ${item.stuffPrice || "0"}
                     </p>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-base">No cart items available</p>
+              <p className="text-base text-gray-600">No cart items available</p>
             )}
           </CardBody>
 
-          <CardFooter className="flex flex-col md:flex-row justify-between items-start md:items-center p-6 gap-4 bg-gray-100">
-            <p className="text-base">
-              <strong>Date:</strong> {OrderData?.createdAt ? new Date(OrderData.createdAt).toLocaleDateString() : "N/A"}
+          {/* Footer */}
+          <CardFooter className="flex flex-col md:flex-row justify-between items-start md:items-center p-6 gap-4 bg-white border-t rounded-b-2xl">
+            <p className="text-base text-gray-700">
+              <strong>Date:</strong>{" "}
+              {OrderData?.createdAt
+                ? new Date(OrderData.createdAt).toLocaleDateString()
+                : "N/A"}
             </p>
-            <p className="text-base font-bold">
+            <p className="text-lg font-bold text-gray-800">
               <strong>Total Price:</strong> ${OrderData?.totalPrice || "N/A"}
             </p>
           </CardFooter>
@@ -134,7 +181,7 @@ export default function OrderSummary() {
   return (
     <Suspense
       fallback={
-        <div className="w-full h-screen flex justify-center items-center text-black ">
+        <div className="w-full h-screen flex justify-center items-center text-black">
           <div className="flex gap-5">
             <Spinner size="lg" />
             <p>Loading...</p>
