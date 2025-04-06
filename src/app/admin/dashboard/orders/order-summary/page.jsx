@@ -97,6 +97,7 @@ const Summary = () => {
                   >
                     {item.thumbnail && (
                       <img
+                      onClick={()=> console.log(item) }
                         src={item.thumbnail}
                         alt={item.name || "Product Image"}
                         className="w-full h-40 object-cover rounded mb-2"
@@ -143,7 +144,8 @@ const Summary = () => {
                     </p>
                     <p className="text-sm">
                       <strong>Logo Position:</strong>{" "}
-                      {item.logoPosition || "N/A"}
+                      {item.logoPosition.x || "N/A"} = X 
+                      {item.logoPosition.y || "N/A"} = Y
                     </p>
                     <p className="text-sm">
                       <strong>Logo Price:</strong> ${item.logoPrice || "0"}
