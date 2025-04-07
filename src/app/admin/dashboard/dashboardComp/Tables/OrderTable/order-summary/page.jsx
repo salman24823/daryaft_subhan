@@ -77,18 +77,24 @@ const Summary = () => {
               <strong>Phone:</strong> {OrderData?.phone || "N/A"}
             </p>
             <p className="text-base">
-              <strong>Payment Method:</strong> {OrderData?.paymentMethod || "N/A"}
+              <strong>Payment Method:</strong>{" "}
+              {OrderData?.paymentMethod || "N/A"}
             </p>
           </CardBody>
           <Divider />
 
           {/* Display Cart Items */}
           <CardBody className="p-6">
-            <h2 className="text-xl md:text-2xl font-bold mb-4">Items Details:</h2>
+            <h2 className="text-xl md:text-2xl font-bold mb-4">
+              Items Details:
+            </h2>
             {OrderData?.cart?.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {OrderData.cart.map((item, index) => (
-                  <div key={index} className="p-4 border rounded-lg shadow-sm flex flex-col items-center">
+                  <div
+                    key={index}
+                    className="p-4 border rounded-lg shadow-sm flex flex-col items-center"
+                  >
                     {item.thumbnail && (
                       <img
                         src={item.thumbnail}
@@ -118,12 +124,16 @@ const Summary = () => {
 
           <CardFooter className="flex flex-col md:flex-row justify-between items-start md:items-center p-6 gap-4 bg-gray-100">
             <p className="text-base">
-              <strong>Date:</strong> {OrderData?.createdAt ? new Date(OrderData.createdAt).toLocaleDateString() : "N/A"}
+              <strong>Date:</strong>{" "}
+              {OrderData?.createdAt
+                ? new Date(OrderData.createdAt).toLocaleDateString()
+                : "N/A"}
             </p>
             <p className="text-base font-bold">
               <strong>Total Price:</strong> ${OrderData?.totalPrice || "N/A"}
             </p>
           </CardFooter>
+          
         </Card>
       )}
     </div>

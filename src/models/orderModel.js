@@ -32,7 +32,7 @@ const checkOutSchema = new mongoose.Schema({
   status: {
     type: String,
     default: "Processing",
-    enum: ["Processing", "Delivered"], // Only "Processing" or "Delivered" are valid
+    enum: ["Processing", "Delivered"], // "Processing" or "Delivered" are valid
   },
   createdAt: { type: Date, default: Date.now },
 });

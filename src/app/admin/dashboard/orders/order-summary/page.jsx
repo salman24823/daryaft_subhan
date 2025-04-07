@@ -170,7 +170,7 @@ const Summary = () => {
                 : "N/A"}
             </p>
             <p className="text-lg font-bold text-gray-800">
-              <strong>Total Price:</strong> {OrderData?.totalPrice || "N/A"}
+              {/* <strong>Total Price:</strong> {OrderData?.totalPrice || "N/A"} */}
             </p>
           </CardFooter>
         </Card>
