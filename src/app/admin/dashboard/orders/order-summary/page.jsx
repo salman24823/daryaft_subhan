@@ -40,7 +40,7 @@ const Summary = () => {
 
       const data = await response.json();
       setOrderData(data);
-      console.log(data)
+      console.log(data);
       setIsLoading(false);
     } catch (error) {
       toast.error("Error fetching order details");
