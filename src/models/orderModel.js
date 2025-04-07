@@ -11,7 +11,10 @@ const cartItemSchema = new mongoose.Schema({
   name: { type: String, default: "N/A" },
   colorCode: { type: String, default: "N/A" },
   logoPrice: { type: String, default: "N/A" },
-  logoPosition: { type: String, default: "N/A" },
+  logoPosition: {
+    x: { type: String, default: "N/A" },
+    y: { type: String, default: "N/A" },
+  },
   logoSize: { type: String, default: "N/A" },
   selectedLogo: { type: String, default: "N/A" },
   stuffPrice: { type: String, default: "N/A" },
@@ -25,6 +28,7 @@ const checkOutSchema = new mongoose.Schema({
   address: { type: String, required: true },
   paymentMethod: { type: String, required: true },
   cart: { type: [cartItemSchema], required: true }, // Store cart items as an array of objects
+
   status: {
     type: String,
     default: "Processing",

@@ -2,7 +2,6 @@
 
 import Faqs from "./components/Faqs/page";
 import LandingSlider from "./components/landingSlider/page";
-
 import ContactForm from "./Sections/Contact-Form/page";
 // import Features from "./Sections/Feature-Section/page";
 import Hero from "./Sections/Hero-Section/page";
@@ -13,38 +12,53 @@ import Trending_items from "./Sections/Trending_items/page";
 import Featured_products from "./Sections/Featured_products/page";
 import Category from "./Sections/Category/page";
 import CustomizeSection from "./components/Customize_section/page";
-import { useEffect } from "react";
-import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
 
 export default function Home() {
 
-  useEffect(()=> {
-    async function getStatus(){
-      const response = await fetch("/api/handleState")
+  const [status, setStatus] = useState()
 
-      if(!response.ok){
-        toast.error("error fetching status")
+  useEffect(() => {
+
+    async function fetchStatus() {
+      try {
+        const response = await fetch("/api/handleState");
+        const data = await response.json();
+
+        if (!response.ok) {
+          toast.error("Failed to fetch status");
+        }
+
+        setStatus(data)
+
+      } catch (error) {
+        toast.error("Failed to fetch status");
       }
-
     }
 
-    getStatus()
+    fetchStatus()
 
-  },[])
+  }, [])
+
 
   return (
-   <>
-    <LandingSlider />
-    <Hero />
-    <Category />
-    <Featured_products />
-    <Newarrival />
-    <Trending_items />
-    <ServiceCards />
-    <CustomizeSection />
-    <Faqs />
-    <ContactForm />
-    <NewsLetter />
-   </>
+    <>
+      <LandingSlider />
+      <Hero />
+      <Category />
+      <Featured_products />
+      <Newarrival />
+      <Trending_items />
+      <ServiceCards />
+      {
+        status?.data?.isSelected === true ? (
+          <CustomizeSection />
+        ) : null
+      }
+
+      <Faqs />
+      <ContactForm />
+      <NewsLetter />
+    </>
   );
 }

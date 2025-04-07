@@ -43,7 +43,7 @@ const Checkout = () => {
       const response = await fetch("/api/handleOrder", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone, address, paymentMethod , cart }),
+        body: JSON.stringify({ name, email, phone, address, paymentMethod, cart }),
       });
 
       if (!response.ok) {
@@ -58,7 +58,7 @@ const Checkout = () => {
       setAddress("");
       setPaymentMethod("cod");
       setCart([]);
-    localStorage.removeItem("cart");
+      localStorage.removeItem("cart");
 
       setIsLoading(false);
     } catch (error) {
@@ -177,9 +177,10 @@ const Checkout = () => {
               >
                 Place Order
               </Button>
+
             </form>
 
-            <p onClick={()=> console.log(cart,"cart") } className="mt-10 text-center text-sm font-semibold text-gray-500">
+            <p onClick={() => console.log(cart, "cart")} className="mt-10 text-center text-sm font-semibold text-gray-500">
               By placing this order you agree to the{" "}
               <a
                 href="#"
