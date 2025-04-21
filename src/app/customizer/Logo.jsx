@@ -2,7 +2,7 @@ import { Button } from "@heroui/react";
 import { CldUploadWidget } from "next-cloudinary";
 import React, { useEffect, useState } from "react";
 
-const Logo = ({ selectedLogo, setSelectedLogo ,logoPosition, setLogoPosition, setLogoSize, logoSize }) => {
+const Logo = ({ selectedLogo, setSelectedLogo, logoPosition, setLogoPosition, setLogoSize, logoSize }) => {
 
   const [logo, setLogo] = useState([]);
 
@@ -150,7 +150,7 @@ const Logo = ({ selectedLogo, setSelectedLogo ,logoPosition, setLogoPosition, se
                 ? "border-blue-600 shadow-lg"
                 : "border-gray-300"
                 }`}
-              onClick={() => setSelectedLogo(logo.url)}
+              onClick={() => setSelectedLogo(logo)}
             >
               <img
                 src={logo.url}

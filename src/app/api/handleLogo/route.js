@@ -63,7 +63,7 @@ export async function DELETE(req) {
       return NextResponse.json({ error: "ID is required" }, { status: 400 });
     }
 
-    await logoModel.findByIdAndDelete(id);
+    await logoModel.findById(id);
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {

@@ -53,9 +53,11 @@ const Logo = () => {
 
       const data = await response.json();
       console.log("Upload successful:", data);
+      
       setImage("");
       setPrice("");
       fetchLogos(); // Refresh table after upload
+
     } catch (err) {
       setError(err.message || "Failed to upload logo");
     } finally {

@@ -5,6 +5,8 @@ const Action = ({ selectedColor, logoPosition, logoSize, selectedLogo }) => {
 
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState(""); // Store selected size
+  const [isLoading, setIsLoading] = useState(false);
+
   // const [loading, set] = useState(""); // Store selected size
 
 
@@ -20,40 +22,49 @@ const Action = ({ selectedColor, logoPosition, logoSize, selectedLogo }) => {
 
   const handleAddToCart = () => {
 
-    const logoPrice = 100
+    setIsLoading(true)
 
-    const newCartItem = {
-      color: selectedColor.colorName,
-      size: selectedSize,
-      quantity,
-      thumbnail: selectedColor.colorImage,
-      id: "Custom Product",
-      salePrice: (selectedColor.stuffPrice + logoPrice) * quantity, // Adding logo price
-      name: "Custom Hoodie",
+    const logoPrice = selectedLogo?.logoPrice? selectedLogo.logoPrice : 1000
 
-      colorCode: selectedColor.colorCode,
-      logoPrice: logoPrice,
-      logoPosition,
-      logoSize,
-      selectedLogo,
-      stuffPrice: selectedColor.stuffPrice,
-    };
+    setTimeout(() => {
 
-    // Get current cart from localStorage or initialize an empty array
-    const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    // Add new item to the cart
-    existingCart.push(newCartItem);
+      const newCartItem = {
+        color: selectedColor.colorName,
+        size: selectedSize,
+        quantity,
+        thumbnail: selectedColor.colorImage,
+        id: "Custom Product",
+        salePrice: (selectedColor.stuffPrice + logoPrice) * quantity, // Adding logo price
+        name: "Custom Hoodie",
 
-    // Save updated cart to localStorage
-    localStorage.setItem("cart", JSON.stringify(existingCart));
+        colorCode: selectedColor.colorCode,
+        logoPrice: logoPrice,
+        logoPosition,
+        logoSize,
+        selectedLogo: selectedLogo.url,
+        stuffPrice: selectedColor.stuffPrice,
+      };
+
+      // Get current cart from localStorage or initialize an empty array
+      const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      // Add new item to the cart
+      existingCart.push(newCartItem);
+
+      // Save updated cart to localStorage
+      localStorage.setItem("cart", JSON.stringify(existingCart));
+
+      setIsLoading(false)
+
+    }, 1000);
   };
 
   return (
     <div className="flex flex-col justify-center gap-2">
 
       <div className="flex items-center justify-between">
-        <h2 className="font-semibold text-gray-700">Stuff Name :</h2>
+        <h2 className="font-semibold text-gray-700" onClick={() => console.log(selectedLogo, "selectedLogo")}>Stuff Name :</h2>
         <h2 className="text-gray-900">
           <span className="font-semibold">{selectedColor.stuffName}</span>
         </h2>
@@ -73,7 +84,7 @@ const Action = ({ selectedColor, logoPosition, logoSize, selectedLogo }) => {
       <div className="flex items-center justify-between">
         <h2 className="font-semibold text-gray-700">Logo Price :</h2>
         <h2 className="text-gray-900">
-          <span className="font-semibold">R.S 100</span> / logo
+          <span className="font-semibold">R.S {selectedLogo.logoPrice}</span> / logo
         </h2>
       </div>
 
@@ -132,7 +143,7 @@ const Action = ({ selectedColor, logoPosition, logoSize, selectedLogo }) => {
 
       {/* Add to Cart Button */}
       <Button
-        // isLoading={loading}
+        isLoading={isLoading}
         onPress={handleAddToCart}
         className="px-4 py-2 bg-[#a16c3d] hover:bg-[#754d2a] text-white rounded-full font-semibold"
       >

@@ -6,6 +6,7 @@ import Hoodie from "./Hoodie";
 import Shirt from "./Shirt";
 import Zipper from "./Zipper";
 import Logo from "./Logo";
+import Action from "./action";
 
 const Customizer = () => {
   const [isSelected, setIsSelected] = useState(false);
@@ -42,7 +43,7 @@ const Customizer = () => {
 
       </div>
 
-      <div className="flex gap-5">
+      <div className="flex items-center gap-5">
         {/* Tabs */}
         <Tabs selectedKey={activeTab} onSelectionChange={setActiveTab}>
           <Tab key="hoodie" title="Hoodie" />
@@ -51,10 +52,13 @@ const Customizer = () => {
           <Tab key="logo" title="Logo" />
         </Tabs>
 
+      <Action />
+
         <Checkbox isSelected={isSelected} onValueChange={handleToggle}>
           {isSelected ? "Enabled" : "Disabled"}
         </Checkbox>
       </div>
+
 
       {/* Tab Content */}
       <div className="mt-4">

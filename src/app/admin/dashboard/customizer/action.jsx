@@ -78,7 +78,7 @@ export default function Action() {
 
     return (
         <>
-            <Button size="sm" onPress={onOpen}>Upload Variation</Button>
+            <Button size="md" color="default" onPress={onOpen}>Upload Variation</Button>
             <Modal size="5xl" isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     <ModalHeader className="flex flex-col gap-1">Upload Variation</ModalHeader>

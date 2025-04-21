@@ -47,7 +47,6 @@ export default function Customizer() {
 
       <div className="col-span-1 lg:col-span-3 h-full ">
         <div className="h-full bg-white shadow-lg p-6 border border-gray-300 rounded-xl backdrop-blur-md bg-opacity-80">
-
           {/* panel buttons */}
           <div className="grid grid-cols-3 mb-6 rounded-full overflow-hidden">
             <Button
@@ -113,10 +112,10 @@ export default function Customizer() {
 
               {/* Selected Logo Overlay */}
               <div
-                className={`absolute w-[50%] h-[40%] flex justify-${logoPosition.x} items-${logoPosition.y}`}
+                className={`absolute w-[42%] h-[33%] flex justify-${logoPosition.x} items-${logoPosition.y}`}
               >
                 <img
-                  src={selectedLogo}
+                  src={selectedLogo.url}
                   alt="Selected Logo"
                   className={` 
                 ${logoSize === "sm" ? "w-16 h-16" : ""} 
