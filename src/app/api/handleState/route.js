@@ -21,6 +21,7 @@ export async function GET() {
       return NextResponse.json({ error: 'Server error' }, { status: 500 });
     }
   }
+
 export async function PUT(request) {
  
 
@@ -32,6 +33,8 @@ export async function PUT(request) {
     await dbConnection()
 
     const id = "67f2447665975e6579a7e86c"
+
+    console.log(isSelected,"isSelected toggle value")
 
     const updated = await ToggleModel.findByIdAndUpdate(
       id,

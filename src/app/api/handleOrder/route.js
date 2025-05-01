@@ -33,12 +33,14 @@ export async function POST(req) {
     await dbConnection();
 
     const contentType = req.headers.get("content-type");
+
     if (!contentType || !contentType.includes("application/json")) {
       return NextResponse.json(
         { error: "Invalid content-type. Expected application/json" },
         { status: 400 }
       );
     }
+    
 
     const { name, email, phone, address, paymentMethod, cart } =
       await req.json();

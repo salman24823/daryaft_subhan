@@ -126,7 +126,7 @@ const NewProducts = () => {
           <MDEditor
             value={productData.description}
             onChange={handleDescriptionChange}
-            height={200}
+            height={800}
             preview="edit"
             className="w-full"
           />
@@ -165,6 +165,8 @@ const NewProducts = () => {
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Color Variations
           </label>
+
+          
           <CldUploadWidget
             uploadPreset="ml_default"
             options={{ sources: ["local", "url"] }}
@@ -185,6 +187,8 @@ const NewProducts = () => {
               </button>
             )}
           </CldUploadWidget>
+
+
           <div className="mt-4 flex flex-wrap gap-4">
             {productData.variations.map((v, index) => (
               <div key={index} className="flex flex-col items-center">
